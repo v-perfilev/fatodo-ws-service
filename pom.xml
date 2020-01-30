@@ -41,7 +41,6 @@
         </dependencies>
     </dependencyManagement>
 
-
     <dependencies>
         <!-- Spring Cloud (extended-skeleton) -->
         <dependency>
