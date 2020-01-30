@@ -1,6 +1,6 @@
 spring:
   application:
-    name: base-skeleton
+    name: extended-skeleton
   cloud:
     config:
       fail-fast: true
