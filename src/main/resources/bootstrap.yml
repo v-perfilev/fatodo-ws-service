@@ -1,0 +1,6 @@
+spring:
+  application:
+    name: base-skeleton
+  cloud:
+    config:
+      fail-fast: true

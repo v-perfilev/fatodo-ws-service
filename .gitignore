@@ -1,0 +1,58 @@
+!**/src/main/**
+!**/src/test/**
+!.mvn/wrapper/maven-wrapper.jar
+
+######################
+# STS
+######################
+.apt_generated
+.classpath
+.factorypath
+.project
+.settings
+.springBeans
+.sts4-cache
+
+# Intellij
+######################
+.idea
+*.iml
+*.iws
+*.ipr
+*.ids
+*.orig
+classes/
+out/
+
+######################
+# Maven
+######################
+log/
+target/
+build/
+
+######################
+# Package Files
+######################
+*.jar
+*.war
+*.ear
+*.db
+
+######################
+# Windows
+######################
+Thumbs.db
+Desktop.ini
+
+######################
+# Mac OSX
+######################
+.DS_Store
+.svn
+
+._*
+.Spotlight-V100
+.Trashes
+
+
