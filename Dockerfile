@@ -1,5 +1,5 @@
 FROM openjdk:13-jdk-alpine as build
-WORKDIR /workspace/app
+WORKDIR /build
 
 COPY mvnw .
 COPY .mvn .mvn
@@ -10,6 +10,6 @@ COPY target/*.jar app.jar
 
 FROM openjdk:13-jdk-alpine
 VOLUME /app
-COPY --from=build /workspace/app/app.jar /app/app.jar
+COPY --from=build /build/app.jar /app/app.jar
 ENTRYPOINT ["java","-jar","/app/app.jar"]
 
