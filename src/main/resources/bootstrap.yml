@@ -3,4 +3,5 @@ spring:
     name: base-skeleton
   cloud:
     config:
+      uri: ${CONFIG_HOST:localhost}:8888
       fail-fast: true
