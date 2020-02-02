@@ -13,3 +13,6 @@ FROM openjdk:13-jdk-alpine
 VOLUME /app
 COPY --from=build /build/target/*.jar /app/app.jar
 ENTRYPOINT ["java","-jar","/app/app.jar"]
+
+COPY ./tools/wait-for-it.sh wait-for-it.sh
+
