@@ -124,6 +124,11 @@
             <artifactId>spring-boot-starter-cache</artifactId>
         </dependency>
 
+        <!-- Spring Configuration Processor -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-configuration-processor</artifactId>
+        </dependency>
         <!-- Lombok -->
         <dependency>
             <groupId>org.projectlombok</groupId>
