@@ -3,5 +3,10 @@ spring:
     name: extended-skeleton
   cloud:
     config:
-      uri: ${CONFIG_HOST:localhost}:8888
+      uri: http://${CONFIG_SERVER_HOST:localhost}:8888
       fail-fast: true
+
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://${REGISTRY_HOST:localhost}:8761/eureka/
