@@ -11,8 +11,10 @@ RUN ./mvnw install -DskipTests
 
 FROM openjdk:13-jdk-alpine
 VOLUME /app
+COPY ./tools/wait wait
 COPY --from=build /build/target/*.jar /app/app.jar
-ENTRYPOINT ["java","-jar","/app/app.jar"]
 
-COPY ./tools/wait-for-it.sh wait-for-it.sh
+CMD wait && java -jar /app/app.jar
+
+
 
