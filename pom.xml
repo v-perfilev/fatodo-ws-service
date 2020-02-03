@@ -16,6 +16,7 @@
 
     <properties>
         <java.version>13</java.version>
+        <spring-boot.version>2.2.4.RELEASE</spring-boot.version>
         <spring-cloud.version>2.2.1.RELEASE</spring-cloud.version>
         <lombok.version>1.18.10</lombok.version>
         <mapstruct.version>1.3.1.Final</mapstruct.version>
@@ -49,6 +50,7 @@
             <dependency>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-configuration-processor</artifactId>
+                <version>${spring-boot.version}</version>
                 <scope>provided</scope>
                 <optional>true</optional>
             </dependency>
