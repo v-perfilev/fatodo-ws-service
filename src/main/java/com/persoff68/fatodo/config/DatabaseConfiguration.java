@@ -12,7 +12,7 @@ import org.springframework.data.mongodb.repository.config.EnableMongoRepositorie
 import org.springframework.validation.beanvalidation.LocalValidatorFactoryBean;
 
 @Configuration
-@EnableMongoRepositories
+@EnableMongoRepositories(basePackages = "com.persoff68.fatodo.repository")
 @EnableMongoAuditing
 public class DatabaseConfiguration {
 
