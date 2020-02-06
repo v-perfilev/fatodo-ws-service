@@ -1,0 +1,17 @@
+spring:
+
+  cloud:
+    config:
+      uri: http://${CONFIG_SERVER_HOST:localhost}:8888
+      fail-fast: true
+
+  data:
+    mongodb:
+      uri: mongodb://${DB_HOST:localhost}:27017
+      database: extended-skeleton
+
+
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://${REGISTRY_HOST:localhost}:8761/eureka/
