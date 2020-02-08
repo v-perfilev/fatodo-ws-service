@@ -1,3 +1,10 @@
 spring:
   application:
     name: extended-skeleton
+
+  cloud:
+    config:
+      uri: http://${CONFIG_SERVER_HOST:localhost}:8888
+      fail-fast: true
+      username: fatodo-config-user
+      password: ${CONFIG_SERVER_PASSWORD:development}
