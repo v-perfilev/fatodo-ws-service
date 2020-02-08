@@ -1,5 +1,6 @@
 package com.persoff68.fatodo.config;
 
+import com.persoff68.fatodo.constant.ExceptionTypeConstants;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.context.request.NativeWebRequest;
@@ -12,57 +13,64 @@ import org.zalando.problem.violations.ConstraintViolationProblem;
 
 import javax.annotation.Nullable;
 import javax.servlet.http.HttpServletRequest;
-import java.net.URI;
 
 @ControllerAdvice
 class ExceptionConfiguration implements ProblemHandling, SecurityAdviceTrait {
 
-    public static final String ERR_CONCURRENCY_FAILURE = "error.concurrencyFailure";
-    public static final String ERR_VALIDATION = "error.validation";
-    public static final String PROBLEM_BASE_URL = "https://www.jhipster.tech/problem";
-    public static final URI DEFAULT_TYPE = URI.create(PROBLEM_BASE_URL + "/problem-with-message");
-    public static final URI CONSTRAINT_VIOLATION_TYPE = URI.create(PROBLEM_BASE_URL + "/constraint-violation");
-    public static final URI ENTITY_NOT_FOUND_TYPE = URI.create(PROBLEM_BASE_URL + "/entity-not-found");
-    public static final URI INVALID_PASSWORD_TYPE = URI.create(PROBLEM_BASE_URL + "/invalid-password");
-    public static final URI EMAIL_ALREADY_USED_TYPE = URI.create(PROBLEM_BASE_URL + "/email-already-used");
-    public static final URI LOGIN_ALREADY_USED_TYPE = URI.create(PROBLEM_BASE_URL + "/login-already-used");
-    public static final URI EMAIL_NOT_FOUND_TYPE = URI.create(PROBLEM_BASE_URL + "/email-not-found");
-
-    private static final String FIELD_ERRORS_KEY = "fieldErrors";
     private static final String MESSAGE_KEY = "message";
     private static final String PATH_KEY = "path";
     private static final String VIOLATIONS_KEY = "violations";
+    private static final String ERROR_VIOLATION = "error.violation";
+    private static final String ERROR_HTTP = "error.http.";
 
     @Override
     public ResponseEntity<Problem> process(@Nullable ResponseEntity<Problem> entity, NativeWebRequest request) {
         if (entity == null) {
-            return entity;
+            return null;
         }
+
+        ResponseEntity<Problem> response = entity;
         Problem problem = entity.getBody();
-        if (!(problem instanceof ConstraintViolationProblem || problem instanceof DefaultProblem)) {
-            return entity;
-        }
-        ProblemBuilder builder = Problem.builder()
-                .withType(Problem.DEFAULT_TYPE.equals(problem.getType()) ? DEFAULT_TYPE : problem.getType())
-                .withStatus(problem.getStatus())
-                .withTitle(problem.getTitle())
-                .with(PATH_KEY, request.getNativeRequest(HttpServletRequest.class).getRequestURI());
 
         if (problem instanceof ConstraintViolationProblem) {
-            builder
-                    .with(VIOLATIONS_KEY, ((ConstraintViolationProblem) problem).getViolations())
-                    .with(MESSAGE_KEY, ERR_VALIDATION);
-        } else {
-            builder
-                    .withCause(((DefaultProblem) problem).getCause())
-                    .withDetail(problem.getDetail())
-                    .withInstance(problem.getInstance());
-            problem.getParameters().forEach(builder::with);
-            if (!problem.getParameters().containsKey(MESSAGE_KEY) && problem.getStatus() != null) {
-                builder.with(MESSAGE_KEY, "error.http." + problem.getStatus().getStatusCode());
-            }
+            response = processConstraintViolationProblem(entity, problem, request);
+        } else if (problem instanceof DefaultProblem) {
+            response = processDefaultProblem(entity, problem, request);
+        }
+
+        return response;
+    }
+
+    private ResponseEntity<Problem> processConstraintViolationProblem(ResponseEntity<Problem> entity, Problem problem, NativeWebRequest request) {
+        ProblemBuilder builder = createBaseBuilder(problem, request)
+                .with(VIOLATIONS_KEY, ((ConstraintViolationProblem) problem).getViolations())
+                .with(MESSAGE_KEY, ERROR_VIOLATION);
+        return new ResponseEntity<>(builder.build(), entity.getHeaders(), entity.getStatusCode());
+    }
+
+    private ResponseEntity<Problem> processDefaultProblem(ResponseEntity<Problem> entity, Problem problem, NativeWebRequest request) {
+        ProblemBuilder builder = createBaseBuilder(problem, request)
+                .withCause(((DefaultProblem) problem).getCause())
+                .withDetail(problem.getDetail())
+                .withInstance(problem.getInstance());
+        problem.getParameters().forEach(builder::with);
+        if (!problem.getParameters().containsKey(MESSAGE_KEY) && problem.getStatus() != null) {
+            builder.with(MESSAGE_KEY, ERROR_HTTP + problem.getStatus().getStatusCode());
         }
         return new ResponseEntity<>(builder.build(), entity.getHeaders(), entity.getStatusCode());
+    }
+
+    private ProblemBuilder createBaseBuilder(Problem problem, NativeWebRequest request) {
+        ProblemBuilder builder = Problem.builder();
+        HttpServletRequest httpRequest = request.getNativeRequest(HttpServletRequest.class);
+        if (problem != null && httpRequest != null) {
+            builder
+                    .withType(Problem.DEFAULT_TYPE.equals(problem.getType()) ? ExceptionTypeConstants.DEFAULT_TYPE : problem.getType())
+                    .withStatus(problem.getStatus())
+                    .withTitle(problem.getTitle())
+                    .with(PATH_KEY, httpRequest.getRequestURI());
+        }
+        return builder;
     }
 
 }
