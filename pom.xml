@@ -26,7 +26,6 @@
         <swagger.version>2.9.2</swagger.version>
     </properties>
 
-    <!-- Dependency management -->
     <dependencyManagement>
         <dependencies>
             <!-- Spring Cloud management (extended-skeleton) -->
@@ -238,5 +237,32 @@
             </plugin>
         </plugins>
     </build>
+
+    <profiles>
+        <!-- dev profile -->
+        <profile>
+            <id>dev</id>
+            <activation>
+                <activeByDefault>true</activeByDefault>
+            </activation>
+            <properties>
+                <spring.profiles.active>dev</spring.profiles.active>
+            </properties>
+        </profile>
+        <!-- docker profile -->
+        <profile>
+            <id>docker</id>
+            <properties>
+                <spring.profiles.active>docker</spring.profiles.active>
+            </properties>
+        </profile>
+        <!-- prod profile -->
+        <profile>
+            <id>prod</id>
+            <properties>
+                <spring.profiles.active>prod</spring.profiles.active>
+            </properties>
+        </profile>
+    </profiles>
 
 </project>
