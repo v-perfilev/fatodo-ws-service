@@ -9,8 +9,9 @@ public class AppProfileUtil {
     private static final String SPRING_PROFILES_DEFAULT = "spring.profiles.default";
 
     public static Properties getDefaultProfile() {
+        String[] profiles = {ProfileConstants.DEVELOPMENT, ProfileConstants.DEVELOPMENT_MONGO};
         Properties properties = new Properties();
-        properties.put(SPRING_PROFILES_DEFAULT, ProfileConstants.DEVELOPMENT);
+        properties.put(SPRING_PROFILES_DEFAULT, profiles);
         return properties;
     }
 
