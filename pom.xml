@@ -27,9 +27,7 @@
         <swagger.version>2.9.2</swagger.version>
         <!-- Profiles -->
         <dev.profile>dev</dev.profile>
-        <dev-mongo.profile>dev-mongo</dev-mongo.profile>
         <docker.profile>docker</docker.profile>
-        <docker-mongo.profile>docker-mongo</docker-mongo.profile>
         <prod.profile>prod</prod.profile>
     </properties>
 
@@ -253,14 +251,14 @@
                 <activeByDefault>true</activeByDefault>
             </activation>
             <properties>
-                <spring.profiles.active>${dev.profile},${dev-mongo.profile}</spring.profiles.active>
+                <spring.profiles.active>${dev.profile}</spring.profiles.active>
             </properties>
         </profile>
         <!-- docker profile -->
         <profile>
             <id>docker</id>
             <properties>
-                <spring.profiles.active>${docker.profile},${docker-mongo.profile}</spring.profiles.active>
+                <spring.profiles.active>${docker.profile}</spring.profiles.active>
             </properties>
         </profile>
         <!-- prod profile -->
