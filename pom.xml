@@ -183,11 +183,6 @@
             <artifactId>mapstruct-processor</artifactId>
         </dependency>
 
-        <!-- Mongobee -->
-        <dependency>
-            <groupId>com.github.mongobee</groupId>
-            <artifactId>mongobee</artifactId>
-        </dependency>
         <!-- Swagger -->
         <dependency>
             <groupId>io.springfox</groupId>
