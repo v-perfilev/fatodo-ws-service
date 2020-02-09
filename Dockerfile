@@ -10,7 +10,7 @@ RUN ./mvnw verify clean --fail-never
 
 # app build layer
 COPY src src
-RUN ./mvnw install -Pdocker -DskipTests
+RUN ./mvnw install -DskipTests
 
 # DEPLOY
 FROM openjdk:13-jdk-alpine
