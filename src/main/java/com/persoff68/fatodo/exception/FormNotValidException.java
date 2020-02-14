@@ -4,10 +4,9 @@ import com.persoff68.fatodo.exception.constant.ExceptionTypes;
 import org.zalando.problem.AbstractThrowableProblem;
 import org.zalando.problem.Status;
 
-public class RecordNotFoundException extends AbstractThrowableProblem {
+public class FormNotValidException extends AbstractThrowableProblem {
 
-    public RecordNotFoundException() {
-        super(ExceptionTypes.DB_TYPE, "Record not found in database", Status.NOT_FOUND);
+    public FormNotValidException() {
+        super(ExceptionTypes.VALIDATION_TYPE, "Form data not valid", Status.BAD_REQUEST);
     }
-
 }
