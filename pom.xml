@@ -15,9 +15,14 @@
     <description>base-skeleton for FaToDo</description>
 
     <properties>
+        <!-- Versions -->
         <java.version>13</java.version>
         <spring-boot.version>2.2.4.RELEASE</spring-boot.version>
         <spring-cloud.version>2.2.1.RELEASE</spring-cloud.version>
+        <!-- Profiles -->
+        <dev.profile>dev</dev.profile>
+        <docker.profile>docker</docker.profile>
+        <prod.profile>prod</prod.profile>
     </properties>
 
     <dependencies>
@@ -59,5 +64,33 @@
             </plugin>
         </plugins>
     </build>
+
+
+    <profiles>
+        <!-- dev profile -->
+        <profile>
+            <id>dev</id>
+            <activation>
+                <activeByDefault>true</activeByDefault>
+            </activation>
+            <properties>
+                <spring.profiles.active>${dev.profile}</spring.profiles.active>
+            </properties>
+        </profile>
+        <!-- docker profile -->
+        <profile>
+            <id>docker</id>
+            <properties>
+                <spring.profiles.active>${docker.profile}</spring.profiles.active>
+            </properties>
+        </profile>
+        <!-- prod profile -->
+        <profile>
+            <id>prod</id>
+            <properties>
+                <spring.profiles.active>${prod.profile}</spring.profiles.active>
+            </properties>
+        </profile>
+    </profiles>
 
 </project>
