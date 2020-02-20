@@ -217,7 +217,7 @@
                 </exclusion>
             </exclusions>
         </dependency>
-        <!-- JUnit 5 -->
+        <!-- Junit 5 -->
         <dependency>
             <groupId>org.junit.jupiter</groupId>
             <artifactId>junit-jupiter-api</artifactId>
