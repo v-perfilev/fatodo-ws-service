@@ -9,6 +9,5 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 @EnableDiscoveryClient
 @EnableFeignClients(basePackages = AppConstants.FEIGN_CLIENT_PATH)
-@EnableConfigurationProperties(AppProperties.class)
 public class CloudConfiguration {
 }
