@@ -1,4 +1,4 @@
-package com.persoff68.fatodo.exception.handler;
+package com.persoff68.fatodo.exception.translator;
 
 import com.persoff68.fatodo.exception.util.ProblemUtils;
 import org.springframework.boot.web.servlet.error.ErrorController;
@@ -18,7 +18,7 @@ import javax.servlet.http.HttpServletRequest;
 
 @RestController
 @ControllerAdvice
-class ExceptionHandler implements ErrorController, ProblemHandling, SecurityAdviceTrait {
+class ExceptionTranslator implements ErrorController, ProblemHandling, SecurityAdviceTrait {
 
     private final static String ERROR_PATH = "/error";
 
