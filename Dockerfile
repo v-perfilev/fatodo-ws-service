@@ -13,7 +13,7 @@ RUN apk add glibc-2.29-r0.apk glibc-bin-2.29-r0.apk
 COPY mvnw .
 COPY .mvn .mvn
 COPY pom.xml .
-RUN ./mvnw verify clean --fail-never
+RUN ./mvnw clean verify -fn
 
 # app build layer
 COPY src src
