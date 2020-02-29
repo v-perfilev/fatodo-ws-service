@@ -1,0 +1,32 @@
+image: openjdk:13-alpine
+
+variables:
+  MAVEN_CLI_OPTS: "-ntp --batch-mode"
+  MAVEN_OPTS: "-Dmaven.repo.local=.m2/repository"
+
+cache:
+  paths:
+    - .m2/repository/
+
+stages:
+  - build
+  - test
+
+build:
+  stage: build
+  script:
+    - ./mvnw $MAVEN_CLI_OPTS compile
+  artifacts:
+    paths:
+      - target/
+    expire_in: 1 day
+
+
+test:
+  stage: test
+  script:
+    - ./mvnw $MAVEN_CLI_OPTS test
+  artifacts:
+    paths:
+      - target/
+    expire_in: 1 day
