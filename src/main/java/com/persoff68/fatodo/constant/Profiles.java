@@ -1,4 +1,4 @@
-package com.persoff68.fatodo.config.constant;
+package com.persoff68.fatodo.constant;
 
 public interface Profiles {
     String DEVELOPMENT = "dev";
