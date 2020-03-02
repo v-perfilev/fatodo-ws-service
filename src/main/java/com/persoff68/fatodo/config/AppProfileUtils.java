@@ -1,10 +1,10 @@
-package com.persoff68.fatodo.util;
+package com.persoff68.fatodo.config;
 
-import com.persoff68.fatodo.util.constant.Profiles;
+import com.persoff68.fatodo.config.constant.Profiles;
 
 import java.util.Properties;
 
-public class ProfileUtils {
+public class AppProfileUtils {
     private static final String SPRING_PROFILES_DEFAULT = "spring.profiles.default";
 
     public static Properties getDefaultProfile() {
