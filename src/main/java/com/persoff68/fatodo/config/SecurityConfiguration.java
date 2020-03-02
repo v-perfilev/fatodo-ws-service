@@ -34,16 +34,17 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .csrf().disable()
                 .cors()
                 .and()
-                .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
-                .and()
-                .authorizeRequests()
-                .anyRequest().authenticated()
+                .sessionManagement()
+                .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 .and()
                 .formLogin().disable()
                 .httpBasic().disable()
                 .exceptionHandling()
                 .authenticationEntryPoint(securityProblemSupport)
-                .accessDeniedHandler(securityProblemSupport);
+                .accessDeniedHandler(securityProblemSupport)
+                .and()
+                .authorizeRequests()
+                .anyRequest().authenticated();
     }
 
 }
