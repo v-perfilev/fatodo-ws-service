@@ -1,6 +1,6 @@
 package com.persoff68.fatodo.exception;
 
-import com.persoff68.fatodo.constant.ExceptionTypes;
+import com.persoff68.fatodo.exception.constant.ExceptionTypes;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.context.request.NativeWebRequest;

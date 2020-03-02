@@ -1,4 +1,4 @@
-package com.persoff68.fatodo.constant;
+package com.persoff68.fatodo.exception.constant;
 
 import java.net.URI;
 
