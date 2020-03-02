@@ -1,6 +1,6 @@
 package com.persoff68.fatodo;
 
-import com.persoff68.fatodo.config.AppProfileUtil;
+import com.persoff68.fatodo.util.ProfileUtils;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
@@ -10,7 +10,7 @@ import java.util.Properties;
 public class BaseSkeletonApplication {
 
     public static void main(String[] args) {
-        Properties defaultProfileProperties = AppProfileUtil.getDefaultProfile();
+        Properties defaultProfileProperties = ProfileUtils.getDefaultProfile();
         SpringApplication app = new SpringApplication(BaseSkeletonApplication.class);
         app.setDefaultProperties(defaultProfileProperties);
         app.run(args);
