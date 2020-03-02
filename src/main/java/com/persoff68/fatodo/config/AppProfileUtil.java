@@ -1,6 +1,6 @@
 package com.persoff68.fatodo.config;
 
-import com.persoff68.fatodo.config.constant.Profiles;
+import com.persoff68.fatodo.constant.Profiles;
 
 import java.util.Properties;
 

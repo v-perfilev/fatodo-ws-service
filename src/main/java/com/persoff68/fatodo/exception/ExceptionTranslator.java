@@ -1,7 +1,6 @@
-package com.persoff68.fatodo.exception.handler;
+package com.persoff68.fatodo.exception;
 
-import com.persoff68.fatodo.exception.constant.ExceptionConstants;
-import com.persoff68.fatodo.exception.constant.ExceptionTypes;
+import com.persoff68.fatodo.constant.ExceptionTypes;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.context.request.NativeWebRequest;
@@ -16,7 +15,12 @@ import javax.annotation.Nullable;
 import javax.servlet.http.HttpServletRequest;
 
 @ControllerAdvice
-class ExceptionTranslator implements ProblemHandling, SecurityAdviceTrait {
+public class ExceptionTranslator implements ProblemHandling, SecurityAdviceTrait {
+    private final String MESSAGE_KEY = "message";
+    private final String PATH_KEY = "path";
+    private final String VIOLATIONS_KEY = "violations";
+    private final String ERROR_VIOLATION = "error.violation";
+    private final String ERROR_HTTP = "error.http.";
 
     @Override
     public ResponseEntity<Problem> process(@Nullable ResponseEntity<Problem> entity, NativeWebRequest request) {
@@ -39,8 +43,8 @@ class ExceptionTranslator implements ProblemHandling, SecurityAdviceTrait {
 
     private Problem processConstraintViolationProblem(Problem problem, NativeWebRequest request) {
         return createBaseBuilder(problem, request)
-                .with(ExceptionConstants.VIOLATIONS_KEY, ((ConstraintViolationProblem) problem).getViolations())
-                .with(ExceptionConstants.MESSAGE_KEY, ExceptionConstants.ERROR_VIOLATION)
+                .with(VIOLATIONS_KEY, ((ConstraintViolationProblem) problem).getViolations())
+                .with(MESSAGE_KEY, ERROR_VIOLATION)
                 .build();
     }
 
@@ -50,8 +54,8 @@ class ExceptionTranslator implements ProblemHandling, SecurityAdviceTrait {
                 .withDetail(problem.getDetail())
                 .withInstance(problem.getInstance());
         problem.getParameters().forEach(builder::with);
-        if (!problem.getParameters().containsKey(ExceptionConstants.MESSAGE_KEY) && problem.getStatus() != null) {
-            builder.with(ExceptionConstants.MESSAGE_KEY, ExceptionConstants.ERROR_HTTP + problem.getStatus().getStatusCode());
+        if (!problem.getParameters().containsKey(MESSAGE_KEY) && problem.getStatus() != null) {
+            builder.with(MESSAGE_KEY, ERROR_HTTP + problem.getStatus().getStatusCode());
         }
         return builder.build();
     }
@@ -64,7 +68,7 @@ class ExceptionTranslator implements ProblemHandling, SecurityAdviceTrait {
                     .withType(Problem.DEFAULT_TYPE.equals(problem.getType()) ? ExceptionTypes.DEFAULT_TYPE : problem.getType())
                     .withStatus(problem.getStatus())
                     .withTitle(problem.getTitle())
-                    .with(ExceptionConstants.PATH_KEY, httpRequest.getRequestURI());
+                    .with(PATH_KEY, httpRequest.getRequestURI());
         }
         return builder;
     }
