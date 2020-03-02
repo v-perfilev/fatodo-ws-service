@@ -1,0 +1,8 @@
+server:
+  address: localhost
+  port: 10344
+
+spring:
+  cloud:
+    config:
+      enabled: false
