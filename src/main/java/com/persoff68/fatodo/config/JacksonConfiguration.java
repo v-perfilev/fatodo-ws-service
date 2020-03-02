@@ -1,5 +1,6 @@
 package com.persoff68.fatodo.config;
 
+import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import lombok.RequiredArgsConstructor;
@@ -21,6 +22,7 @@ public class JacksonConfiguration {
         objectMapper.registerModule(problemModule);
         objectMapper.registerModule(constraintViolationProblemModule);
         objectMapper.enable(SerializationFeature.INDENT_OUTPUT);
+        objectMapper.disable(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES);
         return objectMapper;
     }
 
