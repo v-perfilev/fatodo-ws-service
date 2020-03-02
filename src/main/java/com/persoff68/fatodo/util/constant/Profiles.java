@@ -1,6 +1,6 @@
-package com.persoff68.fatodo.config.constant;
+package com.persoff68.fatodo.util.constant;
 
-public interface AppProfiles {
+public interface Profiles {
     String DEVELOPMENT = "dev";
     String DOCKER = "docker";
     String PRODUCTION = "prod";
