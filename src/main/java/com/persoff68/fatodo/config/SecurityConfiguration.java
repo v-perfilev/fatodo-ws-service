@@ -1,6 +1,6 @@
 package com.persoff68.fatodo.config;
 
-import com.persoff68.fatodo.security.JwtTokenFilter;
+import com.persoff68.fatodo.security.jwt.JwtTokenFilter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Import;

@@ -1,4 +1,4 @@
-package com.persoff68.fatodo.security;
+package com.persoff68.fatodo.security.jwt;
 
 import com.persoff68.fatodo.config.AppProperties;
 import lombok.RequiredArgsConstructor;

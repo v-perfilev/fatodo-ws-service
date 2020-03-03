@@ -1,6 +1,7 @@
 package com.persoff68.fatodo.security;
 
 import com.persoff68.fatodo.config.AppProperties;
+import com.persoff68.fatodo.security.jwt.JwtTokenProvider;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;

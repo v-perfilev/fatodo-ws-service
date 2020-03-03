@@ -1,4 +1,4 @@
-package com.persoff68.fatodo.security;
+package com.persoff68.fatodo.security.util;
 
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
