@@ -13,7 +13,7 @@ public class AppProperties {
         private String authorizationHeader;
         private String authorizationPrefix;
         private String tokenSecret;
-        private long tokenExpirationMSec;
+        private long tokenExpirationSec;
     }
 
 }

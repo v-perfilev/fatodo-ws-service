@@ -3,4 +3,4 @@ app:
     authorizationHeader: Authorization
     authorizationPrefix: Bearer
     tokenSecret: test_tokenSecret
-    tokenExpirationMSec: 864000000
+    tokenExpirationSec: 864000

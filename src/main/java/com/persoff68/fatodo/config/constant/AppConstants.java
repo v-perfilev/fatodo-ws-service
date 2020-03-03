@@ -2,4 +2,8 @@ package com.persoff68.fatodo.config.constant;
 
 public interface AppConstants {
     String FEIGN_CLIENT_PATH = "com.persoff68.fatodo.client";
+
+    String SYSTEM_USERNAME = "system";
+    String SYSTEM_AUTHORITY = "ROLE_SYSTEM";
+    long SYSTEM_TOKEN_EXPIRATION_SEC = 60;
 }
