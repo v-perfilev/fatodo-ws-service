@@ -6,4 +6,6 @@ public interface AppConstants {
     String SYSTEM_USERNAME = "system";
     String SYSTEM_AUTHORITY = "ROLE_SYSTEM";
     long SYSTEM_TOKEN_EXPIRATION_SEC = 60;
+
+    long SERIAL_VERSION_UID = 1L;
 }
