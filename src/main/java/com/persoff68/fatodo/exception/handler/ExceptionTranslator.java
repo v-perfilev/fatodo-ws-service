@@ -34,13 +34,17 @@ public class ExceptionTranslator implements ProblemHandling, SecurityAdviceTrait
         return new ResponseEntity<>(problem, entity.getHeaders(), entity.getStatusCode());
     }
 
-    public Problem processProblem(Problem problem, String route) {
+    public ResponseEntity<Problem> process(Problem problem, String route) {
+        problem = processProblem(problem, route);
+        return ResponseEntity.status(problem.getStatus().getStatusCode()).body(problem);
+    }
+
+    private Problem processProblem(Problem problem, String route) {
         if (problem instanceof ConstraintViolationProblem) {
-            problem = processConstraintViolationProblem(problem, route);
+            return processConstraintViolationProblem(problem, route);
         } else {
-            problem = processDefaultProblem(problem, route);
+            return processDefaultProblem(problem, route);
         }
-        return problem;
     }
 
     private Problem processConstraintViolationProblem(Problem problem, String route) {

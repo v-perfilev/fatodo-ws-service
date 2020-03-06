@@ -43,8 +43,7 @@ public class ExceptionController implements ErrorController {
     private ThrowableProblem handleException(Exception e, Integer statusCode) {
         if (e instanceof ThrowableProblem) {
             return (ThrowableProblem) e;
-        }
-        if (e instanceof RuntimeException) {
+        } else if (e instanceof RuntimeException) {
             return new RuntimeProblem(e, statusCode);
         } else {
             return new InheritedProblem(e, statusCode);
@@ -54,7 +53,8 @@ public class ExceptionController implements ErrorController {
     private ThrowableProblem handleStatus(int statusCode) {
         if (statusCode == 404) {
             return new PageNotFoundProblem();
+        } else {
+            return new InternalServerProblem();
         }
-        return new InternalServerProblem();
     }
 }
