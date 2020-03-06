@@ -1,4 +1,4 @@
-package com.persoff68.fatodo.exception;
+package com.persoff68.fatodo.exception.handler;
 
 import com.persoff68.fatodo.exception.constant.ExceptionTypes;
 import org.springframework.http.ResponseEntity;

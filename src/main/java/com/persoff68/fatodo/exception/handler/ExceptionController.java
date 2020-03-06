@@ -1,4 +1,4 @@
-package com.persoff68.fatodo.exception;
+package com.persoff68.fatodo.exception.handler;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.boot.web.servlet.error.ErrorController;

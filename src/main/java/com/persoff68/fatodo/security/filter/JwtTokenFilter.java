@@ -1,6 +1,7 @@
-package com.persoff68.fatodo.security.jwt;
+package com.persoff68.fatodo.security.filter;
 
 import com.persoff68.fatodo.config.AppProperties;
+import com.persoff68.fatodo.security.jwt.JwtTokenProvider;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;

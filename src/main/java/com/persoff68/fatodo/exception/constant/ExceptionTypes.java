@@ -7,4 +7,5 @@ public interface ExceptionTypes {
     URI DB_TYPE = URI.create("/db-error");
     URI AUTH_TYPE = URI.create("/authentication-error");
     URI VALIDATION_TYPE = URI.create("/validation-error");
+    URI CONNECTION_EXCEPTION = URI.create("/connection-error");
 }
