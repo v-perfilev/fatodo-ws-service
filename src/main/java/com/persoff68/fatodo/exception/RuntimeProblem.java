@@ -7,7 +7,7 @@ import org.zalando.problem.Status;
 public class RuntimeProblem extends AbstractThrowableProblem {
 
     public RuntimeProblem(Throwable throwable) {
-        super(ExceptionTypes.DEFAULT_TYPE, throwable.getCause().toString(), Status.INTERNAL_SERVER_ERROR, throwable.getMessage());
+        super(ExceptionTypes.CONNECTION_EXCEPTION, throwable.getClass().getSimpleName(), Status.INTERNAL_SERVER_ERROR, throwable.getMessage());
     }
 
 }
