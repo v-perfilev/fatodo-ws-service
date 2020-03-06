@@ -7,7 +7,7 @@ import org.zalando.problem.Status;
 public class RuntimeProblem extends AbstractThrowableProblem {
 
     public RuntimeProblem(Throwable throwable, int statusCode) {
-        super(ExceptionTypes.RUNTIME_TYPE, throwable.getCause().getClass().getSimpleName(), Status.valueOf(statusCode), throwable.getMessage());
+        super(ExceptionTypes.RUNTIME_TYPE, throwable.getCause().getClass().getSimpleName(), Status.valueOf(statusCode), throwable.getCause().getMessage());
     }
 
 }
