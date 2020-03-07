@@ -1,6 +1,7 @@
 package com.persoff68.fatodo.exception.handler;
 
 import com.persoff68.fatodo.exception.constant.ExceptionTypes;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.context.request.NativeWebRequest;
@@ -30,31 +31,32 @@ public class ExceptionTranslator implements ProblemHandling, SecurityAdviceTrait
         HttpServletRequest httpRequest = request.getNativeRequest(HttpServletRequest.class);
         String route = httpRequest.getRequestURI();
         Problem problem = entity.getBody();
-        problem = processProblem(problem, route);
+        problem = handleProblem(problem, route);
         return new ResponseEntity<>(problem, entity.getHeaders(), entity.getStatusCode());
     }
 
     public ResponseEntity<Problem> process(Problem problem, String route) {
-        problem = processProblem(problem, route);
-        return ResponseEntity.status(problem.getStatus().getStatusCode()).body(problem);
+        problem = handleProblem(problem, route);
+        return ResponseEntity.status(problem.getStatus().getStatusCode())
+                .contentType(MediaType.APPLICATION_JSON).body(problem);
     }
 
-    private Problem processProblem(Problem problem, String route) {
+    private Problem handleProblem(Problem problem, String route) {
         if (problem instanceof ConstraintViolationProblem) {
-            return processConstraintViolationProblem(problem, route);
+            return handleConstraintViolationProblem(problem, route);
         } else {
-            return processDefaultProblem(problem, route);
+            return handleDefaultProblem(problem, route);
         }
     }
 
-    private Problem processConstraintViolationProblem(Problem problem, String route) {
+    private Problem handleConstraintViolationProblem(Problem problem, String route) {
         return createBaseBuilder(problem, route)
                 .with(VIOLATIONS_KEY, ((ConstraintViolationProblem) problem).getViolations())
                 .with(MESSAGE_KEY, ERROR_VIOLATION)
                 .build();
     }
 
-    private Problem processDefaultProblem(Problem problem, String route) {
+    private Problem handleDefaultProblem(Problem problem, String route) {
         ProblemBuilder builder = createBaseBuilder(problem, route)
                 .withCause(((AbstractThrowableProblem) problem).getCause())
                 .withDetail(problem.getDetail())

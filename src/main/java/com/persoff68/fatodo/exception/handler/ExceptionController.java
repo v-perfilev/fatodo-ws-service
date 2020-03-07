@@ -8,9 +8,7 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.context.request.ServletWebRequest;
 import org.zalando.problem.Problem;
-import org.zalando.problem.ThrowableProblem;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -31,11 +29,11 @@ public class ExceptionController implements ErrorController {
     public ResponseEntity<Problem> error(HttpServletRequest request) {
         Integer statusCodeInteger = (Integer) request.getAttribute(JAVAX_STATUS_CODE);
         int statusCode = statusCodeInteger != null ? statusCodeInteger : 500;
-        ThrowableProblem problem = handleStatus(statusCode);
-        return exceptionTranslator.create(problem, new ServletWebRequest(request));
+        Problem problem = handleStatus(statusCode);
+        return exceptionTranslator.process(problem, request.getRequestURI());
     }
 
-    private ThrowableProblem handleStatus(int statusCode) {
+    private Problem handleStatus(int statusCode) {
         if (statusCode == 404) {
             return new PageNotFoundProblem();
         } else {

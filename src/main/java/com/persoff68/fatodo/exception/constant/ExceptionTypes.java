@@ -9,5 +9,5 @@ public interface ExceptionTypes {
     URI VALIDATION_TYPE = URI.create("/validation-error");
     URI RUNTIME_TYPE = URI.create("/runtime-error");
     URI INHERITED_TYPE = URI.create("/inherited-error");
-    URI CONNECTION_TYPE = URI.create("/connection-error");
+    URI FALLBACK_TYPE = URI.create("/fallback-error");
 }
