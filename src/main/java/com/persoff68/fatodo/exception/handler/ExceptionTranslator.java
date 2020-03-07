@@ -29,16 +29,19 @@ public class ExceptionTranslator implements ProblemHandling, SecurityAdviceTrait
             return null;
         }
         HttpServletRequest httpRequest = request.getNativeRequest(HttpServletRequest.class);
-        String route = httpRequest.getRequestURI();
-        Problem problem = entity.getBody();
-        problem = handleProblem(problem, route);
-        return new ResponseEntity<>(problem, entity.getHeaders(), entity.getStatusCode());
+        Problem problem = handleProblem(entity.getBody(), httpRequest.getRequestURI());
+        return ResponseEntity
+                .status(entity.getStatusCodeValue())
+                .contentType(MediaType.APPLICATION_JSON)
+                .body(problem);
     }
 
     public ResponseEntity<Problem> process(Problem problem, String route) {
         problem = handleProblem(problem, route);
-        return ResponseEntity.status(problem.getStatus().getStatusCode())
-                .contentType(MediaType.APPLICATION_JSON).body(problem);
+        return ResponseEntity
+                .status(problem.getStatus().getStatusCode())
+                .contentType(MediaType.APPLICATION_JSON)
+                .body(problem);
     }
 
     private Problem handleProblem(Problem problem, String route) {
