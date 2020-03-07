@@ -8,11 +8,11 @@
         <version>2.2.4.RELEASE</version>
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
-    <groupId>com.persoff68</groupId>
-    <artifactId>fatodo</artifactId>
+    <groupId>com.persoff68.fatodo</groupId>
+    <artifactId>extendedskeleton</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <name>extended-skeleton</name>
-    <description>extended-skeleton for FaToDo</description>
+    <description>Extended skeleton for FaToDo</description>
 
     <properties>
         <!-- Dependency versions -->
@@ -127,6 +127,17 @@
                 <artifactId>springfox-swagger-ui</artifactId>
                 <version>${swagger.version}</version>
             </dependency>
+            <!-- Test management -->
+            <dependency>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-starter-test</artifactId>
+                <scope>test</scope>
+            </dependency>
+            <dependency>
+                <groupId>org.springframework.security</groupId>
+                <artifactId>spring-security-test</artifactId>
+                <scope>test</scope>
+            </dependency>
         </dependencies>
     </dependencyManagement>
 
@@ -235,11 +246,10 @@
             <artifactId>springfox-swagger-ui</artifactId>
         </dependency>
 
-        <!-- Spring Test -->
+        <!-- Test -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-test</artifactId>
-            <scope>test</scope>
             <exclusions>
                 <exclusion>
                     <groupId>org.junit.vintage</groupId>
@@ -250,7 +260,6 @@
         <dependency>
             <groupId>org.springframework.security</groupId>
             <artifactId>spring-security-test</artifactId>
-            <scope>test</scope>
         </dependency>
     </dependencies>
 
