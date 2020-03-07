@@ -6,8 +6,9 @@ import org.zalando.problem.Status;
 
 public class InheritedProblem extends AbstractThrowableProblem {
 
-    public InheritedProblem(Throwable throwable, int statusCode) {
-        super(ExceptionTypes.INHERITED_TYPE, throwable.getClass().getSimpleName(), Status.valueOf(statusCode), throwable.getMessage());
+    public InheritedProblem(Throwable throwable) {
+        super(ExceptionTypes.INHERITED_TYPE, throwable.getClass().getSimpleName(),
+                Status.INTERNAL_SERVER_ERROR, throwable.getMessage());
     }
 
 }
