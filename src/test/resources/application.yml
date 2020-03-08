@@ -2,5 +2,5 @@ app:
   auth:
     authorizationHeader: Authorization
     authorizationPrefix: Bearer
-    tokenSecret: test_tokenSecret
+    tokenSecret: 4323B829EF1EEF14E324241FB72E6
     tokenExpirationSec: 864000
