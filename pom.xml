@@ -334,6 +334,7 @@
                     <testFramework>JUNIT5</testFramework>
                     <baseClassForTests>${contract.package}.DefaultBase</baseClassForTests>
                     <packageWithBaseClasses>${contract.package}</packageWithBaseClasses>
+                    <failOnNoContracts>false</failOnNoContracts>
                 </configuration>
             </plugin>
         </plugins>
