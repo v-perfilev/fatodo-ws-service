@@ -30,6 +30,3 @@ RUN chmod +x /wait
 
 # final command
 CMD /wait && java -jar /app/app.jar
-
-
-
