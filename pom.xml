@@ -352,9 +352,8 @@
                 <extensions>true</extensions>
                 <configuration>
                     <testFramework>JUNIT5</testFramework>
-                    <baseClassForTests>${contract.package}.DefaultBase</baseClassForTests>
+                    <baseClassForTests>${contract.package}.main.TestBase</baseClassForTests>
                     <packageWithBaseClasses>${contract.package}</packageWithBaseClasses>
-                    <failOnNoContracts>false</failOnNoContracts>
                 </configuration>
             </plugin>
         </plugins>
