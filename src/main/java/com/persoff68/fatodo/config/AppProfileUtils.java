@@ -1,6 +1,6 @@
 package com.persoff68.fatodo.config;
 
-import com.persoff68.fatodo.config.constant.Profiles;
+import com.persoff68.fatodo.config.constant.Profile;
 
 import java.util.Properties;
 
@@ -8,7 +8,7 @@ public class AppProfileUtils {
     private static final String SPRING_PROFILES_DEFAULT = "spring.profiles.default";
 
     public static Properties getDefaultProfile() {
-        String[] profiles = {Profiles.DEVELOPMENT};
+        String[] profiles = {Profile.DEVELOPMENT.getValue()};
         Properties properties = new Properties();
         properties.put(SPRING_PROFILES_DEFAULT, profiles);
         return properties;
