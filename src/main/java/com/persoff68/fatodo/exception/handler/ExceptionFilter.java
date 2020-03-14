@@ -1,28 +1,27 @@
 package com.persoff68.fatodo.exception.handler;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.persoff68.fatodo.exception.InheritedProblem;
-import com.persoff68.fatodo.exception.RuntimeProblem;
+import com.persoff68.fatodo.exception.attribute.ExceptionErrorAttribute;
 import lombok.RequiredArgsConstructor;
+import org.springframework.core.Ordered;
 import org.springframework.core.annotation.Order;
-import org.springframework.http.ResponseEntity;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
-import org.zalando.problem.Problem;
-import org.zalando.problem.ThrowableProblem;
 
 import javax.servlet.FilterChain;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.Map;
 
 @Component
-@Order(Integer.MIN_VALUE)
+@Order(Ordered.HIGHEST_PRECEDENCE)
 @RequiredArgsConstructor
 public class ExceptionFilter extends OncePerRequestFilter {
 
-    private final ExceptionTranslator exceptionTranslator;
+    private final ExceptionErrorAttribute customErrorAttribute;
     private final ObjectMapper objectMapper;
 
     @Override
@@ -30,30 +29,10 @@ public class ExceptionFilter extends OncePerRequestFilter {
         try {
             chain.doFilter(request, response);
         } catch (Exception e) {
-            ResponseEntity<Problem> responseEntity = createResponseEntity(e, request);
-            writeValuesToResponse(response, responseEntity);
-        }
-    }
-
-    private void writeValuesToResponse(HttpServletResponse response, ResponseEntity<Problem> responseEntity) throws IOException {
-        responseEntity.getHeaders().forEach((key, value) -> response.setHeader(key, String.join(", ", value)));
-        response.setStatus(responseEntity.getStatusCodeValue());
-        response.getWriter().write(objectMapper.writeValueAsString(responseEntity.getBody()));
-    }
-
-    private ResponseEntity<Problem> createResponseEntity(Exception e, HttpServletRequest request) {
-        ThrowableProblem problem = handleException(e);
-        String uri = request.getRequestURI();
-        return exceptionTranslator.process(problem, uri);
-    }
-
-    private ThrowableProblem handleException(Exception e) {
-        if (e instanceof ThrowableProblem) {
-            return (ThrowableProblem) e;
-        } else if (e instanceof RuntimeException) {
-            return new RuntimeProblem(e);
-        } else {
-            return new InheritedProblem(e);
+            HttpStatus status = customErrorAttribute.getStatus(e);
+            Map<String, Object> errorAttributes = customErrorAttribute.getErrorAttributes(request, e);
+            String responseBody = objectMapper.writeValueAsString(errorAttributes);
+            response.sendError(status.value(), responseBody);
         }
     }
 }
