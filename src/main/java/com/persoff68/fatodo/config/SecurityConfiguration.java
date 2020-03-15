@@ -2,6 +2,7 @@ package com.persoff68.fatodo.config;
 
 import com.persoff68.fatodo.security.filter.JwtTokenFilter;
 import com.persoff68.fatodo.security.filter.SecurityLocaleFilter;
+import com.persoff68.fatodo.security.filter.SecurityProblemSupport;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -18,6 +19,7 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 @RequiredArgsConstructor
 public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
+    private final SecurityProblemSupport securityProblemSupport;
     private final JwtTokenFilter jwtTokenFilter;
     private final SecurityLocaleFilter securityLocaleFilter;
 
@@ -41,8 +43,8 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .formLogin().disable()
                 .httpBasic().disable()
                 .exceptionHandling()
-//                .authenticationEntryPoint(securityProblemSupport)
-//                .accessDeniedHandler(securityProblemSupport)
+                .authenticationEntryPoint(securityProblemSupport)
+                .accessDeniedHandler(securityProblemSupport)
                 .and()
                 .addFilterBefore(jwtTokenFilter, UsernamePasswordAuthenticationFilter.class)
                 .addFilterAfter(securityLocaleFilter, UsernamePasswordAuthenticationFilter.class)

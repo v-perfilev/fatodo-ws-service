@@ -1,7 +1,10 @@
 package com.persoff68.fatodo.exception.handler;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.persoff68.fatodo.exception.attribute.RequestErrorAttribute;
+import com.persoff68.fatodo.exception.attribute.AttributeHandler;
+import com.persoff68.fatodo.exception.attribute.ErrorAttributeStrategy;
+import com.persoff68.fatodo.exception.attribute.ExceptionErrorAttributeStrategy;
+import com.persoff68.fatodo.exception.attribute.RequestErrorAttributeStrategy;
 import lombok.RequiredArgsConstructor;
 import org.springframework.boot.web.servlet.error.ErrorController;
 import org.springframework.http.HttpStatus;
@@ -19,7 +22,6 @@ import java.util.Map;
 public class ExceptionController implements ErrorController {
     private final static String ERROR_PATH = "/error";
 
-    private final RequestErrorAttribute requestErrorAttribute;
     private final ObjectMapper objectMapper;
 
     @Override
@@ -29,10 +31,8 @@ public class ExceptionController implements ErrorController {
 
     @RequestMapping(value = ERROR_PATH, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<String> error(HttpServletRequest request) throws IOException {
-        HttpStatus status = requestErrorAttribute.getStatus(request);
-        Map<String, Object> errorAttributes = requestErrorAttribute.getErrorAttributes(request);
-        String responseBody = objectMapper.writeValueAsString(errorAttributes);
-        return ResponseEntity.status(status).body(responseBody);
+        AttributeHandler attributeHandler = new AttributeHandler(request);
+        return attributeHandler.getResponseEntity(objectMapper);
     }
 
 }
