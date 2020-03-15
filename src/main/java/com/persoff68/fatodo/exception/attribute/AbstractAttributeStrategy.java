@@ -13,7 +13,7 @@ import java.util.Map;
 
 @RequiredArgsConstructor
 public abstract class AbstractAttributeStrategy implements attributeStrategy {
-    private static final String EXCEPTION_PATH = "javax.servlet.error.request_uri";
+    private static final String EXCEPTION_PATH = "javax.servlet.error.exception";
     private static final String REQUEST_URI_PATH = "javax.servlet.error.request_uri";
 
     @Getter

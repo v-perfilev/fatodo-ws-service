@@ -1,11 +1,13 @@
 package com.persoff68.fatodo.security.filter;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.persoff68.fatodo.exception.AbstractException;
 import com.persoff68.fatodo.exception.attribute.AttributeHandler;
 import com.persoff68.fatodo.security.exception.ForbiddenException;
 import com.persoff68.fatodo.security.exception.UnauthorizedException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.access.AccessDeniedException;
+import org.springframework.security.authentication.InternalAuthenticationServiceException;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.web.AuthenticationEntryPoint;
 import org.springframework.security.web.access.AccessDeniedHandler;
@@ -24,7 +26,10 @@ public class SecurityProblemSupport implements AuthenticationEntryPoint, AccessD
 
     @Override
     public void commence(HttpServletRequest request, HttpServletResponse response, AuthenticationException e) throws IOException, ServletException {
-        Exception exception = new UnauthorizedException();
+        Exception exception = e instanceof InternalAuthenticationServiceException
+                && e.getCause() instanceof AbstractException
+                ? (AbstractException) e.getCause()
+                : new UnauthorizedException();
         AttributeHandler.from(request, exception).sendError(objectMapper, response);
     }
 
