@@ -1,6 +1,6 @@
 package com.persoff68.fatodo.exception.attribute;
 
-import com.persoff68.fatodo.exception.AbstractRuntimeException;
+import com.persoff68.fatodo.exception.AbstractException;
 import org.springframework.http.HttpStatus;
 import org.springframework.util.StringUtils;
 import org.springframework.validation.BindingResult;
@@ -27,8 +27,8 @@ public final class RequestErrorAttributeStrategy extends AbstractErrorAttributeS
         Throwable error = getError(new ServletWebRequest(request));
         Integer statusCode = (Integer) request.getAttribute(STATUS_CODE_PATH);
 
-        if (error instanceof AbstractRuntimeException) {
-            status = ((AbstractRuntimeException) error).getStatus();
+        if (error instanceof AbstractException) {
+            status = ((AbstractException) error).getStatus();
         } else if (statusCode != null) {
             try {
                 status = HttpStatus.valueOf(statusCode);

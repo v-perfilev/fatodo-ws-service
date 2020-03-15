@@ -1,6 +1,6 @@
 package com.persoff68.fatodo.exception.attribute;
 
-import com.persoff68.fatodo.exception.AbstractRuntimeException;
+import com.persoff68.fatodo.exception.AbstractException;
 import org.springframework.http.HttpStatus;
 
 import javax.servlet.http.HttpServletRequest;
@@ -16,8 +16,8 @@ public final class ExceptionErrorAttributeStrategy extends AbstractErrorAttribut
 
     @Override
     public HttpStatus getStatus() {
-        return exception instanceof AbstractRuntimeException && ((AbstractRuntimeException) exception).getStatus() != null
-                ? ((AbstractRuntimeException) exception).getStatus()
+        return exception instanceof AbstractException && ((AbstractException) exception).getStatus() != null
+                ? ((AbstractException) exception).getStatus()
                 : HttpStatus.INTERNAL_SERVER_ERROR;
     }
 
