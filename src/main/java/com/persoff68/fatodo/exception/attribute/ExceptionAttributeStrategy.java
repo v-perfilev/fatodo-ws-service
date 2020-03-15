@@ -5,11 +5,11 @@ import org.springframework.http.HttpStatus;
 
 import javax.servlet.http.HttpServletRequest;
 
-public final class ExceptionErrorAttributeStrategy extends AbstractErrorAttributeStrategy {
+public final class ExceptionAttributeStrategy extends AbstractAttributeStrategy {
 
     private final Exception exception;
 
-    public ExceptionErrorAttributeStrategy(HttpServletRequest request, Exception exception) {
+    public ExceptionAttributeStrategy(HttpServletRequest request, Exception exception) {
         super(request);
         this.exception = exception;
     }

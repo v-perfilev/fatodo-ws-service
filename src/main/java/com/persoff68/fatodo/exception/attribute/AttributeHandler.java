@@ -1,7 +1,6 @@
 package com.persoff68.fatodo.exception.attribute;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
@@ -12,14 +11,22 @@ import java.util.Map;
 
 public class AttributeHandler {
 
-    private final ErrorAttributeStrategy errorAttributeStrategy;
+    private final attributeStrategy attributeStrategy;
 
-    public AttributeHandler(HttpServletRequest request) {
-        this.errorAttributeStrategy = new RequestErrorAttributeStrategy(request);
+    private AttributeHandler(HttpServletRequest request) {
+        this.attributeStrategy = new RequestAttributeStrategy(request);
     }
 
-    public AttributeHandler(HttpServletRequest request, Exception exception) {
-        this.errorAttributeStrategy = new ExceptionErrorAttributeStrategy(request, exception);
+    private AttributeHandler(HttpServletRequest request, Exception exception) {
+        this.attributeStrategy = new ExceptionAttributeStrategy(request, exception);
+    }
+
+    public static AttributeHandler from(HttpServletRequest request) {
+        return new AttributeHandler(request);
+    }
+
+    public static AttributeHandler from(HttpServletRequest request, Exception exception) {
+        return new AttributeHandler(request, exception);
     }
 
     public ResponseEntity<String> getResponseEntity(ObjectMapper objectMapper) throws IOException {
@@ -37,14 +44,14 @@ public class AttributeHandler {
     }
 
     private Map<String, Object> getErrorAttributes() {
-        errorAttributeStrategy.addTimestamp();
-        errorAttributeStrategy.addStatus();
-        errorAttributeStrategy.addErrorDetails();
-        errorAttributeStrategy.addPath();
-        return errorAttributeStrategy.getErrorAttributes();
+        attributeStrategy.addTimestamp();
+        attributeStrategy.addStatus();
+        attributeStrategy.addErrorDetails();
+        attributeStrategy.addPath();
+        return attributeStrategy.getErrorAttributes();
     }
 
     private HttpStatus getStatus() {
-        return errorAttributeStrategy.getStatus();
+        return attributeStrategy.getStatus();
     }
 }

@@ -4,7 +4,7 @@ import org.springframework.http.HttpStatus;
 
 import java.util.Map;
 
-public interface ErrorAttributeStrategy {
+public interface attributeStrategy {
 
     Map<String, Object> getErrorAttributes();
 

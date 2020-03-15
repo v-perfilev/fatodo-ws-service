@@ -22,13 +22,11 @@ public class SecurityProblemSupport implements AuthenticationEntryPoint, AccessD
 
     @Override
     public void commence(HttpServletRequest request, HttpServletResponse response, AuthenticationException e) throws IOException, ServletException {
-        AttributeHandler attributeHandler = new AttributeHandler(request, e);
-        attributeHandler.sendError(objectMapper, response);
+        AttributeHandler.from(request, e).sendError(objectMapper, response);
     }
 
     @Override
     public void handle(HttpServletRequest request, HttpServletResponse response, AccessDeniedException e) throws IOException, ServletException {
-        AttributeHandler attributeHandler = new AttributeHandler(request, e);
-        attributeHandler.sendError(objectMapper, response);
+        AttributeHandler.from(request, e).sendError(objectMapper, response);
     }
 }

@@ -12,11 +12,11 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import java.util.Map;
 
-public final class RequestErrorAttributeStrategy extends AbstractErrorAttributeStrategy {
+public final class RequestAttributeStrategy extends AbstractAttributeStrategy {
     private static final String MESSAGE_PATH = "javax.servlet.error.message";
     private static final String STATUS_CODE_PATH = "javax.servlet.error.status_code";
 
-    public RequestErrorAttributeStrategy(HttpServletRequest request) {
+    public RequestAttributeStrategy(HttpServletRequest request) {
         super(request);
     }
 
