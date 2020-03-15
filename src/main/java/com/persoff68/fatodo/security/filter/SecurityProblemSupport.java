@@ -2,6 +2,8 @@ package com.persoff68.fatodo.security.filter;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.persoff68.fatodo.exception.attribute.AttributeHandler;
+import com.persoff68.fatodo.security.exception.ForbiddenException;
+import com.persoff68.fatodo.security.exception.UnauthorizedException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.core.AuthenticationException;
@@ -22,11 +24,13 @@ public class SecurityProblemSupport implements AuthenticationEntryPoint, AccessD
 
     @Override
     public void commence(HttpServletRequest request, HttpServletResponse response, AuthenticationException e) throws IOException, ServletException {
-        AttributeHandler.from(request, e).sendError(objectMapper, response);
+        Exception exception = new UnauthorizedException();
+        AttributeHandler.from(request, exception).sendError(objectMapper, response);
     }
 
     @Override
     public void handle(HttpServletRequest request, HttpServletResponse response, AccessDeniedException e) throws IOException, ServletException {
-        AttributeHandler.from(request, e).sendError(objectMapper, response);
+        Exception exception = new ForbiddenException();
+        AttributeHandler.from(request, exception).sendError(objectMapper, response);
     }
 }
