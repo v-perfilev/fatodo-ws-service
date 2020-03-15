@@ -8,4 +8,8 @@ public final class ModelAlreadyExistsException extends AbstractDatabaseException
         super(HttpStatus.BAD_REQUEST, "Model already exits in database");
     }
 
+    public ModelAlreadyExistsException(Class<?> modelClass) {
+        super(HttpStatus.BAD_REQUEST, modelClass.getSimpleName() + " already exits in database");
+    }
+
 }

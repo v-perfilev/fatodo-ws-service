@@ -8,4 +8,8 @@ public final class ModelNotFoundException extends AbstractDatabaseException {
         super(HttpStatus.NOT_FOUND, "Model not found in database");
     }
 
+    public ModelNotFoundException(Class<?> modelClass) {
+        super(HttpStatus.NOT_FOUND, modelClass.getSimpleName() + " not found in database");
+    }
+
 }
