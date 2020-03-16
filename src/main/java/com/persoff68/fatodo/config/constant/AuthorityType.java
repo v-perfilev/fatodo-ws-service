@@ -4,7 +4,7 @@ import lombok.Getter;
 
 import java.util.Arrays;
 
-public enum Authority {
+public enum AuthorityType {
     SYSTEM(Constants.SYSTEM_VALUE),
     ADMIN(Constants.ADMIN_VALUE),
     USER(Constants.USER_VALUE);
@@ -12,12 +12,12 @@ public enum Authority {
     @Getter
     private final String value;
 
-    Authority(String value) {
+    AuthorityType(String value) {
         this.value = value;
     }
 
-    public boolean contains(String value) {
-        return Arrays.stream(Authority.values()).anyMatch(a -> a.getValue().equals(value));
+    public static boolean contains(String value) {
+        return Arrays.stream(AuthorityType.values()).anyMatch(a -> a.getValue().equals(value));
     }
 
     public static class Constants {

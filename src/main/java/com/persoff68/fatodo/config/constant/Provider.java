@@ -16,7 +16,7 @@ public enum Provider {
         this.value = value;
     }
 
-    public boolean contains(String value) {
+    public static boolean contains(String value) {
         return Arrays.stream(Provider.values()).anyMatch(a -> a.getValue().equals(value));
     }
 
