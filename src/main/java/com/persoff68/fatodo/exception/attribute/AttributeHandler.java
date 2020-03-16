@@ -29,6 +29,18 @@ public class AttributeHandler {
         return new AttributeHandler(request, exception);
     }
 
+    public Map<String, Object> getErrorAttributes() {
+        attributeStrategy.addTimestamp();
+        attributeStrategy.addStatus();
+        attributeStrategy.addErrorDetails();
+        attributeStrategy.addPath();
+        return attributeStrategy.getErrorAttributes();
+    }
+
+    public HttpStatus getStatus() {
+        return attributeStrategy.getStatus();
+    }
+
     public ResponseEntity<String> getResponseEntity(ObjectMapper objectMapper) throws IOException {
         HttpStatus status = getStatus();
         Map<String, Object> errorAttributes = getErrorAttributes();
@@ -41,17 +53,5 @@ public class AttributeHandler {
         Map<String, Object> errorAttributes = getErrorAttributes();
         String responseBody = objectMapper.writeValueAsString(errorAttributes);
         response.sendError(status.value(), responseBody);
-    }
-
-    private Map<String, Object> getErrorAttributes() {
-        attributeStrategy.addTimestamp();
-        attributeStrategy.addStatus();
-        attributeStrategy.addErrorDetails();
-        attributeStrategy.addPath();
-        return attributeStrategy.getErrorAttributes();
-    }
-
-    private HttpStatus getStatus() {
-        return attributeStrategy.getStatus();
     }
 }

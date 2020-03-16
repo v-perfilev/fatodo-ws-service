@@ -1,6 +1,7 @@
 package com.persoff68.fatodo.exception.attribute;
 
 import com.persoff68.fatodo.exception.AbstractException;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.util.StringUtils;
 import org.springframework.validation.BindingResult;
@@ -12,13 +13,13 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import java.util.Map;
 
+@RequiredArgsConstructor
 public final class RequestAttributeStrategy extends AbstractAttributeStrategy {
     private static final String MESSAGE_PATH = "javax.servlet.error.message";
     private static final String STATUS_CODE_PATH = "javax.servlet.error.status_code";
+    private static final String REQUEST_URI_PATH = "javax.servlet.error.request_uri";
 
-    public RequestAttributeStrategy(HttpServletRequest request) {
-        super(request);
-    }
+    private final HttpServletRequest request;
 
     @Override
     public HttpStatus getStatus() {
@@ -86,6 +87,15 @@ public final class RequestAttributeStrategy extends AbstractAttributeStrategy {
             return ((MethodArgumentNotValidException) error).getBindingResult();
         }
         return null;
+    }
+
+    @Override
+    public void addPath() {
+        WebRequest webRequest = new ServletWebRequest(request);
+        String path = getAttribute(webRequest, REQUEST_URI_PATH);
+        if (path != null) {
+            errorAttributes.put("path", path);
+        }
     }
 
 }
