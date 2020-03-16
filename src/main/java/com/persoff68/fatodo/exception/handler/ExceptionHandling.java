@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 
 import javax.servlet.http.HttpServletRequest;
+import java.io.IOException;
 
 @ControllerAdvice
 @Order(Ordered.HIGHEST_PRECEDENCE)
@@ -20,7 +21,7 @@ public class ExceptionHandling {
     private final ObjectMapper objectMapper;
 
     @ExceptionHandler(AbstractException.class)
-    public ResponseEntity<String> handleAbstractException(HttpServletRequest request, AbstractException e) {
+    public ResponseEntity<String> handleAbstractException(HttpServletRequest request, AbstractException e) throws IOException {
         return AttributeHandler.from(request, e).getResponseEntity(objectMapper);
     }
 

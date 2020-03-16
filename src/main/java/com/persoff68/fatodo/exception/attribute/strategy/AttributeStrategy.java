@@ -1,10 +1,10 @@
-package com.persoff68.fatodo.exception.attribute;
+package com.persoff68.fatodo.exception.attribute.strategy;
 
 import org.springframework.http.HttpStatus;
 
 import java.util.Map;
 
-public interface attributeStrategy {
+public interface AttributeStrategy {
 
     Map<String, Object> getErrorAttributes();
 
