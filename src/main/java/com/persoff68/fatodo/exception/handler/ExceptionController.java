@@ -25,7 +25,7 @@ public class ExceptionController implements ErrorController {
     @RequestMapping(value = ERROR_PATH, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<String> error(HttpServletRequest request) {
         HttpStatus status = AttributeUtils.getStatus(request);
-        String body = AttributeUtils.getError(new ServletWebRequest(request)).getMessage();
+        String body = AttributeUtils.getMessage(new ServletWebRequest(request));
         return ResponseEntity.status(status).body(body);
     }
 

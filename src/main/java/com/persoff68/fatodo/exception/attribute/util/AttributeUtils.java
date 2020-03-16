@@ -7,14 +7,18 @@ import org.springframework.web.context.request.ServletWebRequest;
 import org.springframework.web.context.request.WebRequest;
 
 import javax.servlet.http.HttpServletRequest;
-import java.sql.Statement;
 
 public class AttributeUtils {
     private static final String EXCEPTION_PATH = "javax.servlet.error.exception";
     private static final String STATUS_CODE_PATH = "javax.servlet.error.status_code";
+    private static final String MESSAGE_PATH = "javax.servlet.error.message";
 
     public static Throwable getError(WebRequest webRequest) {
         return getAttribute(webRequest, EXCEPTION_PATH);
+    }
+
+    public static String getMessage(WebRequest webRequest) {
+        return getAttribute(webRequest, MESSAGE_PATH);
     }
 
     public static HttpStatus getStatus(HttpServletRequest request) {

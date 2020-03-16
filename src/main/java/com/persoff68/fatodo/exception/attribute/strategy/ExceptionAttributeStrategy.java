@@ -52,6 +52,7 @@ public final class ExceptionAttributeStrategy implements AttributeStrategy {
     public void addPath() {
         WebRequest webRequest = new ServletWebRequest(request);
         String path = AttributeUtils.getAttribute(webRequest, REQUEST_URI_PATH);
+        path = path == null ? request.getRequestURI() : path;
         if (path != null) {
             errorAttributes.put("path", path);
         }
