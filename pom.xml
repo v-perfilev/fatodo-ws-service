@@ -19,12 +19,27 @@
         <root.package>com.persoff68.fatodo</root.package>
         <!-- Dependency versions -->
         <java.version>13</java.version>
-        <spring-cloud.version>2.2.1.RELEASE</spring-cloud.version>
+        <spring-cloud.version>Hoxton.RELEASE</spring-cloud.version>
+        <!-- Plugin versions -->
+        <maven-jar-plugin.version>3.2.0</maven-jar-plugin.version>
         <!-- Profiles -->
         <dev.profile>dev</dev.profile>
         <docker.profile>docker</docker.profile>
         <prod.profile>prod</prod.profile>
     </properties>
+
+    <dependencyManagement>
+        <dependencies>
+            <!-- Spring Cloud management -->
+            <dependency>
+                <groupId>org.springframework.cloud</groupId>
+                <artifactId>spring-cloud-dependencies</artifactId>
+                <version>${spring-cloud.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
 
     <dependencies>
         <!-- Spring Boot Web -->
@@ -54,18 +69,19 @@
 
     <build>
         <plugins>
-            <!-- Maven Jar Plugin -->
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-jar-plugin</artifactId>
-                <configuration>
-                    <finalName>${project.name}</finalName>
-                </configuration>
-            </plugin>
             <!-- Spring Boot Maven Plugin -->
             <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
+                <configuration>
+                    <finalName>${project.name}</finalName>
+                </configuration>
+            </plugin>
+            <!-- Maven Jar Plugin -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-jar-plugin</artifactId>
+                <version>${maven-jar-plugin.version}</version>
                 <configuration>
                     <finalName>${project.name}</finalName>
                 </configuration>
