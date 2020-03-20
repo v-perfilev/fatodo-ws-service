@@ -20,7 +20,7 @@
         <contract.package>com.persoff68.fatodo.contract</contract.package>
         <!-- Dependency versions -->
         <java.version>13</java.version>
-        <spring-cloud.version>2.2.1.RELEASE</spring-cloud.version>
+        <spring-cloud.version>Hoxton.RELEASE</spring-cloud.version>
         <jackson.version>2.10.2</jackson.version>
         <jaxb.version>2.3.1</jaxb.version>
         <jwt.version>0.9.1</jwt.version>
@@ -130,7 +130,11 @@
         </dependency>
         <dependency>
             <groupId>org.springframework.cloud</groupId>
-            <artifactId>spring-cloud-starter-sleuth</artifactId>
+            <artifactId>spring-cloud-starter-netflix-hystrix</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-starter-netflix-hystrix-dashboard</artifactId>
         </dependency>
         <dependency>
             <groupId>org.springframework.cloud</groupId>
@@ -138,11 +142,11 @@
         </dependency>
         <dependency>
             <groupId>org.springframework.cloud</groupId>
-            <artifactId>spring-cloud-starter-netflix-hystrix</artifactId>
+            <artifactId>spring-cloud-starter-sleuth</artifactId>
         </dependency>
         <dependency>
             <groupId>org.springframework.cloud</groupId>
-            <artifactId>spring-cloud-starter-netflix-hystrix-dashboard</artifactId>
+            <artifactId>spring-cloud-starter-zipkin</artifactId>
         </dependency>
 
         <!-- Spring Boot Web -->
