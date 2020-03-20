@@ -17,7 +17,6 @@ public class LoggingAspect {
     private static final String CONTROLLER_POINTCUT = "within(" + AppConstants.CONTROLLER_PATH + "..*)";
     private static final String SERVICE_POINTCUT = "within(" + AppConstants.SERVICE_PATH + "..*)";
 
-
     @Pointcut(CONTROLLER_POINTCUT + " || "
             + SERVICE_POINTCUT)
     public void applicationPackagePointcut() {
@@ -35,10 +34,8 @@ public class LoggingAspect {
                 joinPoint.getSignature().getName(), Arrays.toString(joinPoint.getArgs()));
         try {
             Object result = joinPoint.proceed();
-            if (log.isDebugEnabled()) {
-                log.debug("Exit: {}.{}() with result = {}", joinPoint.getSignature().getDeclaringTypeName(),
-                        joinPoint.getSignature().getName(), result);
-            }
+            log.debug("Exit: {}.{}() with result = {}", joinPoint.getSignature().getDeclaringTypeName(),
+                    joinPoint.getSignature().getName(), result);
             return result;
         } catch (IllegalArgumentException e) {
             log.error("Illegal argument: {} in {}.{}()", Arrays.toString(joinPoint.getArgs()),
