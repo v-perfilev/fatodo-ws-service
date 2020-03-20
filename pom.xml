@@ -19,7 +19,6 @@
         <root.package>com.persoff68.fatodo</root.package>
         <!-- Dependency versions -->
         <java.version>13</java.version>
-        <spring-boot.version>2.2.4.RELEASE</spring-boot.version>
         <spring-cloud.version>2.2.1.RELEASE</spring-cloud.version>
         <!-- Profiles -->
         <dev.profile>dev</dev.profile>
