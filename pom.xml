@@ -39,7 +39,7 @@
 
     <dependencyManagement>
         <dependencies>
-            <!-- Spring Cloud management (extended-skeleton) -->
+            <!-- Spring Cloud management -->
             <dependency>
                 <groupId>org.springframework.cloud</groupId>
                 <artifactId>spring-cloud-dependencies</artifactId>
