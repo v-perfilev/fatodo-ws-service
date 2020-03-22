@@ -34,7 +34,7 @@ maven-test:
 sonar-analyze:
   stage: analyze
   dependencies:
-    - test
+    - maven-test
   script:
     - ./mvnw $MAVEN_CLI_OPTS sonar:sonar
   artifacts:
