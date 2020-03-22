@@ -30,7 +30,10 @@
         <!-- Plugin versions -->
         <maven-jar-plugin.version>3.2.0</maven-jar-plugin.version>
         <maven-surefire-plugin.version>3.0.0-M4</maven-surefire-plugin.version>
+        <spring-cloud-contract-maven-plugin.version>2.2.2.RELEASE</spring-cloud-contract-maven-plugin.version>
+        <properties-maven-plugin.version>1.0.0</properties-maven-plugin.version>
         <sonar-maven-plugin.version>3.7.0.1746</sonar-maven-plugin.version>
+        <jacoco-maven-plugin.version>0.8.5</jacoco-maven-plugin.version>
         <!-- Profiles -->
         <dev.profile>dev</dev.profile>
         <docker.profile>docker</docker.profile>
@@ -289,6 +292,7 @@
             <plugin>
                 <groupId>org.springframework.cloud</groupId>
                 <artifactId>spring-cloud-contract-maven-plugin</artifactId>
+                <version>${spring-cloud-contract-maven-plugin.version}</version>
                 <extensions>true</extensions>
                 <configuration>
                     <testFramework>JUNIT5</testFramework>
@@ -296,11 +300,51 @@
                     <packageWithBaseClasses>${contract.package}</packageWithBaseClasses>
                 </configuration>
             </plugin>
+            <!-- Properties Maven Plugin -->
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>properties-maven-plugin</artifactId>
+                <version>${properties-maven-plugin.version}</version>
+                <executions>
+                    <execution>
+                        <phase>initialize</phase>
+                        <goals>
+                            <goal>read-project-properties</goal>
+                        </goals>
+                        <configuration>
+                            <files>
+                                <file>${basedir}/sonar-project.properties</file>
+                            </files>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
             <!-- Sonar Maven Plugin -->
             <plugin>
                 <groupId>org.sonarsource.scanner.maven</groupId>
                 <artifactId>sonar-maven-plugin</artifactId>
                 <version>${sonar-maven-plugin.version}</version>
+            </plugin>
+            <!-- Jacoco Maven Plugin -->
+            <plugin>
+                <groupId>org.jacoco</groupId>
+                <artifactId>jacoco-maven-plugin</artifactId>
+                <version>${jacoco-maven-plugin.version}</version>
+                <executions>
+                    <execution>
+                        <id>default-prepare-agent</id>
+                        <goals>
+                            <goal>prepare-agent</goal>
+                        </goals>
+                    </execution>
+                    <execution>
+                        <id>default-report</id>
+                        <phase>prepare-package</phase>
+                        <goals>
+                            <goal>report</goal>
+                        </goals>
+                    </execution>
+                </executions>
             </plugin>
         </plugins>
     </build>
