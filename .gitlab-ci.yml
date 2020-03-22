@@ -15,7 +15,7 @@ stages:
   - test
   - analyze
 
-build:
+maven-build:
   stage: build
   script:
     - ./mvnw $MAVEN_CLI_OPTS compile
@@ -24,7 +24,7 @@ build:
       - target/
     expire_in: 1 day
 
-test:
+maven-test:
   stage: test
   script:
     - ./mvnw $MAVEN_CLI_OPTS verify
@@ -39,3 +39,7 @@ sonar-analyze:
     - test
   script:
     - ./mvnw $MAVEN_CLI_OPTS sonar:sonar -Dsonar.host.url=$SONAR_URL -Dsonar.login=$SONAR_TOKEN
+  artifacts:
+    paths:
+      - target/
+    expire_in: 1 day
