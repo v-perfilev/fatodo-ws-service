@@ -3,6 +3,8 @@ image: persoff68/alpine-openjdk-13-glibc
 variables:
   MAVEN_CLI_OPTS: "-ntp --batch-mode"
   MAVEN_OPTS: "-Dmaven.repo.local=.m2/repository"
+  SONAR_URL: "http://89.108.65.10:9000"
+  SONAR_TOKEN: "35519929faf423d04827fa7795f19c2a6de0268d"
 
 cache:
   paths:
@@ -11,6 +13,7 @@ cache:
 stages:
   - build
   - test
+  - analyze
 
 build:
   stage: build
@@ -21,7 +24,6 @@ build:
       - target/
     expire_in: 1 day
 
-
 test:
   stage: test
   script:
@@ -30,3 +32,10 @@ test:
     paths:
       - target/
     expire_in: 1 day
+
+sonar-analyze:
+  stage: analyze
+  dependencies:
+    - test
+  script:
+    - ./mvnw $MAVEN_CLI_OPTS sonar:sonar -Dsonar.host.url=$SONAR_URL -Dsonar.login=$SONAR_TOKEN

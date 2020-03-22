@@ -30,6 +30,7 @@
         <!-- Plugin versions -->
         <maven-jar-plugin.version>3.2.0</maven-jar-plugin.version>
         <maven-surefire-plugin.version>3.0.0-M4</maven-surefire-plugin.version>
+        <sonar-maven-plugin.version>3.7.0.1746</sonar-maven-plugin.version>
         <!-- Profiles -->
         <dev.profile>dev</dev.profile>
         <docker.profile>docker</docker.profile>
@@ -294,6 +295,12 @@
                     <baseClassForTests>${contract.package}.main.TestBase</baseClassForTests>
                     <packageWithBaseClasses>${contract.package}</packageWithBaseClasses>
                 </configuration>
+            </plugin>
+            <!-- Sonar Maven Plugin -->
+            <plugin>
+                <groupId>org.sonarsource.scanner.maven</groupId>
+                <artifactId>sonar-maven-plugin</artifactId>
+                <version>${sonar-maven-plugin.version}</version>
             </plugin>
         </plugins>
     </build>
