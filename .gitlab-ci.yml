@@ -11,8 +11,9 @@ cache:
 stages:
   - build
   - test
+  - analyze
 
-build:
+maven-build:
   stage: build
   script:
     - ./mvnw $MAVEN_CLI_OPTS compile
@@ -21,11 +22,21 @@ build:
       - target/
     expire_in: 1 day
 
-
-test:
+maven-test:
   stage: test
   script:
     - ./mvnw $MAVEN_CLI_OPTS verify
+  artifacts:
+    paths:
+      - target/
+    expire_in: 1 day
+
+sonar-analyze:
+  stage: analyze
+  dependencies:
+    - maven-test
+  script:
+    - ./mvnw $MAVEN_CLI_OPTS initialize sonar:sonar
   artifacts:
     paths:
       - target/
