@@ -36,7 +36,7 @@ sonar-analyze:
   dependencies:
     - maven-test
   script:
-    - ./mvnw $MAVEN_CLI_OPTS sonar:sonar
+    - ./mvnw $MAVEN_CLI_OPTS initialize sonar:sonar
   artifacts:
     paths:
       - target/
