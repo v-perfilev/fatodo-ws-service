@@ -20,5 +20,8 @@ public enum Profile {
         public static final String DOCKER_VALUE = "docker";
         public static final String PRODUCTION_VALUE = "prod";
         public static final String TEST_VALUE = "test";
+
+        private Constants() {
+        }
     }
 }
