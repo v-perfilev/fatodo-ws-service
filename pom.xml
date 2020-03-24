@@ -158,7 +158,6 @@
                 <version>${sonar-maven-plugin.version}</version>
             </plugin>
             <!-- Jacoco Maven Plugin -->
-
             <plugin>
                 <groupId>org.jacoco</groupId>
                 <artifactId>jacoco-maven-plugin</artifactId>
@@ -206,8 +205,6 @@
                     </execution>
                 </executions>
             </plugin>
-
-
         </plugins>
     </build>
 

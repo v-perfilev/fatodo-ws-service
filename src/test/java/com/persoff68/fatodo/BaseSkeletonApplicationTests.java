@@ -27,7 +27,8 @@ class BaseSkeletonApplicationTests {
     @Test
     void contextLoads() throws Exception {
         BaseSkeletonApplication.main(new String[]{});
-        mvc.perform(get("/")).andExpect(status().isNotFound());
+        mvc.perform(get("/"))
+                .andExpect(status().isNotFound());
     }
 
 }
