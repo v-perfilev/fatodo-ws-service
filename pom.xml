@@ -318,7 +318,6 @@
                 <version>${sonar-maven-plugin.version}</version>
             </plugin>
             <!-- Jacoco Maven Plugin -->
-
             <plugin>
                 <groupId>org.jacoco</groupId>
                 <artifactId>jacoco-maven-plugin</artifactId>
@@ -378,8 +377,6 @@
                     <packageWithBaseClasses>${contract.package}</packageWithBaseClasses>
                 </configuration>
             </plugin>
-
-
         </plugins>
     </build>
 
