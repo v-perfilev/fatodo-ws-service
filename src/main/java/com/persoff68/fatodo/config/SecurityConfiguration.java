@@ -10,11 +10,13 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(AuthenticationManagerBuilder authManager) throws Exception {
+        // redefine method of parent class
     }
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        http.authorizeRequests()
+        http
+                .authorizeRequests()
                 .anyRequest().authenticated()
                 .and().httpBasic();
     }
