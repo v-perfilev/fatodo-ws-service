@@ -24,7 +24,10 @@ class ExtendedSkeletonApplicationTests {
     }
 
     @Test
-    void contextLoads() {
+    void contextLoads() throws Exception {
+        ExtendedSkeletonApplication.main(new String[]{});
+        mvc.perform(get("/"))
+                .andExpect(status().isNotFound());
     }
 
     @Test

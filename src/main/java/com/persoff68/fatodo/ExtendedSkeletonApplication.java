@@ -16,7 +16,7 @@ public class ExtendedSkeletonApplication {
         Properties defaultProfileProperties = AppProfileUtils.getDefaultProfile();
         SpringApplication app = new SpringApplication(ExtendedSkeletonApplication.class);
         app.setDefaultProperties(defaultProfileProperties);
-        app.run(args);
+        app.run();
     }
 
 }
