@@ -11,6 +11,9 @@ import java.util.Optional;
 
 public class SecurityUtils {
 
+    private SecurityUtils() {
+    }
+
     public static Optional<String> getCurrentUsername() {
         Authentication authentication = getCurrentAuthentication();
         String username = fetchUsernameFromAuthentication(authentication);

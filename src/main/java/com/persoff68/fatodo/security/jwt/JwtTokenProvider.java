@@ -29,8 +29,8 @@ import java.util.stream.Collectors;
 @Component
 @RequiredArgsConstructor
 public class JwtTokenProvider {
-    private final String USERNAME_KEY = "username";
-    private final String AUTHORITY_KEY = "authorities";
+    private static final String USERNAME_KEY = "username";
+    private static final String AUTHORITY_KEY = "authorities";
 
     private final AppProperties appProperties;
 

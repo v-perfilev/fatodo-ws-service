@@ -24,5 +24,8 @@ public enum Provider {
         public static final String LOCAL_VALUE = "LOCAL";
         public static final String GOOGLE_VALUE = "GOOGLE";
         public static final String FACEBOOK_VALUE = "FACEBOOK";
+
+        private Constants() {
+        }
     }
 }

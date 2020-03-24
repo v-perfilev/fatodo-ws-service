@@ -13,6 +13,9 @@ public class AttributeUtils {
     private static final String STATUS_CODE_PATH = "javax.servlet.error.status_code";
     private static final String MESSAGE_PATH = "javax.servlet.error.message";
 
+    private AttributeUtils() {
+    }
+
     public static Throwable getError(WebRequest webRequest) {
         return getAttribute(webRequest, EXCEPTION_PATH);
     }

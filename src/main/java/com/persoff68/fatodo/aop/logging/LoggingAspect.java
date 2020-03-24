@@ -20,6 +20,7 @@ public class LoggingAspect {
     @Pointcut(CONTROLLER_POINTCUT + " || "
             + SERVICE_POINTCUT)
     public void applicationPackagePointcut() {
+        // pointcut for controllers and services
     }
 
     @AfterThrowing(pointcut = "applicationPackagePointcut()", throwing = "e")
