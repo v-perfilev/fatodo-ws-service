@@ -1,6 +1,6 @@
 package com.persoff68.fatodo.config;
 
-import com.persoff68.fatodo.config.constant.Profiles;
+import com.persoff68.fatodo.config.constant.Profile;
 import org.junit.jupiter.api.Test;
 
 import java.util.Properties;
@@ -14,6 +14,6 @@ public class AppProfileUtilsTest {
         Properties properties = AppProfileUtils.getDefaultProfile();
         String[] defaultProfiles = (String[]) properties.get("spring.profiles.default");
         assertThat(defaultProfiles).hasSize(1);
-        assertThat(defaultProfiles).contains(Profiles.DEVELOPMENT);
+        assertThat(defaultProfiles).contains(Profile.Constants.DEVELOPMENT_VALUE);
     }
 }
