@@ -16,7 +16,7 @@ stages:
 maven-build:
   stage: build
   script:
-    - ./mvnw $MAVEN_CLI_OPTS compile
+    - ./mvnw $MAVEN_CLI_OPTS compile $MAVEN_OPTS
   artifacts:
     paths:
       - target/
@@ -25,7 +25,7 @@ maven-build:
 maven-test:
   stage: test
   script:
-    - ./mvnw $MAVEN_CLI_OPTS verify
+    - ./mvnw $MAVEN_CLI_OPTS verify $MAVEN_OPTS
   artifacts:
     paths:
       - target/
@@ -36,7 +36,7 @@ sonar-analyze:
   dependencies:
     - maven-test
   script:
-    - ./mvnw $MAVEN_CLI_OPTS initialize sonar:sonar
+    - ./mvnw $MAVEN_CLI_OPTS initialize sonar:sonar -Dsonar.host.url=$SONAR_URL -Dsonar.login=$SONAR_TOKEN $MAVEN_OPTS
   artifacts:
     paths:
       - target/

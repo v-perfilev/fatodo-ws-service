@@ -1,0 +1,29 @@
+<configuration>
+    <springProperty scope="context" name="app-name" source="spring.application.name"/>
+
+    <!-- Stdout Appender -->
+    <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder>
+            <pattern>%d{HH:mm:ss.SSS} %-20([${app-name}]) %-7([%level]) %logger{36} - %msg%n</pattern>s
+        </encoder>
+    </appender>
+
+    <!-- Kafka Appender -->
+    <appender name="kafkaAppender" class="com.github.danielwegener.logback.kafka.KafkaAppender">
+        <encoder>
+            <pattern>%d{HH:mm:ss.SSS} %-20([${app-name}]) %-7([%level]) %logger{36} - %msg%n</pattern>s
+        </encoder>
+        <topic>fatodo-logs</topic>
+        <keyingStrategy class="com.github.danielwegener.logback.kafka.keying.NoKeyKeyingStrategy"/>
+        <deliveryStrategy class="com.github.danielwegener.logback.kafka.delivery.AsynchronousDeliveryStrategy"/>
+
+        <producerConfig>bootstrap.servers=${KAFKA_BOOTSTRAP_SERVERS:-localhost:9092}</producerConfig>
+        <producerConfig>retries=2</producerConfig>
+    </appender>
+
+
+    <root level="info">
+        <appender-ref ref="STDOUT"/>
+        <appender-ref ref="kafkaAppender"/>
+    </root>
+</configuration>
