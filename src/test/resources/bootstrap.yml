@@ -8,3 +8,9 @@ spring:
       enabled: false
     discovery:
       enabled: false
+
+management:
+  metrics:
+    export:
+      influx:
+        enabled: false
