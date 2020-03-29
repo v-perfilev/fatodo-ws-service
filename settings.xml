@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+
+<settings xmlns="http://maven.apache.org/SETTINGS/1.0.0">
+
+    <servers>
+        <server>
+            <id>YOUR REPOSITORY ID</id>
+            <username>${maven.repo.username}</username>
+            <password>${maven.repo.password}</password>
+        </server>
+    </servers>
+
+</settings>

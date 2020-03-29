@@ -1,7 +1,7 @@
 image: persoff68/alpine-openjdk-13-glibc
 
 variables:
-  MAVEN_CLI_OPTS: "-ntp --batch-mode"
+  MAVEN_CLI_OPTS: "-ntp --batch-mode -s settings.xml"
   MAVEN_OPTS: "-Dmaven.repo.local=.m2/repository"
 
 cache:
@@ -12,6 +12,7 @@ stages:
   - build
   - test
   - analyze
+  - deploy
 
 maven-build:
   stage: build
@@ -24,6 +25,8 @@ maven-build:
 
 maven-test:
   stage: test
+  dependencies:
+    - maven-build
   script:
     - ./mvnw $MAVEN_CLI_OPTS verify $MAVEN_OPTS
   artifacts:
@@ -36,8 +39,25 @@ sonar-analyze:
   dependencies:
     - maven-test
   script:
-    - ./mvnw $MAVEN_CLI_OPTS initialize sonar:sonar -Dsonar.host.url=$SONAR_URL -Dsonar.login=$SONAR_TOKEN $MAVEN_OPTS
+    - ./mvnw $MAVEN_CLI_OPTS initialize sonar:sonar $MAVEN_OPTS
+      -Dsonar.host.url=$SONAR_URL
+      -Dsonar.login=$SONAR_TOKEN
   artifacts:
     paths:
       - target/
     expire_in: 1 day
+
+deploy-to-rerpository:
+  stage: deploy
+  dependencies:
+    - maven-build
+  script:
+    - ./mvnw $MAVEN_CLI_OPTS deploy $MAVEN_OPTS -Dmaven.test.skip=true
+      -Dmaven.repo.url=$MAVEN_URL
+      -Dmaven.repo.username=$MAVEN_USERNAME
+      -Dmaven.repo.password=$MAVEN_PASSWORD
+  artifacts:
+    paths:
+      - target/
+    expire_in: 1 day
+
