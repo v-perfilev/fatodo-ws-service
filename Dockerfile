@@ -1,5 +1,5 @@
 # BUILD
-FROM openjdk:13-jdk-alpine as build
+FROM openjdk:13-alpine as build
 WORKDIR /build
 
 # important libs
@@ -10,19 +10,18 @@ RUN apk --no-cache add ca-certificates && \
     apk add glibc-2.29-r0.apk glibc-bin-2.29-r0.apk
 
 # maven dependencies layer
-COPY mvnw .
+COPY mvnw pom.xml *.properties ./
 COPY .mvn .mvn
-COPY pom.xml .
+COPY src src
 RUN ./mvnw verify clean --fail-never
 
 # app build layer
-COPY src src
-RUN ./mvnw install -DskipTests
+RUN ./mvnw install -Dmaven.test.skip=true
 
 # DEPLOY
-FROM openjdk:13-jdk-alpine
+FROM openjdk:13-alpine
 VOLUME /app
-COPY --from=build /build/target/fatodo-*.jar /app/app.jar
+COPY --from=build /build/target/fatodo.jar /app/app.jar
 
 # wait tool layer
 COPY ./tools/wait wait
