@@ -25,7 +25,8 @@ public class SecurityProblemSupport implements AuthenticationEntryPoint, AccessD
     private final ObjectMapper objectMapper;
 
     @Override
-    public void commence(HttpServletRequest request, HttpServletResponse response, AuthenticationException e) throws IOException, ServletException {
+    public void commence(HttpServletRequest request, HttpServletResponse response, AuthenticationException e)
+            throws IOException, ServletException {
         Exception exception = e instanceof InternalAuthenticationServiceException
                 && e.getCause() instanceof AbstractException
                 ? (AbstractException) e.getCause()
@@ -34,7 +35,8 @@ public class SecurityProblemSupport implements AuthenticationEntryPoint, AccessD
     }
 
     @Override
-    public void handle(HttpServletRequest request, HttpServletResponse response, AccessDeniedException e) throws IOException, ServletException {
+    public void handle(HttpServletRequest request, HttpServletResponse response, AccessDeniedException e)
+            throws IOException, ServletException {
         Exception exception = new ForbiddenException();
         AttributeHandler.from(request, exception).sendError(objectMapper, response);
     }
