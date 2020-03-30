@@ -41,6 +41,7 @@
         <jacoco.utReportFile>${jacoco.utReportFolder}/test.exec</jacoco.utReportFile>
         <jacoco.itReportFolder>${project.build.directory}/jacoco/integrationTest</jacoco.itReportFolder>
         <jacoco.itReportFile>${jacoco.itReportFolder}/integrationTest.exec</jacoco.itReportFile>
+        <maven-checkstyle-plugin.version>3.1.1</maven-checkstyle-plugin.version>
         <spring-cloud-contract-maven-plugin.version>2.2.2.RELEASE</spring-cloud-contract-maven-plugin.version>
         <!-- Profiles -->
         <dev.profile>dev</dev.profile>
@@ -285,7 +286,7 @@
                         <configuration>
                             <attach>false</attach>
                             <descriptors>
-                                ${basedir}/src/assembly/stub.xml
+                                ${basedir}/etc/assembly/stub.xml
                             </descriptors>
                         </configuration>
                     </execution>
@@ -342,7 +343,7 @@
                         </goals>
                         <configuration>
                             <files>
-                                <file>${basedir}/sonar-project.properties</file>
+                                <file>${basedir}/etc/sonar/sonar-project.properties</file>
                             </files>
                         </configuration>
                     </execution>
@@ -399,6 +400,29 @@
                             <dataFile>${jacoco.itReportFile}</dataFile>
                             <outputDirectory>${jacoco.itReportFolder}</outputDirectory>
                         </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+            <!-- Maven Checkstyle Plugin -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-checkstyle-plugin</artifactId>
+                <version>${maven-checkstyle-plugin.version}</version>
+                <configuration>
+                    <configLocation>${basedir}/etc/checkstyle/checkstyle.xml</configLocation>
+<!--                    <suppressionsLocation>${basedir}/etc/checkstyle/suppressions.xml</suppressionsLocation>-->
+                    <encoding>UTF-8</encoding>
+                    <consoleOutput>true</consoleOutput>
+                    <failsOnError>true</failsOnError>
+                    <linkXRef>false</linkXRef>
+                </configuration>
+                <executions>
+                    <execution>
+                        <id>validate</id>
+                        <phase>validate</phase>
+                        <goals>
+                            <goal>check</goal>
+                        </goals>
                     </execution>
                 </executions>
             </plugin>
