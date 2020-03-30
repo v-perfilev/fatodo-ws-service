@@ -23,15 +23,15 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     private final JwtTokenFilter jwtTokenFilter;
     private final SecurityLocaleFilter securityLocaleFilter;
 
-    @Override
-    protected void configure(AuthenticationManagerBuilder authManager) throws Exception {
-        // redefine method of parent class
-    }
-
     @Bean
     @Override
     public AuthenticationManager authenticationManagerBean() throws Exception {
         return super.authenticationManagerBean();
+    }
+
+    @Override
+    protected void configure(AuthenticationManagerBuilder authManager) throws Exception {
+        // redefine method of parent class
     }
 
     @Override
