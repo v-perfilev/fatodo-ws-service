@@ -1,7 +1,7 @@
 image: persoff68/alpine-openjdk-13-glibc
 
 variables:
-  MAVEN_CLI_OPTS: "-ntp --batch-mode -s settings.xml"
+  MAVEN_CLI_OPTS: "-ntp --batch-mode -s etc/maven/settings.xml"
   MAVEN_OPTS: "-Dmaven.repo.local=.m2/repository"
 
 cache:
@@ -46,6 +46,11 @@ sonar-analyze:
     paths:
       - target/
     expire_in: 1 day
+
+checkstyle-analyze:
+  stage: analyze
+  script:
+    - ./mvnw $MAVEN_CLI_OPTS checkstyle:check $MAVEN_OPTS
 
 deploy-to-rerpository:
   stage: deploy

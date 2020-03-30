@@ -10,12 +10,13 @@ RUN apk --no-cache add ca-certificates && \
     apk add glibc-2.29-r0.apk glibc-bin-2.29-r0.apk
 
 # maven dependencies layer
-COPY mvnw pom.xml *.properties ./
+COPY mvnw pom.xml ./
 COPY .mvn .mvn
-COPY src src
+COPY etc etc
 RUN ./mvnw verify clean --fail-never
 
 # app build layer
+COPY src src
 RUN ./mvnw install -Dmaven.test.skip=true
 
 # DEPLOY
@@ -24,7 +25,7 @@ VOLUME /app
 COPY --from=build /build/target/fatodo.jar /app/app.jar
 
 # wait tool layer
-COPY ./tools/wait wait
+COPY ./etc/tools/wait wait
 RUN chmod +x /wait
 
 # final command
