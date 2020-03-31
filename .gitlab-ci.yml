@@ -10,8 +10,8 @@ cache:
 
 stages:
   - build
-  - unit-tests
-  - integration-tests
+  - UT
+  - IT
   - analyze
   - deploy
 
@@ -25,7 +25,7 @@ compile:
     expire_in: 1 day
 
 unit-tests:
-  stage: unit-tests
+  stage: UT
   dependencies:
     - compile
   script:
@@ -36,7 +36,7 @@ unit-tests:
     expire_in: 1 day
 
 integration-tests:
-  stage: integration-tests
+  stage: IT
   dependencies:
     - compile
   script:
@@ -47,7 +47,7 @@ integration-tests:
     expire_in: 1 day
 
 contract-tests:
-  stage: integration-tests
+  stage: IT
   dependencies:
     - compile
   script:
