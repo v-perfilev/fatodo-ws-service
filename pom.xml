@@ -139,6 +139,7 @@
                         <include>**/*Tests.*</include>
                         <include>**/contract/*Test.*</include>
                     </includes>
+                    <reportsDirectory>${project.basedir}/target/surefire-reports</reportsDirectory>
                 </configuration>
             </plugin>
             <!-- Properties Maven Plugin -->
@@ -275,6 +276,7 @@
                             <includes>
                                 <include>**/*CT.*</include>
                             </includes>
+                            <reportsDirectory>${project.basedir}/target/surefire-reports</reportsDirectory>
                         </configuration>
                     </plugin>
                 </plugins>

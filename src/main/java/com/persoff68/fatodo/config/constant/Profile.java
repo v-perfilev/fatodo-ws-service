@@ -2,7 +2,6 @@ package com.persoff68.fatodo.config.constant;
 
 
 import lombok.Getter;
-import lombok.RequiredArgsConstructor;
 
 public enum Profile {
     DEVELOPMENT(Constants.DEVELOPMENT_VALUE),
