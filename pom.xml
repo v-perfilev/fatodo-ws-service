@@ -27,6 +27,7 @@
         <!-- Plugin versions -->
         <maven-jar-plugin.version>3.2.0</maven-jar-plugin.version>
         <maven-surefire-plugin.version>3.0.0-M4</maven-surefire-plugin.version>
+        <maven-failsafe-plugin.version>3.0.0-M4</maven-failsafe-plugin.version>
         <properties-maven-plugin.version>1.0.0</properties-maven-plugin.version>
         <sonar-maven-plugin.version>3.7.0.1746</sonar-maven-plugin.version>
         <jacoco-maven-plugin.version>0.8.5</jacoco-maven-plugin.version>
@@ -109,66 +110,36 @@
     </dependencies>
 
     <build>
+        <defaultGoal>spring-boot:run</defaultGoal>
         <finalName>${jar.name}</finalName>
         <plugins>
-            <!-- Maven Assembly Plugin -->
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-assembly-plugin</artifactId>
-                <executions>
-                    <execution>
-                        <id>stub</id>
-                        <phase>prepare-package</phase>
-                        <goals>
-                            <goal>single</goal>
-                        </goals>
-                        <inherited>false</inherited>
-                        <configuration>
-                            <attach>false</attach>
-                            <descriptors>
-                                ${basedir}/etc/assembly/stub.xml
-                            </descriptors>
-                        </configuration>
-                    </execution>
-                </executions>
-            </plugin>
             <!-- Maven Surefire Plugin -->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-surefire-plugin</artifactId>
                 <version>${maven-surefire-plugin.version}</version>
                 <configuration>
-                    <skipTests>true</skipTests>
+                    <runOrder>alphabetical</runOrder>
+                    <excludes>
+                        <exclude>**/*IT.*</exclude>
+                        <exclude>**/*Tests.*</exclude>
+                        <exclude>**/contract/*Test.*</exclude>
+                    </excludes>
                 </configuration>
-                <executions>
-                    <execution>
-                        <id>unit-tests</id>
-                        <phase>test</phase>
-                        <goals>
-                            <goal>test</goal>
-                        </goals>
-                        <configuration>
-                            <skipTests>false</skipTests>
-                            <includes>
-                                <include>**/*Test.java</include>
-                            </includes>
-                        </configuration>
-                    </execution>
-                    <execution>
-                        <id>integration-tests</id>
-                        <phase>integration-test</phase>
-                        <goals>
-                            <goal>test</goal>
-                        </goals>
-                        <configuration>
-                            <skipTests>false</skipTests>
-                            <includes>
-                                <include>**/*IT.*</include>
-                                <include>**/*Tests.*</include>
-                            </includes>
-                        </configuration>
-                    </execution>
-                </executions>
+            </plugin>
+            <!-- Maven Failsafe Plugin -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-failsafe-plugin</artifactId>
+                <version>${maven-failsafe-plugin.version}</version>
+                <configuration>
+                    <runOrder>alphabetical</runOrder>
+                    <includes>
+                        <include>**/*IT.*</include>
+                        <include>**/*Tests.*</include>
+                        <include>**/contract/*Test.*</include>
+                    </includes>
+                </configuration>
             </plugin>
             <!-- Properties Maven Plugin -->
             <plugin>
@@ -288,6 +259,26 @@
             <properties>
                 <spring.profiles.active>${prod.profile}</spring.profiles.active>
             </properties>
+        </profile>
+        <!-- contracts profile -->
+        <profile>
+            <id>contracts</id>
+            <build>
+                <plugins>
+                    <!-- Maven Failsafe Plugin -->
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-failsafe-plugin</artifactId>
+                        <version>${maven-failsafe-plugin.version}</version>
+                        <configuration>
+                            <runOrder>alphabetical</runOrder>
+                            <includes>
+                                <include>**/*CT.*</include>
+                            </includes>
+                        </configuration>
+                    </plugin>
+                </plugins>
+            </build>
         </profile>
     </profiles>
 
