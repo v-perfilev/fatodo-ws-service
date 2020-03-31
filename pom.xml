@@ -125,6 +125,7 @@
                         <exclude>**/*Tests.*</exclude>
                         <exclude>**/contract/*Test.*</exclude>
                     </excludes>
+                    <argLine>${surefire.jacoco.args}</argLine>
                 </configuration>
             </plugin>
             <!-- Maven Failsafe Plugin -->
@@ -139,8 +140,16 @@
                         <include>**/*Tests.*</include>
                         <include>**/contract/*Test.*</include>
                     </includes>
-                    <reportsDirectory>${project.basedir}/target/surefire-reports</reportsDirectory>
+                    <argLine>${failsafe.jacoco.args}</argLine>
                 </configuration>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>integration-test</goal>
+                            <goal>verify</goal>
+                        </goals>
+                    </execution>
+                </executions>
             </plugin>
             <!-- Properties Maven Plugin -->
             <plugin>
@@ -180,6 +189,7 @@
                         </goals>
                         <configuration>
                             <destFile>${jacoco.utReportFile}</destFile>
+                            <propertyName>surefire.jacoco.args</propertyName>
                         </configuration>
                     </execution>
                     <execution>
@@ -200,6 +210,7 @@
                         </goals>
                         <configuration>
                             <destFile>${jacoco.itReportFile}</destFile>
+                            <propertyName>failsafe.jacoco.args</propertyName>
                         </configuration>
                     </execution>
                     <execution>
@@ -276,7 +287,6 @@
                             <includes>
                                 <include>**/*CT.*</include>
                             </includes>
-                            <reportsDirectory>${project.basedir}/target/surefire-reports</reportsDirectory>
                         </configuration>
                     </plugin>
                 </plugins>
