@@ -417,8 +417,7 @@
                     <extensions>true</extensions>
                     <configuration>
                         <testFramework>JUNIT5</testFramework>
-                        <baseClassForTests>${contract.package}.main.TestBase</baseClassForTests>
-                        <packageWithBaseClasses>${contract.package}</packageWithBaseClasses>
+                        <baseClassForTests>${contract.package}.ContractBase</baseClassForTests>
                     </configuration>
                 </plugin>
             </plugins>
