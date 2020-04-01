@@ -1,6 +1,7 @@
 package com.persoff68.fatodo.exception;
 
 import com.persoff68.fatodo.security.exception.ForbiddenException;
+import com.persoff68.fatodo.security.exception.UnauthorizedException;
 import com.persoff68.fatodo.service.exception.ModelAlreadyExistsException;
 import com.persoff68.fatodo.service.exception.ModelDuplicatedException;
 import com.persoff68.fatodo.service.exception.ModelNotFoundException;
@@ -93,6 +94,14 @@ public class ExceptionTest {
         assertThat(exception).isInstanceOf(AbstractException.class);
         AbstractException abstractException = (AbstractException) exception;
         assertThat(abstractException.getStatus()).isEqualTo(HttpStatus.FORBIDDEN);
+    }
+
+    @Test
+    void testUnauthorizedException() {
+        Object exception = new UnauthorizedException();
+        assertThat(exception).isInstanceOf(AbstractException.class);
+        AbstractException abstractException = (AbstractException) exception;
+        assertThat(abstractException.getStatus()).isEqualTo(HttpStatus.UNAUTHORIZED);
     }
 
 }
