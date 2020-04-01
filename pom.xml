@@ -17,6 +17,7 @@
     <properties>
         <!-- Common variables -->
         <jar.name>fatodo</jar.name>
+        <maven.repo.url/>
         <!-- Packages -->
         <root.package>com.persoff68.fatodo</root.package>
         <contract.package>com.persoff68.fatodo.contract</contract.package>
@@ -34,19 +35,24 @@
         <!-- Plugin versions -->
         <maven-jar-plugin.version>3.2.0</maven-jar-plugin.version>
         <maven-surefire-plugin.version>3.0.0-M4</maven-surefire-plugin.version>
+        <maven-failsafe-plugin.version>3.0.0-M4</maven-failsafe-plugin.version>
         <properties-maven-plugin.version>1.0.0</properties-maven-plugin.version>
         <sonar-maven-plugin.version>3.7.0.1746</sonar-maven-plugin.version>
         <jacoco-maven-plugin.version>0.8.5</jacoco-maven-plugin.version>
-        <jacoco.utReportFolder>${project.build.directory}/jacoco/test</jacoco.utReportFolder>
-        <jacoco.utReportFile>${jacoco.utReportFolder}/test.exec</jacoco.utReportFile>
-        <jacoco.itReportFolder>${project.build.directory}/jacoco/integrationTest</jacoco.itReportFolder>
-        <jacoco.itReportFile>${jacoco.itReportFolder}/integrationTest.exec</jacoco.itReportFile>
         <maven-checkstyle-plugin.version>3.1.1</maven-checkstyle-plugin.version>
         <spring-cloud-contract-maven-plugin.version>2.2.2.RELEASE</spring-cloud-contract-maven-plugin.version>
+        <!-- Plugin variables -->
+        <jacoco.ut-report-folder>${project.build.directory}/jacoco/test</jacoco.ut-report-folder>
+        <jacoco.ut-report-file>${jacoco.ut-report-folder}/test.exec</jacoco.ut-report-file>
+        <jacoco.it-report-folder>${project.build.directory}/jacoco/integrationTest</jacoco.it-report-folder>
+        <jacoco.it-report-file>${jacoco.it-report-folder}/integrationTest.exec</jacoco.it-report-file>
+        <skipTests>false</skipTests>
+        <skipUTs>${skipTests}</skipUTs>
+        <skipITs>${skipTests}</skipITs>
         <!-- Profiles -->
-        <dev.profile>dev</dev.profile>
-        <docker.profile>docker</docker.profile>
-        <prod.profile>prod</prod.profile>
+        <dev.spring-profile>dev</dev.spring-profile>
+        <docker.spring-profile>docker</docker.spring-profile>
+        <prod.spring-profile>prod</prod.spring-profile>
     </properties>
 
     <dependencyManagement>
@@ -269,169 +275,190 @@
     </dependencies>
 
     <build>
+        <defaultGoal>spring-boot:run</defaultGoal>
         <finalName>${jar.name}</finalName>
+
+        <pluginManagement>
+            <plugins>
+                <!-- Properties Maven Plugin Management -->
+                <plugin>
+                    <groupId>org.codehaus.mojo</groupId>
+                    <artifactId>properties-maven-plugin</artifactId>
+                    <version>${properties-maven-plugin.version}</version>
+                    <executions>
+                        <execution>
+                            <phase>initialize</phase>
+                            <goals>
+                                <goal>read-project-properties</goal>
+                            </goals>
+                            <configuration>
+                                <files>
+                                    <file>${basedir}/etc/sonar/sonar-project.properties</file>
+                                </files>
+                            </configuration>
+                        </execution>
+                    </executions>
+                </plugin>
+                <!-- Maven Surefire Plugin Management -->
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-surefire-plugin</artifactId>
+                    <version>${maven-surefire-plugin.version}</version>
+                    <configuration>
+                        <skipTests>${skipUTs}</skipTests>
+                        <runOrder>alphabetical</runOrder>
+                        <excludes>
+                            <exclude>**/*IT.*</exclude>
+                            <exclude>**/*Tests.*</exclude>
+                            <exclude>**/contract/*Test.*</exclude>
+                        </excludes>
+                    </configuration>
+                </plugin>
+                <!-- Maven Failsafe Plugin Management -->
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-failsafe-plugin</artifactId>
+                    <version>${maven-failsafe-plugin.version}</version>
+                    <configuration>
+                        <skipTests>${skipTests}</skipTests>
+                        <skipITs>${skipITs}</skipITs>
+                        <runOrder>alphabetical</runOrder>
+                        <includes>
+                            <include>**/*IT.*</include>
+                            <include>**/*Tests.*</include>
+                            <include>**/contract/*Test.*</include>
+                        </includes>
+                    </configuration>
+                    <executions>
+                        <execution>
+                            <goals>
+                                <goal>integration-test</goal>
+                                <goal>verify</goal>
+                            </goals>
+                        </execution>
+                    </executions>
+                </plugin>
+                <!-- Jacoco Maven Plugin Management -->
+                <plugin>
+                    <groupId>org.jacoco</groupId>
+                    <artifactId>jacoco-maven-plugin</artifactId>
+                    <version>${jacoco-maven-plugin.version}</version>
+                    <executions>
+                        <execution>
+                            <id>pre-unit-tests</id>
+                            <goals>
+                                <goal>prepare-agent</goal>
+                            </goals>
+                            <configuration>
+                                <destFile>${jacoco.ut-report-file}</destFile>
+                            </configuration>
+                        </execution>
+                        <execution>
+                            <id>post-unit-test</id>
+                            <phase>test</phase>
+                            <goals>
+                                <goal>report</goal>
+                            </goals>
+                            <configuration>
+                                <dataFile>${jacoco.ut-report-file}</dataFile>
+                                <outputDirectory>${jacoco.ut-report-folder}</outputDirectory>
+                            </configuration>
+                        </execution>
+                        <execution>
+                            <goals>
+                                <goal>prepare-agent-integration</goal>
+                            </goals>
+                            <configuration>
+                                <destFile>${jacoco.it-report-file}</destFile>
+                            </configuration>
+                        </execution>
+                        <execution>
+                            <id>post-integration-tests</id>
+                            <phase>post-integration-test</phase>
+                            <goals>
+                                <goal>report-integration</goal>
+                            </goals>
+                            <configuration>
+                                <dataFile>${jacoco.it-report-file}</dataFile>
+                                <outputDirectory>${jacoco.it-report-folder}</outputDirectory>
+                            </configuration>
+                        </execution>
+                    </executions>
+                </plugin>
+                <!-- Sonar Maven Plugin Management-->
+                <plugin>
+                    <groupId>org.sonarsource.scanner.maven</groupId>
+                    <artifactId>sonar-maven-plugin</artifactId>
+                    <version>${sonar-maven-plugin.version}</version>
+                </plugin>
+                <!-- Maven Checkstyle Plugin Management -->
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-checkstyle-plugin</artifactId>
+                    <version>${maven-checkstyle-plugin.version}</version>
+                    <configuration>
+                        <configLocation>${basedir}/etc/checkstyle/checkstyle.xml</configLocation>
+                        <encoding>UTF-8</encoding>
+                        <consoleOutput>true</consoleOutput>
+                        <failsOnError>true</failsOnError>
+                        <linkXRef>false</linkXRef>
+                    </configuration>
+                    <executions>
+                        <execution>
+                            <phase>none</phase>
+                        </execution>
+                    </executions>
+                </plugin>
+                <!-- Spring Cloud Contract Maven Plugin Management -->
+                <plugin>
+                    <groupId>org.springframework.cloud</groupId>
+                    <artifactId>spring-cloud-contract-maven-plugin</artifactId>
+                    <version>${spring-cloud-contract-maven-plugin.version}</version>
+                    <extensions>true</extensions>
+                    <configuration>
+                        <testFramework>JUNIT5</testFramework>
+                        <baseClassForTests>${contract.package}.main.TestBase</baseClassForTests>
+                        <packageWithBaseClasses>${contract.package}</packageWithBaseClasses>
+                    </configuration>
+                </plugin>
+            </plugins>
+        </pluginManagement>
+
         <plugins>
-            <!-- Maven Assembly Plugin -->
+            <!-- Properties Maven Plugin -->
             <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-assembly-plugin</artifactId>
-                <executions>
-                    <execution>
-                        <id>stub</id>
-                        <phase>prepare-package</phase>
-                        <goals>
-                            <goal>single</goal>
-                        </goals>
-                        <inherited>false</inherited>
-                        <configuration>
-                            <attach>false</attach>
-                            <descriptors>
-                                ${basedir}/etc/assembly/stub.xml
-                            </descriptors>
-                        </configuration>
-                    </execution>
-                </executions>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>properties-maven-plugin</artifactId>
             </plugin>
             <!-- Maven Surefire Plugin -->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-surefire-plugin</artifactId>
-                <version>${maven-surefire-plugin.version}</version>
-                <configuration>
-                    <skipTests>true</skipTests>
-                </configuration>
-                <executions>
-                    <execution>
-                        <id>unit-tests</id>
-                        <phase>test</phase>
-                        <goals>
-                            <goal>test</goal>
-                        </goals>
-                        <configuration>
-                            <skipTests>false</skipTests>
-                            <includes>
-                                <include>**/*Test.java</include>
-                            </includes>
-                        </configuration>
-                    </execution>
-                    <execution>
-                        <id>integration-tests</id>
-                        <phase>integration-test</phase>
-                        <goals>
-                            <goal>test</goal>
-                        </goals>
-                        <configuration>
-                            <skipTests>false</skipTests>
-                            <includes>
-                                <include>**/*IT.*</include>
-                                <include>**/*Tests.*</include>
-                            </includes>
-                        </configuration>
-                    </execution>
-                </executions>
             </plugin>
-            <!-- Properties Maven Plugin -->
+            <!-- Maven Failsafe Plugin -->
             <plugin>
-                <groupId>org.codehaus.mojo</groupId>
-                <artifactId>properties-maven-plugin</artifactId>
-                <version>${properties-maven-plugin.version}</version>
-                <executions>
-                    <execution>
-                        <phase>initialize</phase>
-                        <goals>
-                            <goal>read-project-properties</goal>
-                        </goals>
-                        <configuration>
-                            <files>
-                                <file>${basedir}/etc/sonar/sonar-project.properties</file>
-                            </files>
-                        </configuration>
-                    </execution>
-                </executions>
-            </plugin>
-            <!-- Sonar Maven Plugin -->
-            <plugin>
-                <groupId>org.sonarsource.scanner.maven</groupId>
-                <artifactId>sonar-maven-plugin</artifactId>
-                <version>${sonar-maven-plugin.version}</version>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-failsafe-plugin</artifactId>
             </plugin>
             <!-- Jacoco Maven Plugin -->
             <plugin>
                 <groupId>org.jacoco</groupId>
                 <artifactId>jacoco-maven-plugin</artifactId>
-                <version>${jacoco-maven-plugin.version}</version>
-                <executions>
-                    <execution>
-                        <id>pre-unit-tests</id>
-                        <goals>
-                            <goal>prepare-agent</goal>
-                        </goals>
-                        <configuration>
-                            <destFile>${jacoco.utReportFile}</destFile>
-                        </configuration>
-                    </execution>
-                    <execution>
-                        <id>post-unit-test</id>
-                        <phase>test</phase>
-                        <goals>
-                            <goal>report</goal>
-                        </goals>
-                        <configuration>
-                            <dataFile>${jacoco.utReportFile}</dataFile>
-                            <outputDirectory>${jacoco.utReportFolder}</outputDirectory>
-                        </configuration>
-                    </execution>
-                    <execution>
-                        <id>pre-integration-tests</id>
-                        <goals>
-                            <goal>prepare-agent-integration</goal>
-                        </goals>
-                        <configuration>
-                            <destFile>${jacoco.itReportFile}</destFile>
-                        </configuration>
-                    </execution>
-                    <execution>
-                        <id>post-integration-tests</id>
-                        <phase>post-integration-test</phase>
-                        <goals>
-                            <goal>report-integration</goal>
-                        </goals>
-                        <configuration>
-                            <dataFile>${jacoco.itReportFile}</dataFile>
-                            <outputDirectory>${jacoco.itReportFolder}</outputDirectory>
-                        </configuration>
-                    </execution>
-                </executions>
+            </plugin>
+            <!-- Sonar Maven Plugin -->
+            <plugin>
+                <groupId>org.sonarsource.scanner.maven</groupId>
+                <artifactId>sonar-maven-plugin</artifactId>
             </plugin>
             <!-- Maven Checkstyle Plugin -->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-checkstyle-plugin</artifactId>
-                <version>${maven-checkstyle-plugin.version}</version>
-                <configuration>
-                    <configLocation>${basedir}/etc/checkstyle/checkstyle.xml</configLocation>
-                    <encoding>UTF-8</encoding>
-                    <consoleOutput>true</consoleOutput>
-                    <failsOnError>true</failsOnError>
-                    <linkXRef>false</linkXRef>
-                </configuration>
-                <executions>
-                    <execution>
-                        <phase>none</phase>
-                    </execution>
-                </executions>
             </plugin>
             <!-- Spring Cloud Contract Maven Plugin -->
             <plugin>
                 <groupId>org.springframework.cloud</groupId>
                 <artifactId>spring-cloud-contract-maven-plugin</artifactId>
-                <version>${spring-cloud-contract-maven-plugin.version}</version>
-                <extensions>true</extensions>
-                <configuration>
-                    <testFramework>JUNIT5</testFramework>
-                    <baseClassForTests>${contract.package}.main.TestBase</baseClassForTests>
-                    <packageWithBaseClasses>${contract.package}</packageWithBaseClasses>
-                </configuration>
             </plugin>
         </plugins>
     </build>
@@ -444,22 +471,41 @@
                 <activeByDefault>true</activeByDefault>
             </activation>
             <properties>
-                <spring.profiles.active>${dev.profile}</spring.profiles.active>
+                <spring.profiles.active>${dev.spring-profile}</spring.profiles.active>
             </properties>
         </profile>
         <!-- docker profile -->
         <profile>
             <id>docker</id>
             <properties>
-                <spring.profiles.active>${docker.profile}</spring.profiles.active>
+                <spring.profiles.active>${docker.spring-profile}</spring.profiles.active>
             </properties>
         </profile>
         <!-- prod profile -->
         <profile>
             <id>prod</id>
             <properties>
-                <spring.profiles.active>${prod.profile}</spring.profiles.active>
+                <spring.profiles.active>${prod.spring-profile}</spring.profiles.active>
             </properties>
+        </profile>
+        <!-- contracts profile -->
+        <profile>
+            <id>contracts</id>
+            <build>
+                <plugins>
+                    <!-- Maven Failsafe Plugin -->
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-failsafe-plugin</artifactId>
+                        <configuration>
+                            <runOrder>alphabetical</runOrder>
+                            <includes>
+                                <include>**/*CT.*</include>
+                            </includes>
+                        </configuration>
+                    </plugin>
+                </plugins>
+            </build>
         </profile>
     </profiles>
 

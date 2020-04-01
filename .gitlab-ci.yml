@@ -10,11 +10,12 @@ cache:
 
 stages:
   - build
-  - test
+  - UT
+  - IT
   - analyze
   - deploy
 
-maven-build:
+compile:
   stage: build
   script:
     - ./mvnw $MAVEN_CLI_OPTS compile $MAVEN_OPTS
@@ -23,21 +24,46 @@ maven-build:
       - target/
     expire_in: 1 day
 
-maven-test:
-  stage: test
+unit-tests:
+  stage: UT
   dependencies:
-    - maven-build
+    - compile
   script:
-    - ./mvnw $MAVEN_CLI_OPTS verify $MAVEN_OPTS
+    - ./mvnw $MAVEN_CLI_OPTS test $MAVEN_OPTS
   artifacts:
     paths:
       - target/
     expire_in: 1 day
 
-sonar-analyze:
+integration-tests:
+  stage: IT
+  dependencies:
+    - compile
+  script:
+    - ./mvnw $MAVEN_CLI_OPTS verify $MAVEN_OPTS
+      -DskipUTs
+  artifacts:
+    paths:
+      - target/
+    expire_in: 1 day
+
+contract-tests:
+  stage: IT
+  dependencies:
+    - compile
+  script:
+    - ./mvnw $MAVEN_CLI_OPTS test-compile failsafe:integration-test failsafe:verify -Pcontracts $MAVEN_OPTS
+  artifacts:
+    paths:
+      - target/
+    expire_in: 1 day
+
+sonar:
   stage: analyze
   dependencies:
-    - maven-test
+    - unit-tests
+    - integration-tests
+    - contract-tests
   script:
     - ./mvnw $MAVEN_CLI_OPTS initialize sonar:sonar $MAVEN_OPTS
       -Dsonar.host.url=$SONAR_URL
@@ -47,17 +73,18 @@ sonar-analyze:
       - target/
     expire_in: 1 day
 
-checkstyle-analyze:
+checkstyle:
   stage: analyze
   script:
     - ./mvnw $MAVEN_CLI_OPTS checkstyle:check $MAVEN_OPTS
 
-deploy-to-rerpository:
+deploy-to-repo:
   stage: deploy
   dependencies:
-    - maven-build
+    - compile
   script:
-    - ./mvnw $MAVEN_CLI_OPTS deploy $MAVEN_OPTS -Dmaven.test.skip=true
+    - ./mvnw $MAVEN_CLI_OPTS deploy $MAVEN_OPTS
+    - -Dmaven.test.skip=true
       -Dmaven.repo.url=$MAVEN_URL
       -Dmaven.repo.username=$MAVEN_USERNAME
       -Dmaven.repo.password=$MAVEN_PASSWORD
