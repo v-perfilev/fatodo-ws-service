@@ -84,7 +84,7 @@ deploy-to-repo:
     - compile
   script:
     - ./mvnw $MAVEN_CLI_OPTS deploy $MAVEN_OPTS
-    - -Dmaven.test.skip=true
+      -Dmaven.test.skip=true
       -Dmaven.repo.url=$MAVEN_URL
       -Dmaven.repo.username=$MAVEN_USERNAME
       -Dmaven.repo.password=$MAVEN_PASSWORD
