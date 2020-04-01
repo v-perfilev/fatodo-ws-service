@@ -40,7 +40,8 @@ integration-tests:
   dependencies:
     - compile
   script:
-    - ./mvnw $MAVEN_CLI_OPTS test-compile failsafe:integration-test failsafe:verify $MAVEN_OPTS
+    - ./mvnw $MAVEN_CLI_OPTS verify $MAVEN_OPTS
+      -DskipUTs
   artifacts:
     paths:
       - target/
@@ -82,7 +83,8 @@ deploy-to-repo:
   dependencies:
     - compile
   script:
-    - ./mvnw $MAVEN_CLI_OPTS deploy $MAVEN_OPTS -Dmaven.test.skip=true
+    - ./mvnw $MAVEN_CLI_OPTS deploy $MAVEN_OPTS
+    - -Dmaven.test.skip=true
       -Dmaven.repo.url=$MAVEN_URL
       -Dmaven.repo.username=$MAVEN_USERNAME
       -Dmaven.repo.password=$MAVEN_PASSWORD

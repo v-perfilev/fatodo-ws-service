@@ -38,6 +38,9 @@
         <jacoco.ut-report-file>${jacoco.ut-report-folder}/test.exec</jacoco.ut-report-file>
         <jacoco.it-report-folder>${project.build.directory}/jacoco/integrationTest</jacoco.it-report-folder>
         <jacoco.it-report-file>${jacoco.it-report-folder}/integrationTest.exec</jacoco.it-report-file>
+        <skipTests>false</skipTests>
+        <skipUTs>${skipTests}</skipUTs>
+        <skipITs>${skipTests}</skipITs>
         <!-- Profiles -->
         <dev.spring-profile>dev</dev.spring-profile>
         <docker.spring-profile>docker</docker.spring-profile>
@@ -142,6 +145,7 @@
                     <artifactId>maven-surefire-plugin</artifactId>
                     <version>${maven-surefire-plugin.version}</version>
                     <configuration>
+                        <skipTests>${skipUTs}</skipTests>
                         <runOrder>alphabetical</runOrder>
                         <excludes>
                             <exclude>**/*IT.*</exclude>
@@ -156,6 +160,8 @@
                     <artifactId>maven-failsafe-plugin</artifactId>
                     <version>${maven-failsafe-plugin.version}</version>
                     <configuration>
+                        <skipTests>${skipTests}</skipTests>
+                        <skipITs>${skipITs}</skipITs>
                         <runOrder>alphabetical</runOrder>
                         <includes>
                             <include>**/*IT.*</include>
@@ -199,7 +205,6 @@
                             </configuration>
                         </execution>
                         <execution>
-                            <id>pre-integration-tests</id>
                             <goals>
                                 <goal>prepare-agent-integration</goal>
                             </goals>
