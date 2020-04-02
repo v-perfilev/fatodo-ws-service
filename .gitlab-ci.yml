@@ -7,7 +7,7 @@ variables:
 cache:
   paths:
     - .m2/repository/
-    - /root/.sonar/cache/
+    - .sonar/cache/
 
 stages:
   - build
