@@ -8,7 +8,7 @@ app:
 stubrunner:
   idsToServiceIds:
     authservice: auth-service
-    userservice: user-
+    userservice: user-service
   repositoryRoot: '@maven.repo.url@'
 
 test:
