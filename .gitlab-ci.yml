@@ -52,7 +52,9 @@ contract-tests:
   dependencies:
     - compile
   script:
-    - ./mvnw $MAVEN_CLI_OPTS test-compile failsafe:integration-test failsafe:verify -Pcontracts $MAVEN_OPTS
+    - ./mvnw $MAVEN_CLI_OPTS initialize test-compile failsafe:integration-test failsafe:verify $MAVEN_OPTS
+      -Pcontracts
+      -Dmaven.repo.url=$MAVEN_URL
   artifacts:
     paths:
       - target/
@@ -63,7 +65,6 @@ sonar:
   dependencies:
     - unit-tests
     - integration-tests
-    - contract-tests
   script:
     - ./mvnw $MAVEN_CLI_OPTS initialize sonar:sonar $MAVEN_OPTS
       -Dsonar.host.url=$SONAR_URL
