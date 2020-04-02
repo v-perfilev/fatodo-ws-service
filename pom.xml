@@ -118,6 +118,19 @@
         <defaultGoal>spring-boot:run</defaultGoal>
         <finalName>${jar.name}</finalName>
 
+        <resources>
+            <resource>
+                <directory>src/main/resources</directory>
+                <filtering>true</filtering>
+            </resource>
+        </resources>
+        <testResources>
+            <testResource>
+                <directory>src/test/resources</directory>
+                <filtering>true</filtering>
+            </testResource>
+        </testResources>
+
         <pluginManagement>
             <plugins>
                 <!-- Properties Maven Plugin Management -->
@@ -335,7 +348,7 @@
     <distributionManagement>
         <repository>
             <id>fatodo</id>
-            <url>${maven.repo.url}/repository/fatodo/</url>
+            <url>${maven.repo.url}</url>
         </repository>
     </distributionManagement>
 
