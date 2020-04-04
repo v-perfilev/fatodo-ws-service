@@ -18,7 +18,8 @@
         <!-- Common variables -->
         <jar.name>fatodo</jar.name>
         <maven.repo.url/>
-        <!-- Packages -->
+        <!-- Classes and packages -->
+        <main.class>com.persoff68.fatodo.BaseSkeletonApplication</main.class>
         <root.package>com.persoff68.fatodo</root.package>
         <!-- Dependency versions -->
         <java.version>13</java.version>
@@ -133,6 +134,21 @@
 
         <pluginManagement>
             <plugins>
+                <!-- Spring Boot Maven Plugin Management -->
+                <plugin>
+                    <groupId>org.springframework.boot</groupId>
+                    <artifactId>spring-boot-maven-plugin</artifactId>
+                    <configuration>
+                        <mainClass>${main.class}</mainClass>
+                    </configuration>
+                    <executions>
+                        <execution>
+                            <goals>
+                                <goal>build-info</goal>
+                            </goals>
+                        </execution>
+                    </executions>
+                </plugin>
                 <!-- Properties Maven Plugin Management -->
                 <plugin>
                     <groupId>org.codehaus.mojo</groupId>
@@ -266,6 +282,11 @@
         </pluginManagement>
 
         <plugins>
+            <!-- Spring Boot Maven Plugin Management -->
+            <plugin>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
+            </plugin>
             <!-- Properties Maven Plugin -->
             <plugin>
                 <groupId>org.codehaus.mojo</groupId>
