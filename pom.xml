@@ -19,7 +19,7 @@
         <jar.name>fatodo</jar.name>
         <maven.repo.url/>
         <!-- Classes and packages -->
-        <main.class>com.persoff68.fatodo.BaseSkeletonApplication</main.class>
+        <main.class>com.persoff68.fatodo.ExtendedSkeletonApplication</main.class>
         <root.package>com.persoff68.fatodo</root.package>
         <contract.package>com.persoff68.fatodo.contract</contract.package>
         <!-- Dependency versions -->
