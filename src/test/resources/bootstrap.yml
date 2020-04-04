@@ -8,6 +8,12 @@ spring:
       enabled: false
     discovery:
       enabled: false
+  zipkin:
+    enabled: false
+
+ribbon:
+  ReadTimeout: 60000
+  ConnectTimeout: 60000
 
 management:
   metrics:
