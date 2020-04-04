@@ -4,7 +4,7 @@
 
     <servers>
         <server>
-            <id>YOUR REPOSITORY ID</id>
+            <id>fatodo</id>
             <username>${maven.repo.username}</username>
             <password>${maven.repo.password}</password>
         </server>
