@@ -163,10 +163,10 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-security</artifactId>
         </dependency>
-        <!-- Spring Boot Cache -->
+        <!-- Spring Boot Redis Cache -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-cache</artifactId>
+            <artifactId>spring-boot-starter-data-redis</artifactId>
         </dependency>
         <!-- Spring Boot AOP -->
         <dependency>
