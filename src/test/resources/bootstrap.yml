@@ -10,6 +10,8 @@ spring:
       enabled: false
   zipkin:
     enabled: false
+  cache:
+    type: none
 
 ribbon:
   ReadTimeout: 60000
