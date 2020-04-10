@@ -1,6 +1,8 @@
 package com.persoff68.fatodo.config.constant;
 
 import lombok.Getter;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 
 import java.util.Arrays;
 
@@ -14,6 +16,10 @@ public enum AuthorityType {
 
     AuthorityType(String value) {
         this.value = value;
+    }
+
+    public GrantedAuthority getGrantedAuthority() {
+        return new SimpleGrantedAuthority(value);
     }
 
     public static boolean contains(String value) {
