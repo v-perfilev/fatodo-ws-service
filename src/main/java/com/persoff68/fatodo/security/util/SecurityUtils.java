@@ -2,12 +2,15 @@ package com.persoff68.fatodo.security.util;
 
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 
+import java.util.HashSet;
 import java.util.Optional;
+import java.util.Set;
 
 public class SecurityUtils {
 
@@ -24,6 +27,12 @@ public class SecurityUtils {
         Authentication authentication = getCurrentAuthentication();
         String username = fetchJwtFromAuthentication(authentication);
         return Optional.ofNullable(username);
+    }
+
+    public static Optional<Set<GrantedAuthority>> getCurrentAuthoritySet() {
+        Authentication authentication = getCurrentAuthentication();
+        Set<GrantedAuthority> authoritySet = fetchAuthoritiesFromAuthentication(authentication);
+        return Optional.ofNullable(authoritySet);
     }
 
     private static String fetchUsernameFromAuthentication(Authentication authentication) {
@@ -43,6 +52,16 @@ public class SecurityUtils {
             jwt = (String) authenticationToken.getCredentials();
         }
         return jwt;
+    }
+
+    private static Set<GrantedAuthority> fetchAuthoritiesFromAuthentication(Authentication authentication) {
+        Set<GrantedAuthority> authoritySet = null;
+        if (authentication instanceof UsernamePasswordAuthenticationToken) {
+            UsernamePasswordAuthenticationToken authenticationToken =
+                    (UsernamePasswordAuthenticationToken) authentication;
+            authoritySet = new HashSet<>(authenticationToken.getAuthorities());
+        }
+        return authoritySet;
     }
 
     private static Authentication getCurrentAuthentication() {
