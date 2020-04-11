@@ -5,6 +5,7 @@ import com.persoff68.fatodo.security.exception.UnauthorizedException;
 import com.persoff68.fatodo.service.exception.ModelAlreadyExistsException;
 import com.persoff68.fatodo.service.exception.ModelDuplicatedException;
 import com.persoff68.fatodo.service.exception.ModelNotFoundException;
+import com.persoff68.fatodo.service.exception.PermissionException;
 import com.persoff68.fatodo.web.rest.exception.ValidationException;
 import org.junit.jupiter.api.Test;
 import org.springframework.http.HttpStatus;
@@ -72,6 +73,22 @@ public class ExceptionTest {
         assertThat(exception).isInstanceOf(AbstractException.class);
         AbstractException abstractException = (AbstractException) exception;
         assertThat(abstractException.getStatus()).isEqualTo(HttpStatus.NOT_FOUND);
+    }
+
+    @Test
+    void testPermissionException_firstConstructor() {
+        Object exception = new PermissionException();
+        assertThat(exception).isInstanceOf(AbstractException.class);
+        AbstractException abstractException = (AbstractException) exception;
+        assertThat(abstractException.getStatus()).isEqualTo(HttpStatus.BAD_REQUEST);
+    }
+
+    @Test
+    void testPermissionException_secondConstructor() {
+        Object exception = new PermissionException("test_message");
+        assertThat(exception).isInstanceOf(AbstractException.class);
+        AbstractException abstractException = (AbstractException) exception;
+        assertThat(abstractException.getStatus()).isEqualTo(HttpStatus.BAD_REQUEST);
     }
 
 
