@@ -1,4 +1,4 @@
-package com.persoff68.fatodo.aop.logging;
+package com.persoff68.fatodo.config.aop.logging;
 
 import com.persoff68.fatodo.config.constant.AppConstants;
 import lombok.extern.slf4j.Slf4j;
