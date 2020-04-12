@@ -8,8 +8,6 @@ import feign.RequestTemplate;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
-import java.util.Optional;
-
 @Component
 @RequiredArgsConstructor
 public class JwtInterceptor implements RequestInterceptor {
@@ -19,8 +17,8 @@ public class JwtInterceptor implements RequestInterceptor {
 
     @Override
     public void apply(RequestTemplate requestTemplate) {
-        Optional<String> jwtOptional = SecurityUtils.getCurrentJwt();
-        String jwt = jwtOptional.orElse(jwtTokenProvider.createSystemJwt());
+        String jwt = SecurityUtils.getCurrentJwt()
+                .orElse(jwtTokenProvider.createSystemJwt());
         String header = appProperties.getAuth().getAuthorizationHeader();
         String value = appProperties.getAuth().getAuthorizationPrefix() + " " + jwt;
         requestTemplate.header(header, value);
