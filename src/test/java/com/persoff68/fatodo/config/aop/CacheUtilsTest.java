@@ -12,7 +12,7 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 public class CacheUtilsTest {
 
     @Test
-    void testGetValue_success() throws Exception {
+    void testGetValue_success() {
         String[] names = {"one", "two"};
         Object[] args = {"test", "test2"};
         Object result = CacheUtils.getValue(names, args, "#two");
@@ -36,7 +36,7 @@ public class CacheUtilsTest {
     }
 
     @Test
-    void testGetCollectionValue_success() throws Exception {
+    void testGetCollectionValue_success() {
         String[] names = {"one", "two"};
         Object[] args = {"test", testObject()};
         Object result = CacheUtils.getCollectionValue(names, args, "#two.list.string");
