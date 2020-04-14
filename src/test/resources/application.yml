@@ -6,10 +6,10 @@ app:
     tokenExpirationSec: 864000
 
 stubrunner:
-  ids-to-service-ids:
+  idsToServiceIds:
     authservice: auth-service
     userservice: user-service
-  repository-root: '@maven.repo.url@'
+  repositoryRoot: '@maven.repo.url@'
 
 test:
   jwt:
