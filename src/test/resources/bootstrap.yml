@@ -14,8 +14,8 @@ spring:
     type: none
 
 ribbon:
-  ReadTimeout: 60000
-  ConnectTimeout: 60000
+  read-timeout: 60000
+  connect-timeout: 60000
 
 management:
   metrics:
