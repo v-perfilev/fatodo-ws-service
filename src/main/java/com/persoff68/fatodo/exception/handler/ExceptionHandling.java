@@ -26,4 +26,18 @@ public class ExceptionHandling {
         return AttributeHandler.from(request, e).getResponseEntity(objectMapper);
     }
 
+    @ExceptionHandler(RuntimeException.class)
+    public ResponseEntity<String> handleRuntimeException(HttpServletRequest request, RuntimeException e)
+            throws IOException {
+        return e.getCause() instanceof Exception
+                ? AttributeHandler.from(request, (Exception) e.getCause()).getResponseEntity(objectMapper)
+                : AttributeHandler.from(request, e).getResponseEntity(objectMapper);
+    }
+
+    @ExceptionHandler(Exception.class)
+    public ResponseEntity<String> handleException(HttpServletRequest request, Exception e)
+            throws IOException {
+        return AttributeHandler.from(request, e).getResponseEntity(objectMapper);
+    }
+
 }
