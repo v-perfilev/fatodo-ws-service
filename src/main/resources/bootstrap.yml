@@ -5,6 +5,6 @@ spring:
   cloud:
     config:
       uri: http://${CONFIG_SERVER_HOST:localhost}:8888
-      fail-fast: true
+      failFast: true
       username: config-user
       password: ${CONFIG_SERVER_PASSWORD:dev}
