@@ -59,7 +59,9 @@ public class CacheUtils {
     }
 
     private static Object getChildFieldByName(Object object, String name) {
-        Field[] fields = object.getClass().getDeclaredFields();
+        List<Field> fieldList = new ArrayList<>();
+        getAllFields(fieldList, object.getClass());
+        Field[] fields = fieldList.toArray(Field[]::new);
         String[] fieldNames = Arrays.stream(fields).map(Field::getName).toArray(String[]::new);
         int fieldIndex = find(fieldNames, name);
         Field field = fields[fieldIndex];
@@ -68,6 +70,13 @@ public class CacheUtils {
             return field.get(object);
         } catch (IllegalAccessException e) {
             throw new CacheException("Error during reading key");
+        }
+    }
+
+    private static void getAllFields(List<Field> fields, Class<?> type) {
+        fields.addAll(Arrays.asList(type.getDeclaredFields()));
+        if (type.getSuperclass() != null) {
+            getAllFields(fields, type.getSuperclass());
         }
     }
 
