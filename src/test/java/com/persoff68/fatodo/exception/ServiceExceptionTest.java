@@ -2,6 +2,7 @@ package com.persoff68.fatodo.exception;
 
 import com.persoff68.fatodo.service.exception.ModelAlreadyExistsException;
 import com.persoff68.fatodo.service.exception.ModelDuplicatedException;
+import com.persoff68.fatodo.service.exception.ModelInvalidException;
 import com.persoff68.fatodo.service.exception.ModelNotFoundException;
 import com.persoff68.fatodo.service.exception.PermissionException;
 import org.junit.jupiter.api.Test;
@@ -57,6 +58,22 @@ public class ServiceExceptionTest {
         assertThat(exception).isInstanceOf(AbstractException.class);
         AbstractException abstractException = (AbstractException) exception;
         assertThat(abstractException.getStatus()).isEqualTo(HttpStatus.NOT_FOUND);
+    }
+
+    @Test
+    void testModelInvalidException_firstConstructor() {
+        Object exception = new ModelInvalidException();
+        assertThat(exception).isInstanceOf(AbstractException.class);
+        AbstractException abstractException = (AbstractException) exception;
+        assertThat(abstractException.getStatus()).isEqualTo(HttpStatus.BAD_REQUEST);
+    }
+
+    @Test
+    void testModelInvalidException_secondConstructor() {
+        Object exception = new ModelInvalidException(Object.class);
+        assertThat(exception).isInstanceOf(AbstractException.class);
+        AbstractException abstractException = (AbstractException) exception;
+        assertThat(abstractException.getStatus()).isEqualTo(HttpStatus.BAD_REQUEST);
     }
 
     @Test
