@@ -9,7 +9,7 @@ public class CommonExceptionTest {
 
     @Test
     void testClientException() {
-        Object exception = new ClientException(HttpStatus.INTERNAL_SERVER_ERROR, "test_message");
+        Object exception = new ClientException();
         assertThat(exception).isInstanceOf(AbstractException.class);
         AbstractException abstractException = (AbstractException) exception;
         assertThat(abstractException.getStatus()).isEqualTo(HttpStatus.INTERNAL_SERVER_ERROR);
