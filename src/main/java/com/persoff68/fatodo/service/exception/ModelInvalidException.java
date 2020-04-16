@@ -9,7 +9,7 @@ public final class ModelInvalidException extends AbstractDatabaseException {
     }
 
     public ModelInvalidException(Class<?> modelClass) {
-        super(HttpStatus.NOT_FOUND, modelClass.getSimpleName() + " not valid");
+        super(HttpStatus.BAD_REQUEST, modelClass.getSimpleName() + " not valid");
     }
 
 }
