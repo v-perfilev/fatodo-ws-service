@@ -9,6 +9,8 @@ stubrunner:
   idsToServiceIds:
     authservice: auth-service
     userservice: user-service
+    itemservice: item-service
+    groupservice: group-service
   repositoryRoot: '@maven.repo.url@'
 
 test:
