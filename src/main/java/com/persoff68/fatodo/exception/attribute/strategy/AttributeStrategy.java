@@ -10,13 +10,13 @@ public interface AttributeStrategy {
 
     HttpStatus getStatus();
 
-    String getTranslationCode();
+    String getFeedbackCode();
 
     void addTimestamp();
 
     void addStatus();
 
-    void addTranslationCode();
+    void addFeedbackCode();
 
     void addErrorDetails();
 

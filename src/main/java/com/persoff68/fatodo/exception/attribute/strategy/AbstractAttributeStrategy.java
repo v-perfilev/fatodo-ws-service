@@ -25,9 +25,9 @@ public abstract class AbstractAttributeStrategy implements AttributeStrategy {
     }
 
     @Override
-    public String getTranslationCode() {
-        return exception instanceof AbstractException && ((AbstractException) exception).getTranslationCode() != null
-                ? ((AbstractException) exception).getTranslationCode()
+    public String getFeedbackCode() {
+        return exception instanceof AbstractException && ((AbstractException) exception).getFeedBackCode() != null
+                ? ((AbstractException) exception).getFeedBackCode()
                 : null;
     }
 
@@ -44,10 +44,10 @@ public abstract class AbstractAttributeStrategy implements AttributeStrategy {
     }
 
     @Override
-    public void addTranslationCode() {
-        String translationCode = getTranslationCode();
-        if (translationCode != null) {
-            errorAttributes.put("translationCode", translationCode);
+    public void addFeedbackCode() {
+        String feedbackCode = getFeedbackCode();
+        if (feedbackCode != null) {
+            errorAttributes.put("feedbackCode", feedbackCode);
         }
     }
 
