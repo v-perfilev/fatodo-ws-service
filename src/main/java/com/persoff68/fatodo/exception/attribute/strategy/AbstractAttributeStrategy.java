@@ -25,6 +25,13 @@ public abstract class AbstractAttributeStrategy implements AttributeStrategy {
     }
 
     @Override
+    public String getTranslationCode() {
+        return exception instanceof AbstractException && ((AbstractException) exception).getTranslationCode() != null
+                ? ((AbstractException) exception).getTranslationCode()
+                : null;
+    }
+
+    @Override
     public void addTimestamp() {
         errorAttributes.put("timestamp", new Date());
     }
@@ -34,6 +41,14 @@ public abstract class AbstractAttributeStrategy implements AttributeStrategy {
         HttpStatus status = getStatus();
         errorAttributes.put("status", status.value());
         errorAttributes.put("error", status.getReasonPhrase());
+    }
+
+    @Override
+    public void addTranslationCode() {
+        String translationCode = getTranslationCode();
+        if (translationCode != null) {
+            errorAttributes.put("translationCode", translationCode);
+        }
     }
 
     @Override
