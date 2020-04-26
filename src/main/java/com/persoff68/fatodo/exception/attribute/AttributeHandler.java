@@ -26,8 +26,8 @@ public class AttributeHandler {
     public Map<String, Object> getErrorAttributes() {
         attributeStrategy.addTimestamp();
         attributeStrategy.addStatus();
-        attributeStrategy.getFeedbackCode();
         attributeStrategy.addErrorDetails();
+        attributeStrategy.addFeedbackCode();
         attributeStrategy.addPath();
         return attributeStrategy.getErrorAttributes();
     }
