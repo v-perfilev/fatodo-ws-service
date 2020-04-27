@@ -5,7 +5,7 @@ import org.springframework.http.HttpStatus;
 public final class ModelNotFoundException extends AbstractDatabaseException {
     private static final String MESSAGE = "Model not found in database";
     private static final String MESSAGE_WITH_PARAM = " not found in database";
-    private static final String FEEDBACK_CODE = "model.not-found";
+    private static final String FEEDBACK_CODE = "model.notFound";
 
     public ModelNotFoundException() {
         super(HttpStatus.NOT_FOUND, MESSAGE, FEEDBACK_CODE);

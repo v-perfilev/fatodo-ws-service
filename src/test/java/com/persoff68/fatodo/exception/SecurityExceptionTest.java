@@ -15,6 +15,7 @@ public class SecurityExceptionTest {
         assertThat(exception).isInstanceOf(AbstractException.class);
         AbstractException abstractException = (AbstractException) exception;
         assertThat(abstractException.getStatus()).isEqualTo(HttpStatus.FORBIDDEN);
+        assertThat(abstractException.getFeedBackCode()).isEqualTo("security.forbidden");
     }
 
     @Test
@@ -23,6 +24,7 @@ public class SecurityExceptionTest {
         assertThat(exception).isInstanceOf(AbstractException.class);
         AbstractException abstractException = (AbstractException) exception;
         assertThat(abstractException.getStatus()).isEqualTo(HttpStatus.UNAUTHORIZED);
+        assertThat(abstractException.getFeedBackCode()).isEqualTo("security.unauthorized");
     }
 
 }

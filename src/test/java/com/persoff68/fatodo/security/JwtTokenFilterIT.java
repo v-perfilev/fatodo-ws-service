@@ -21,17 +21,17 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 public class JwtTokenFilterIT {
 
     @Value("${test.jwt.user}")
-    private String userJwt;
+    String userJwt;
     @Value("${test.jwt.invalid-expired}")
-    private String invalidExpiredJwt;
+    String invalidExpiredJwt;
     @Value("${test.jwt.invalid-format}")
-    private String invalidFormatJwt;
+    String invalidFormatJwt;
     @Value("${test.jwt.invalid-wrong}")
-    private String invalidWrongJwt;
+    String invalidWrongJwt;
 
     @Autowired
-    private WebApplicationContext context;
-    private MockMvc mvc;
+    WebApplicationContext context;
+    MockMvc mvc;
 
     @BeforeEach
     void setup() {

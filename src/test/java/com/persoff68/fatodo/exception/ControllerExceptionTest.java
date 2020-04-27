@@ -9,11 +9,12 @@ import static org.assertj.core.api.Assertions.assertThat;
 public class ControllerExceptionTest {
 
     @Test
-    void testValidationException() {
+    void testInvalidFormException() {
         Object exception = new InvalidFormException();
         assertThat(exception).isInstanceOf(AbstractException.class);
         AbstractException abstractException = (AbstractException) exception;
         assertThat(abstractException.getStatus()).isEqualTo(HttpStatus.BAD_REQUEST);
+        assertThat(abstractException.getFeedBackCode()).isEqualTo("form.invalid");
     }
 
 }

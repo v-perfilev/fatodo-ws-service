@@ -18,6 +18,7 @@ public class ServiceExceptionTest {
         assertThat(exception).isInstanceOf(AbstractException.class);
         AbstractException abstractException = (AbstractException) exception;
         assertThat(abstractException.getStatus()).isEqualTo(HttpStatus.BAD_REQUEST);
+        assertThat(abstractException.getFeedBackCode()).isEqualTo("model.exists");
     }
 
     @Test
@@ -26,6 +27,7 @@ public class ServiceExceptionTest {
         assertThat(exception).isInstanceOf(AbstractException.class);
         AbstractException abstractException = (AbstractException) exception;
         assertThat(abstractException.getStatus()).isEqualTo(HttpStatus.BAD_REQUEST);
+        assertThat(abstractException.getFeedBackCode()).isEqualTo("model.exists");
     }
 
     @Test
@@ -34,6 +36,7 @@ public class ServiceExceptionTest {
         assertThat(exception).isInstanceOf(AbstractException.class);
         AbstractException abstractException = (AbstractException) exception;
         assertThat(abstractException.getStatus()).isEqualTo(HttpStatus.CONFLICT);
+        assertThat(abstractException.getFeedBackCode()).isEqualTo("model.duplicated");
     }
 
     @Test
@@ -42,6 +45,7 @@ public class ServiceExceptionTest {
         assertThat(exception).isInstanceOf(AbstractException.class);
         AbstractException abstractException = (AbstractException) exception;
         assertThat(abstractException.getStatus()).isEqualTo(HttpStatus.CONFLICT);
+        assertThat(abstractException.getFeedBackCode()).isEqualTo("model.duplicated");
     }
 
     @Test
@@ -50,6 +54,7 @@ public class ServiceExceptionTest {
         assertThat(exception).isInstanceOf(AbstractException.class);
         AbstractException abstractException = (AbstractException) exception;
         assertThat(abstractException.getStatus()).isEqualTo(HttpStatus.NOT_FOUND);
+        assertThat(abstractException.getFeedBackCode()).isEqualTo("model.notFound");
     }
 
     @Test
@@ -58,6 +63,7 @@ public class ServiceExceptionTest {
         assertThat(exception).isInstanceOf(AbstractException.class);
         AbstractException abstractException = (AbstractException) exception;
         assertThat(abstractException.getStatus()).isEqualTo(HttpStatus.NOT_FOUND);
+        assertThat(abstractException.getFeedBackCode()).isEqualTo("model.notFound");
     }
 
     @Test
@@ -66,6 +72,7 @@ public class ServiceExceptionTest {
         assertThat(exception).isInstanceOf(AbstractException.class);
         AbstractException abstractException = (AbstractException) exception;
         assertThat(abstractException.getStatus()).isEqualTo(HttpStatus.BAD_REQUEST);
+        assertThat(abstractException.getFeedBackCode()).isEqualTo("model.invalid");
     }
 
     @Test
@@ -74,6 +81,7 @@ public class ServiceExceptionTest {
         assertThat(exception).isInstanceOf(AbstractException.class);
         AbstractException abstractException = (AbstractException) exception;
         assertThat(abstractException.getStatus()).isEqualTo(HttpStatus.BAD_REQUEST);
+        assertThat(abstractException.getFeedBackCode()).isEqualTo("model.invalid");
     }
 
     @Test
@@ -82,6 +90,7 @@ public class ServiceExceptionTest {
         assertThat(exception).isInstanceOf(AbstractException.class);
         AbstractException abstractException = (AbstractException) exception;
         assertThat(abstractException.getStatus()).isEqualTo(HttpStatus.BAD_REQUEST);
+        assertThat(abstractException.getFeedBackCode()).isEqualTo("permission.restricted");
     }
 
     @Test
@@ -90,6 +99,7 @@ public class ServiceExceptionTest {
         assertThat(exception).isInstanceOf(AbstractException.class);
         AbstractException abstractException = (AbstractException) exception;
         assertThat(abstractException.getStatus()).isEqualTo(HttpStatus.BAD_REQUEST);
+        assertThat(abstractException.getFeedBackCode()).isEqualTo("permission.restricted");
     }
 
 }

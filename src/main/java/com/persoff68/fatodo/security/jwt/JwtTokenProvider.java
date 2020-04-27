@@ -2,6 +2,8 @@ package com.persoff68.fatodo.security.jwt;
 
 import com.persoff68.fatodo.config.AppProperties;
 import com.persoff68.fatodo.config.constant.AppConstants;
+import com.persoff68.fatodo.security.exception.UnauthorizedException;
+import com.persoff68.fatodo.security.util.SecurityUtils;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.ExpiredJwtException;
 import io.jsonwebtoken.Jwts;
@@ -33,6 +35,12 @@ public class JwtTokenProvider {
     private static final String AUTHORITY_KEY = "authorities";
 
     private final AppProperties appProperties;
+
+    public String getId() {
+        String jwt = SecurityUtils.getCurrentJwt()
+                .orElseThrow(UnauthorizedException::new);
+        return getUserIdFromJwt(jwt);
+    }
 
     public String getUserIdFromJwt(String token) {
         return getClaimsFromJwt(token).getSubject();
