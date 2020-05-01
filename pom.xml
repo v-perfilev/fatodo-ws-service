@@ -45,6 +45,7 @@
         <!-- Profiles -->
         <dev.spring-profile>dev</dev.spring-profile>
         <docker.spring-profile>docker</docker.spring-profile>
+        <docker-rem-env.spring-profile>dockerRemEnv</docker-rem-env.spring-profile>
         <prod.spring-profile>prod</prod.spring-profile>
     </properties>
 
@@ -336,6 +337,13 @@
             <id>docker</id>
             <properties>
                 <spring.profiles.active>${docker.spring-profile}</spring.profiles.active>
+            </properties>
+        </profile>
+        <!-- docker with remote environment profile -->
+        <profile>
+            <id>dockerRemEnv</id>
+            <properties>
+                <spring.profiles.active>${docker-rem-env.spring-profile}</spring.profiles.active>
             </properties>
         </profile>
         <!-- prod profile -->
