@@ -13,9 +13,12 @@ spring:
   cache:
     type: none
 
-ribbon:
-  ReadRimeout: 60000
-  ConnectTimeout: 60000
+feign:
+  client:
+    config:
+      default:
+        connectTimeout: 20000
+        readTimeout: 20000
 
 management:
   metrics:
