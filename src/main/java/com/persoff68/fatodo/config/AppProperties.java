@@ -1,6 +1,5 @@
 package com.persoff68.fatodo.config;
 
-import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
 import org.springframework.boot.context.properties.ConfigurationProperties;
@@ -8,7 +7,14 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
 @Getter
 @ConfigurationProperties(prefix = "app")
 public class AppProperties {
+    private final Common common = new Common();
     private final Auth auth = new Auth();
+
+    @Getter
+    @Setter
+    public static class Common {
+        private String baseUrl;
+    }
 
     @Getter
     @Setter
@@ -18,6 +24,5 @@ public class AppProperties {
         private String tokenSecret;
         private long tokenExpirationSec;
     }
-
 }
 
