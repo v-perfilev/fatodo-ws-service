@@ -12,7 +12,7 @@
     <artifactId>baseskeleton</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <name>base-skeleton</name>
-    <description>Base skeleton for FaToDo</description>
+    <description>Base skeleton for Fatodo</description>
 
     <properties>
         <!-- Common variables -->
