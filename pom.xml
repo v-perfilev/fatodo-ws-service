@@ -12,7 +12,7 @@
     <artifactId>extendedskeleton</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <name>extended-skeleton</name>
-    <description>Extended skeleton for FaToDo</description>
+    <description>Extended skeleton for Fatodo</description>
 
     <properties>
         <!-- Common variables -->

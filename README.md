@@ -1,2 +1,2 @@
-# FaToDo extended-skeleton
-Spring app that is used for development of complex microservices.
+# Fatodo extended-skeleton
+Very simple spring app that is used for development of base microservices.
