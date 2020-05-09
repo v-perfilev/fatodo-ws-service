@@ -14,6 +14,7 @@ public class AppProperties {
     @Setter
     public static class Common {
         private String baseUrl;
+        private String apiUrl;
     }
 
     @Getter
