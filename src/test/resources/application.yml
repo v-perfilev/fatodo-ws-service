@@ -11,6 +11,7 @@ stubrunner:
     userservice: user-service
     itemservice: item-service
     groupservice: group-service
+    mailservice: mail-service
   repositoryRoot: '@maven.repo.url@'
 
 test:
