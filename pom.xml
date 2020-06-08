@@ -5,7 +5,7 @@
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
-        <version>2.2.6.RELEASE</version>
+        <version>2.3.0.RELEASE</version>
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
     <groupId>com.persoff68.fatodo</groupId>
@@ -24,7 +24,7 @@
         <contract.package>com.persoff68.fatodo.contract</contract.package>
         <!-- Dependency versions -->
         <java.version>13</java.version>
-        <spring-cloud.version>Hoxton.SR3</spring-cloud.version>
+        <spring-cloud.version>Hoxton.SR5</spring-cloud.version>
         <jackson.version>2.10.2</jackson.version>
         <jaxb.version>2.3.1</jaxb.version>
         <jwt.version>0.9.1</jwt.version>
@@ -34,7 +34,6 @@
         <micrometer-registry-influx.version>1.4.0</micrometer-registry-influx.version>
         <swagger.version>2.9.2</swagger.version>
         <!-- Plugin versions -->
-        <maven-jar-plugin.version>3.2.0</maven-jar-plugin.version>
         <maven-surefire-plugin.version>3.0.0-M4</maven-surefire-plugin.version>
         <maven-failsafe-plugin.version>3.0.0-M4</maven-failsafe-plugin.version>
         <properties-maven-plugin.version>1.0.0</properties-maven-plugin.version>
