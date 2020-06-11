@@ -21,7 +21,7 @@ public enum Language {
         return Arrays.stream(values()).anyMatch(language -> language.getValue().equals(value));
     }
 
-    private static class Constants {
+    public static class Constants {
         public static final String EN_VALUE = "en";
         public static final String RU_VALUE = "ru";
 

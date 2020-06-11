@@ -16,7 +16,7 @@ public enum Profile {
         return value;
     }
 
-    private static class Constants {
+    public static class Constants {
         public static final String DEVELOPMENT_VALUE = "dev";
         public static final String DOCKER_VALUE = "docker";
         public static final String PRODUCTION_VALUE = "prod";

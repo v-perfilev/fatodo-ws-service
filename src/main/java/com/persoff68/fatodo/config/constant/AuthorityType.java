@@ -28,7 +28,7 @@ public enum AuthorityType {
         return Arrays.stream(values()).anyMatch(authorityType -> authorityType.getValue().equals(value));
     }
 
-    private static class Constants {
+    public static class Constants {
         public static final String SYSTEM_VALUE = "ROLE_SYSTEM";
         public static final String ADMIN_VALUE = "ROLE_ADMIN";
         public static final String USER_VALUE = "ROLE_USER";
