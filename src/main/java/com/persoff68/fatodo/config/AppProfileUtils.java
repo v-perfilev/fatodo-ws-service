@@ -11,7 +11,7 @@ public class AppProfileUtils {
     }
 
     public static Properties getDefaultProfile() {
-        String[] profiles = {Profile.Constants.DEVELOPMENT_VALUE};
+        String[] profiles = {Profile.DEVELOPMENT.getValue()};
         Properties properties = new Properties();
         properties.put(SPRING_PROFILES_DEFAULT, profiles);
         return properties;

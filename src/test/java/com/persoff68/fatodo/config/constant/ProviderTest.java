@@ -8,9 +8,9 @@ public class ProviderTest {
 
     @Test
     void testEnum() {
-        assertThat(Provider.LOCAL.getValue()).isEqualTo(Provider.Constants.LOCAL_VALUE);
-        assertThat(Provider.GOOGLE.getValue()).isEqualTo(Provider.Constants.GOOGLE_VALUE);
-        assertThat(Provider.FACEBOOK.getValue()).isEqualTo(Provider.Constants.FACEBOOK_VALUE);
+        assertThat(Provider.LOCAL.getValue()).isEqualTo("LOCAL");
+        assertThat(Provider.GOOGLE.getValue()).isEqualTo("GOOGLE");
+        assertThat(Provider.FACEBOOK.getValue()).isEqualTo("FACEBOOK");
     }
 
     @Test

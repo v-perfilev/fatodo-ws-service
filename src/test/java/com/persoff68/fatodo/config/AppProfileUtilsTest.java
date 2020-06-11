@@ -14,6 +14,6 @@ public class AppProfileUtilsTest {
         Properties properties = AppProfileUtils.getDefaultProfile();
         String[] defaultProfiles = (String[]) properties.get("spring.profiles.default");
         assertThat(defaultProfiles).hasSize(1);
-        assertThat(defaultProfiles).contains(Profile.Constants.DEVELOPMENT_VALUE);
+        assertThat(defaultProfiles).contains(Profile.DEVELOPMENT.getValue());
     }
 }

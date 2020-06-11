@@ -9,9 +9,9 @@ public class AuthorityTypeTest {
 
     @Test
     void testEnum() {
-        assertThat(AuthorityType.ADMIN.getValue()).isEqualTo(AuthorityType.Constants.ADMIN_VALUE);
-        assertThat(AuthorityType.SYSTEM.getValue()).isEqualTo(AuthorityType.Constants.SYSTEM_VALUE);
-        assertThat(AuthorityType.USER.getValue()).isEqualTo(AuthorityType.Constants.USER_VALUE);
+        assertThat(AuthorityType.ADMIN.getValue()).isEqualTo("ROLE_ADMIN");
+        assertThat(AuthorityType.SYSTEM.getValue()).isEqualTo("ROLE_SYSTEM");
+        assertThat(AuthorityType.USER.getValue()).isEqualTo("ROLE_USER");
     }
 
     @Test
@@ -25,7 +25,7 @@ public class AuthorityTypeTest {
     @Test
     void testGetGrantedAuthority() {
         assertThat(AuthorityType.ADMIN.getGrantedAuthority())
-                .isEqualTo(new SimpleGrantedAuthority(AuthorityType.Constants.ADMIN_VALUE));
+                .isEqualTo(new SimpleGrantedAuthority(AuthorityType.ADMIN.getValue()));
     }
 
 }

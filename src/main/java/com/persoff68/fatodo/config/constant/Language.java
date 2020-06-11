@@ -2,14 +2,14 @@ package com.persoff68.fatodo.config.constant;
 
 import java.util.Arrays;
 
-public enum Provider {
-    LOCAL(Constants.LOCAL_VALUE),
-    GOOGLE(Constants.GOOGLE_VALUE),
-    FACEBOOK(Constants.FACEBOOK_VALUE);
+public enum Language {
+    DEFAULT(Constants.EN_VALUE),
+    EN(Constants.EN_VALUE),
+    RU(Constants.RU_VALUE);
 
     private final String value;
 
-    Provider(String value) {
+    Language(String value) {
         this.value = value;
     }
 
@@ -22,9 +22,8 @@ public enum Provider {
     }
 
     private static class Constants {
-        public static final String LOCAL_VALUE = "LOCAL";
-        public static final String GOOGLE_VALUE = "GOOGLE";
-        public static final String FACEBOOK_VALUE = "FACEBOOK";
+        public static final String EN_VALUE = "en";
+        public static final String RU_VALUE = "ru";
 
         private Constants() {
         }

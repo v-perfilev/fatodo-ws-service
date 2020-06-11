@@ -8,10 +8,10 @@ public class ProfileTest {
 
     @Test
     void testEnum() {
-        assertThat(Profile.DEVELOPMENT.getValue()).isEqualTo(Profile.Constants.DEVELOPMENT_VALUE);
-        assertThat(Profile.DOCKER.getValue()).isEqualTo(Profile.Constants.DOCKER_VALUE);
-        assertThat(Profile.DEVELOPMENT.getValue()).isEqualTo(Profile.Constants.DEVELOPMENT_VALUE);
-        assertThat(Profile.TEST.getValue()).isEqualTo(Profile.Constants.TEST_VALUE);
+        assertThat(Profile.DEVELOPMENT.getValue()).isEqualTo("dev");
+        assertThat(Profile.DOCKER.getValue()).isEqualTo("docker");
+        assertThat(Profile.PRODUCTION.getValue()).isEqualTo("prod");
+        assertThat(Profile.TEST.getValue()).isEqualTo("test");
     }
 
 }
