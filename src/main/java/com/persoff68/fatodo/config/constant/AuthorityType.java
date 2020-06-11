@@ -25,7 +25,7 @@ public enum AuthorityType {
     }
 
     public static boolean contains(String value) {
-        return Arrays.stream(AuthorityType.values()).anyMatch(a -> a.getValue().equals(value));
+        return Arrays.stream(values()).anyMatch(authorityType -> authorityType.getValue().equals(value));
     }
 
     private static class Constants {

@@ -18,7 +18,7 @@ public enum Provider {
     }
 
     public static boolean contains(String value) {
-        return Arrays.stream(Provider.values()).anyMatch(a -> a.getValue().equals(value));
+        return Arrays.stream(values()).anyMatch(provider -> provider.getValue().equals(value));
     }
 
     private static class Constants {
