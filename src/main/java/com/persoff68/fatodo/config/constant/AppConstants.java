@@ -9,6 +9,9 @@ public class AppConstants {
     public static final String SYSTEM_AUTHORITY = "ROLE_SYSTEM";
     public static final long SYSTEM_TOKEN_EXPIRATION_SEC = 60;
 
+    public static final String DEFAULT_LANGUAGE = "en";
+    public static final String[] LANGUAGES = {"en", "ru"};
+
     public static final long SERIAL_VERSION_UID = 1L;
 
     private AppConstants() {
