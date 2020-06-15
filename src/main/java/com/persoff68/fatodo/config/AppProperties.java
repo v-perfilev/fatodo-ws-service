@@ -24,6 +24,7 @@ public class AppProperties {
         private String authorizationPrefix;
         private String tokenSecret;
         private long tokenExpirationSec;
+        private String captchaSecret;
     }
 }
 
