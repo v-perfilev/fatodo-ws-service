@@ -1,6 +1,7 @@
 package com.persoff68.fatodo.security;
 
 import com.persoff68.fatodo.config.AppProperties;
+import com.persoff68.fatodo.config.constant.AppConstants;
 import com.persoff68.fatodo.security.details.CustomUserDetails;
 import com.persoff68.fatodo.security.jwt.JwtTokenProvider;
 import org.junit.jupiter.api.BeforeEach;
@@ -55,6 +56,17 @@ public class JwtTokenProviderTest {
         String jwt = jwtTokenProvider.createUserJwt("test_id", user);
         boolean isValid = jwtTokenProvider.validateJwt(jwt);
         assertThat(isValid).isTrue();
+    }
+
+    @Test
+    void testCreateSystemJwtAndValidateJwt() {
+        String jwt = jwtTokenProvider.createSystemJwt();
+        Authentication authentication = jwtTokenProvider.getAuthenticationFromJwt(jwt);
+        boolean isValid = jwtTokenProvider.validateJwt(jwt);
+        boolean hasSystemAuthority = authentication.getAuthorities().stream()
+                .map(GrantedAuthority::getAuthority).anyMatch(s -> s.equals(AppConstants.SYSTEM_AUTHORITY));
+        assertThat(isValid).isTrue();
+        assertThat(hasSystemAuthority).isTrue();
     }
 
 }
