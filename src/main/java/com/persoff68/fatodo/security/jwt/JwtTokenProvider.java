@@ -2,8 +2,7 @@ package com.persoff68.fatodo.security.jwt;
 
 import com.persoff68.fatodo.config.AppProperties;
 import com.persoff68.fatodo.config.constant.AppConstants;
-import com.persoff68.fatodo.security.exception.UnauthorizedException;
-import com.persoff68.fatodo.security.util.SecurityUtils;
+import com.persoff68.fatodo.security.details.CustomUserDetails;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.ExpiredJwtException;
 import io.jsonwebtoken.Jwts;
@@ -36,25 +35,16 @@ public class JwtTokenProvider {
 
     private final AppProperties appProperties;
 
-    public String getId() {
-        String jwt = SecurityUtils.getCurrentJwt()
-                .orElseThrow(UnauthorizedException::new);
-        return getUserIdFromJwt(jwt);
-    }
-
-    public String getUserIdFromJwt(String token) {
-        return getClaimsFromJwt(token).getSubject();
-    }
-
     public UsernamePasswordAuthenticationToken getAuthenticationFromJwt(String jwt) {
         Claims claims = getClaimsFromJwt(jwt);
+        String id = claims.getSubject();
         String username = claims.get(USERNAME_KEY).toString();
         List<? extends GrantedAuthority> authorityList =
                 Arrays.stream(claims.get(AUTHORITY_KEY).toString().split(","))
                         .map(SimpleGrantedAuthority::new)
                         .collect(Collectors.toList());
-        User user = new User(username, "", authorityList);
-        return new UsernamePasswordAuthenticationToken(user, jwt, authorityList);
+        CustomUserDetails userDetails = new CustomUserDetails(id, username, "", authorityList);
+        return new UsernamePasswordAuthenticationToken(userDetails, jwt, authorityList);
     }
 
     public String createUserJwt(String id, User user) {
@@ -136,11 +126,11 @@ public class JwtTokenProvider {
     @Getter
     @Builder
     private static class JwtParams {
-        private String id;
-        private String username;
-        private String authorities;
-        private Date nowDate;
-        private Date expirationDate;
+        private final String id;
+        private final String username;
+        private final String authorities;
+        private final Date nowDate;
+        private final Date expirationDate;
     }
 
 }

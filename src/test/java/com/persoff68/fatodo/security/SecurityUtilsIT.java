@@ -3,8 +3,6 @@ package com.persoff68.fatodo.security;
 import com.persoff68.fatodo.annotation.WithCustomSecurityContext;
 import com.persoff68.fatodo.security.util.SecurityUtils;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -17,6 +15,21 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 @SpringBootTest(classes = SecurityUtils.class)
 public class SecurityUtilsIT {
+
+    @Test
+    @WithAnonymousUser
+    void testGetCurrentId_ifAnonymous() {
+        Optional<String> idOptional = SecurityUtils.getCurrentId();
+        assertThat(idOptional.isPresent()).isFalse();
+    }
+
+    @Test
+    @WithCustomSecurityContext
+    void testGetCurrentId_ifAuthorized() {
+        Optional<String> idOptional = SecurityUtils.getCurrentId();
+        assertThat(idOptional.isPresent()).isTrue();
+        assertThat(idOptional.get()).isEqualTo("test_id");
+    }
 
     @Test
     @WithAnonymousUser
