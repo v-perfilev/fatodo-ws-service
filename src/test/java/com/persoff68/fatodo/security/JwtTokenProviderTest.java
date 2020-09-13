@@ -39,7 +39,7 @@ public class JwtTokenProviderTest {
 
     @Test
     void testGetAuthenticationFromJwt() {
-        String jwt = "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIxIiwidXNlcm5hbWUiOiJ0ZXN0X3VzZXIiLCJhdXRob3JpdGllcyI6IlJPTEVfVEVTVCIsImlhdCI6MTU4MzI2ODYxMSwiZXhwIjoyNTgzMjY4NjcxfQ._gQPODOrXvpmc3WfHAli3kgbcm7mwu7SmmJAVqin8CK41v475Teeh4gUgsH-lTJqLNQCacBHmpBxPvloHEWFCw";
+        String jwt = "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ0ZXN0X2lkIiwidXNlcm5hbWUiOiJ0ZXN0X3VzZXIiLCJhdXRob3JpdGllcyI6IlJPTEVfVEVTVCIsImlhdCI6MTU4MzI2ODYxMSwiZXhwIjoyNTgzMjY4NjcxfQ.HsXZbf5WA7Db6XucuyA4EC8MlvaLFWphW34jqjWlzOwDMwaeUDYsC68Ev_rQ7mc0l_ZXwd11ymkvI2NpAXFAvQ";
         List<? extends GrantedAuthority> authorityList =
                 Collections.singletonList(new SimpleGrantedAuthority("ROLE_TEST"));
         CustomUserDetails userDetails = new CustomUserDetails("test_id", "test_user", "", authorityList);
