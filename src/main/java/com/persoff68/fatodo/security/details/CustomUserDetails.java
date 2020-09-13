@@ -11,7 +11,8 @@ public class CustomUserDetails extends User {
 
     private final String id;
 
-    public CustomUserDetails(String id, String username, String password, Collection<? extends GrantedAuthority> authorities) {
+    public CustomUserDetails(String id, String username, String password,
+                             Collection<? extends GrantedAuthority> authorities) {
         super(username, password, authorities);
         this.id = id;
     }
