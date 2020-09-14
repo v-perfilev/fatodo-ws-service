@@ -3,6 +3,8 @@ server:
   port: 10344
 
 spring:
+  profiles:
+    active: test
   cloud:
     config:
       enabled: false
