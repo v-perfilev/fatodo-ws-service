@@ -18,6 +18,8 @@
         <!-- Common variables -->
         <jar.name>fatodo</jar.name>
         <maven.repo.url/>
+        <maven.repo.username/>
+        <maven.repo.password/>
         <!-- Classes and packages -->
         <main.class>com.persoff68.fatodo.ExtendedSkeletonApplication</main.class>
         <root.package>com.persoff68.fatodo</root.package>
