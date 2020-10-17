@@ -24,12 +24,15 @@ public class RestExceptionHandling {
 
     @ExceptionHandler(MethodArgumentNotValidException.class)
     public ResponseEntity<String> handleMethodArgumentNotValidException(HttpServletRequest request) throws IOException {
-        Exception e = new InvalidFormException();
-        return AttributeHandler.from(request, e).getResponseEntity(objectMapper);
+        return handleInvalidFormException(request);
     }
 
     @ExceptionHandler(BindException.class)
     public ResponseEntity<String> handleBindException(HttpServletRequest request) throws IOException {
+        return handleInvalidFormException(request);
+    }
+
+    private ResponseEntity<String> handleInvalidFormException(HttpServletRequest request) throws IOException {
         Exception e = new InvalidFormException();
         return AttributeHandler.from(request, e).getResponseEntity(objectMapper);
     }
