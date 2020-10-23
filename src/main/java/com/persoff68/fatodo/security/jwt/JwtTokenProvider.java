@@ -3,6 +3,7 @@ package com.persoff68.fatodo.security.jwt;
 import com.persoff68.fatodo.config.AppProperties;
 import com.persoff68.fatodo.config.constant.AppConstants;
 import com.persoff68.fatodo.security.details.CustomUserDetails;
+import com.persoff68.fatodo.security.util.SecurityUtils;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.ExpiredJwtException;
 import io.jsonwebtoken.Jwts;
@@ -23,6 +24,7 @@ import org.springframework.stereotype.Component;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
+import java.util.UUID;
 import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
 
@@ -37,7 +39,7 @@ public class JwtTokenProvider {
 
     public UsernamePasswordAuthenticationToken getAuthenticationFromJwt(String jwt) {
         Claims claims = getClaimsFromJwt(jwt);
-        String id = claims.getSubject();
+        UUID id = SecurityUtils.getUuidFromString(claims.getSubject());
         String username = claims.get(USERNAME_KEY).toString();
         List<? extends GrantedAuthority> authorityList =
                 Arrays.stream(claims.get(AUTHORITY_KEY).toString().split(","))
@@ -47,7 +49,7 @@ public class JwtTokenProvider {
         return new UsernamePasswordAuthenticationToken(userDetails, jwt, authorityList);
     }
 
-    public String createUserJwt(String id, User user) {
+    public String createUserJwt(UUID id, User user) {
         long tokenExpirationSec = appProperties.getAuth().getTokenExpirationSec();
 
         String authorities = user.getAuthorities().stream()
@@ -74,7 +76,7 @@ public class JwtTokenProvider {
                 + TimeUnit.SECONDS.toMillis(AppConstants.SYSTEM_TOKEN_EXPIRATION_SEC));
 
         JwtParams params = JwtParams.builder()
-                .id("0")
+                .id(AppConstants.SYSTEM_ID)
                 .username(AppConstants.SYSTEM_USERNAME)
                 .authorities(AppConstants.SYSTEM_AUTHORITY)
                 .nowDate(nowDate)
@@ -87,7 +89,10 @@ public class JwtTokenProvider {
     public boolean validateJwt(String jwt) {
         try {
             String tokenSecret = appProperties.getAuth().getTokenSecret();
-            Jwts.parser().setSigningKey(tokenSecret).parseClaimsJws(jwt);
+            String id = Jwts.parser().setSigningKey(tokenSecret).parseClaimsJws(jwt).getBody().getSubject();
+            if (SecurityUtils.getUuidFromString(id) == null) {
+                throw new IllegalArgumentException();
+            }
             return true;
         } catch (SignatureException ex) {
             log.error("Invalid JWT signature");
@@ -98,7 +103,7 @@ public class JwtTokenProvider {
         } catch (UnsupportedJwtException ex) {
             log.error("Unsupported JWT token");
         } catch (IllegalArgumentException ex) {
-            log.error("JWT claims string is empty.");
+            log.error("JWT claims string not valid");
         }
         return false;
     }
@@ -114,7 +119,7 @@ public class JwtTokenProvider {
     private String buildJwt(JwtParams params) {
         String tokenSecret = appProperties.getAuth().getTokenSecret();
         return Jwts.builder()
-                .setSubject(params.getId())
+                .setSubject(params.getId().toString())
                 .claim(USERNAME_KEY, params.getUsername())
                 .claim(AUTHORITY_KEY, params.getAuthorities())
                 .setIssuedAt(params.getNowDate())
@@ -126,7 +131,7 @@ public class JwtTokenProvider {
     @Getter
     @Builder
     private static class JwtParams {
-        private final String id;
+        private final UUID id;
         private final String username;
         private final String authorities;
         private final Date nowDate;

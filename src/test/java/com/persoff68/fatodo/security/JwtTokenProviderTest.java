@@ -17,6 +17,7 @@ import org.springframework.security.core.userdetails.User;
 
 import java.util.Collections;
 import java.util.List;
+import java.util.UUID;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -33,16 +34,18 @@ public class JwtTokenProviderTest {
         appProperties = Mockito.mock(AppProperties.class);
         auth = Mockito.mock(AppProperties.Auth.class);
         Mockito.when(appProperties.getAuth()).thenReturn(auth);
-        Mockito.when(auth.getTokenSecret()).thenReturn("testTokenSecretTestTokenSecretTestTokenSecretTestTokenSecret");
+        Mockito.when(auth.getTokenSecret()).thenReturn("4323B829EF1EEF14E324241FB72E6");
         jwtTokenProvider = new JwtTokenProvider(appProperties);
     }
 
     @Test
     void testGetAuthenticationFromJwt() {
-        String jwt = "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ0ZXN0X2lkIiwidXNlcm5hbWUiOiJ0ZXN0X3VzZXIiLCJhdXRob3JpdGllcyI6IlJPTEVfVEVTVCIsImlhdCI6MTU4MzI2ODYxMSwiZXhwIjoyNTgzMjY4NjcxfQ.HsXZbf5WA7Db6XucuyA4EC8MlvaLFWphW34jqjWlzOwDMwaeUDYsC68Ev_rQ7mc0l_ZXwd11ymkvI2NpAXFAvQ";
+        String jwt = "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJiNDQ2Y2I5OS01ZGQ1LTQ4YTgtOWNjMS1kMWI4OTc5NzY4ZmMiLCJ1c2VybmFtZSI6InRlc3RfdGVzdCIsImF1dGhvcml0aWVzIjoiUk9MRV9URVNUIiwiaWF0IjowLCJleHAiOjMyNTAzNjc2NDAwfQ.AxcHnejWG4Y_edm_ymjO6U92UPKoZTn_a5kLLv4j_M4bvGkCOmMigLET6a9F4DpbVW2zUlnXNyvVY_KpxadEQg";
+        UUID id = UUID.fromString("b446cb99-5dd5-48a8-9cc1-d1b8979768fc");
+        String username = "test_test";
         List<? extends GrantedAuthority> authorityList =
                 Collections.singletonList(new SimpleGrantedAuthority("ROLE_TEST"));
-        CustomUserDetails userDetails = new CustomUserDetails("test_id", "test_user", "", authorityList);
+        CustomUserDetails userDetails = new CustomUserDetails(id, username, "", authorityList);
         Authentication authentication = new UsernamePasswordAuthenticationToken(userDetails, jwt, authorityList);
         Authentication resultAuthentication = jwtTokenProvider.getAuthenticationFromJwt(jwt);
         assertThat(resultAuthentication).isEqualTo(authentication);
@@ -51,9 +54,10 @@ public class JwtTokenProviderTest {
     @Test
     void testCreateUserJwtAndValidateJwt() {
         Mockito.when(auth.getTokenExpirationSec()).thenReturn(100L);
+        UUID id = UUID.randomUUID();
         User user = new User("test_user", "",
                 Collections.singletonList(new SimpleGrantedAuthority("ROLE_TEST")));
-        String jwt = jwtTokenProvider.createUserJwt("test_id", user);
+        String jwt = jwtTokenProvider.createUserJwt(id, user);
         boolean isValid = jwtTokenProvider.validateJwt(jwt);
         assertThat(isValid).isTrue();
     }

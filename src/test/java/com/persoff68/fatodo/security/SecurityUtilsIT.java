@@ -10,6 +10,7 @@ import org.springframework.security.test.context.support.WithAnonymousUser;
 
 import java.util.Optional;
 import java.util.Set;
+import java.util.UUID;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -19,16 +20,16 @@ public class SecurityUtilsIT {
     @Test
     @WithAnonymousUser
     void testGetCurrentId_ifAnonymous() {
-        Optional<String> idOptional = SecurityUtils.getCurrentId();
+        Optional<UUID> idOptional = SecurityUtils.getCurrentId();
         assertThat(idOptional.isPresent()).isFalse();
     }
 
     @Test
     @WithCustomSecurityContext
     void testGetCurrentId_ifAuthorized() {
-        Optional<String> idOptional = SecurityUtils.getCurrentId();
+        Optional<UUID> idOptional = SecurityUtils.getCurrentId();
         assertThat(idOptional.isPresent()).isTrue();
-        assertThat(idOptional.get()).isEqualTo("test_id");
+        assertThat(idOptional.get()).isEqualTo(UUID.fromString("41789d72-3fa5-4019-8205-ccf44213b322"));
     }
 
     @Test

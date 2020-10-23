@@ -6,14 +6,15 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.User;
 
 import java.util.Collection;
+import java.util.UUID;
 
 @Getter
 @EqualsAndHashCode(callSuper = true)
 public class CustomUserDetails extends User {
 
-    private final String id;
+    private final UUID id;
 
-    public CustomUserDetails(String id, String username, String password,
+    public CustomUserDetails(UUID id, String username, String password,
                              Collection<? extends GrantedAuthority> authorities) {
         super(username, password, authorities);
         this.id = id;

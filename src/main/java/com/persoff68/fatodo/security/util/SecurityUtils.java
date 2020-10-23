@@ -10,15 +10,24 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import java.util.HashSet;
 import java.util.Optional;
 import java.util.Set;
+import java.util.UUID;
 
 public class SecurityUtils {
 
     private SecurityUtils() {
     }
 
-    public static Optional<String> getCurrentId() {
+    public static UUID getUuidFromString(String id) {
+        try {
+            return UUID.fromString(id);
+        } catch (IllegalArgumentException e) {
+            return null;
+        }
+    }
+
+    public static Optional<UUID> getCurrentId() {
         Authentication authentication = getCurrentAuthentication();
-        String id = fetchIdFromAuthentication(authentication);
+        UUID id = fetchIdFromAuthentication(authentication);
         return Optional.ofNullable(id);
     }
 
@@ -41,8 +50,8 @@ public class SecurityUtils {
         return Optional.ofNullable(username);
     }
 
-    private static String fetchIdFromAuthentication(Authentication authentication) {
-        String id = null;
+    private static UUID fetchIdFromAuthentication(Authentication authentication) {
+        UUID id = null;
         if (authentication instanceof UsernamePasswordAuthenticationToken) {
             CustomUserDetails userDetails = (CustomUserDetails) authentication.getPrincipal();
             id = userDetails.getId();
