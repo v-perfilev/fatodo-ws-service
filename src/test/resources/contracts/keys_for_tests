@@ -2,7 +2,7 @@ Secret: 4323B829EF1EEF14E324241FB72E6
 
 #1 - ROLE_SYSTEM:
 {
-  "sub": "1",
+  "sub": "00000000-0000-0000-0000-000000000000",
   "username": "test_system",
   "authorities": "ROLE_SYSTEM",
   "iat": 0,
