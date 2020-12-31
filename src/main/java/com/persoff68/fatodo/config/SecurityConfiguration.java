@@ -22,7 +22,7 @@ import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 @RequiredArgsConstructor
 public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
-    private final static String[] publicUrls = {
+    private static final String[] publicUrls = {
             "/actuator/**",
             "/v2/api-docs",
             "/configuration/ui",
