@@ -50,7 +50,7 @@ public class OnStartRunner implements ApplicationRunner, ApplicationListener<Web
     }
 
     @Override
-    public void run(ApplicationArguments args) throws Exception {
+    public void run(ApplicationArguments args) {
         boolean allNotNull = Stream.of(appName, protocol, host, port, profiles).allMatch(Objects::nonNull);
         if (allNotNull) {
             logCommonInfo();
@@ -60,9 +60,9 @@ public class OnStartRunner implements ApplicationRunner, ApplicationListener<Web
 
     private void logCommonInfo() {
         log.info(
-                "Application '{}' is running!\n\t" +
-                        "Access URL: \t{}://{}:{}\n\t" +
-                        "Profile(s): \t{}\n",
+                "Application '{}' is running!\n\t"
+                        + "Access URL: \t{}://{}:{}\n\t"
+                        + "Profile(s): \t{}\n",
                 appName,
                 protocol,
                 host,
