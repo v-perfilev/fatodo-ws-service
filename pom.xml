@@ -22,7 +22,7 @@
         <main.class>com.persoff68.fatodo.BaseSkeletonApplication</main.class>
         <root.package>com.persoff68.fatodo</root.package>
         <!-- Dependency versions -->
-        <java.version>13</java.version>
+        <java.version>15</java.version>
         <spring-cloud.version>Hoxton.SR5</spring-cloud.version>
         <lombok.version>1.18.10</lombok.version>
         <logback-kafka-appender.version>0.2.0-RC2</logback-kafka-appender.version>
