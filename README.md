@@ -1,5 +1,5 @@
-# Fatodo extended-skeleton
-Very simple spring app that is used for development of base microservices.
+# Fatodo WS service
+Service for websocket connections
 
 ## Tests
 

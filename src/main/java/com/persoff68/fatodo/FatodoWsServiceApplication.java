@@ -10,11 +10,11 @@ import java.util.Properties;
 
 @SpringBootApplication
 @EnableConfigurationProperties(AppProperties.class)
-public class ExtendedSkeletonApplication {
+public class FatodoWsServiceApplication {
 
     public static void main(String[] args) {
         Properties defaultProfileProperties = AppProfileUtils.getDefaultProfile();
-        SpringApplication app = new SpringApplication(ExtendedSkeletonApplication.class);
+        SpringApplication app = new SpringApplication(FatodoWsServiceApplication.class);
         app.setDefaultProperties(defaultProfileProperties);
         app.run();
     }

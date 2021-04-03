@@ -1,6 +1,6 @@
 spring:
   application:
-    name: extended-skeleton
+    name: ws-service
 
   cloud:
     config:
