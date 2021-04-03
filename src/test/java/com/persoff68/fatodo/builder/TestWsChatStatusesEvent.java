@@ -23,4 +23,10 @@ public class TestWsChatStatusesEvent extends WsChatStatusesEvent {
                 .statuses(new ChatStatuses());
     }
 
+    public WsChatStatusesEvent toParent() {
+        WsChatStatusesEvent event = new WsChatStatusesEvent();
+        event.setUserIds(getUserIds());
+        event.setStatuses(getStatuses());
+        return event;
+    }
 }

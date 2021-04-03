@@ -23,4 +23,10 @@ public class TestWsChatMessageEvent extends WsChatMessageEvent {
                 .message(new ChatMessage());
     }
 
+    public WsChatMessageEvent toParent() {
+        WsChatMessageEvent event = new WsChatMessageEvent();
+        event.setUserIds(getUserIds());
+        event.setMessage(getMessage());
+        return event;
+    }
 }

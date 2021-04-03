@@ -57,7 +57,7 @@ public class ChatControllerIT {
     @WithCustomSecurityContext
     public void testSendChatNewEvent_ok() throws Exception {
         String url = ENDPOINT + "/new";
-        WsChatEvent event = TestWsChatEvent.defaultBuilder().build();
+        WsChatEvent event = TestWsChatEvent.defaultBuilder().build().toParent();
         String requestBody = objectMapper.writeValueAsString(event);
         mvc.perform(post(url)
                 .contentType(MediaType.APPLICATION_JSON).content(requestBody))
@@ -68,7 +68,7 @@ public class ChatControllerIT {
     @WithAnonymousUser
     public void testSendChatNewEvent_unauthorized() throws Exception {
         String url = ENDPOINT + "/new";
-        WsChatEvent event = TestWsChatEvent.defaultBuilder().build();
+        WsChatEvent event = TestWsChatEvent.defaultBuilder().build().toParent();
         String requestBody = objectMapper.writeValueAsString(event);
         mvc.perform(post(url)
                 .contentType(MediaType.APPLICATION_JSON).content(requestBody))
@@ -79,7 +79,7 @@ public class ChatControllerIT {
     @WithCustomSecurityContext
     public void testSendChatUpdateEvent_ok() throws Exception {
         String url = ENDPOINT + "/update";
-        WsChatEvent event = TestWsChatEvent.defaultBuilder().build();
+        WsChatEvent event = TestWsChatEvent.defaultBuilder().build().toParent();
         String requestBody = objectMapper.writeValueAsString(event);
         mvc.perform(post(url)
                 .contentType(MediaType.APPLICATION_JSON).content(requestBody))
@@ -90,7 +90,7 @@ public class ChatControllerIT {
     @WithAnonymousUser
     public void testSendChatUpdateEvent_unauthorized() throws Exception {
         String url = ENDPOINT + "/update";
-        WsChatEvent event = TestWsChatEvent.defaultBuilder().build();
+        WsChatEvent event = TestWsChatEvent.defaultBuilder().build().toParent();
         String requestBody = objectMapper.writeValueAsString(event);
         mvc.perform(post(url)
                 .contentType(MediaType.APPLICATION_JSON).content(requestBody))
@@ -101,7 +101,7 @@ public class ChatControllerIT {
     @WithCustomSecurityContext
     public void testSendChatLastMessageEvent_ok() throws Exception {
         String url = ENDPOINT + "/last-message";
-        WsChatEvent event = TestWsChatEvent.defaultBuilder().build();
+        WsChatEvent event = TestWsChatEvent.defaultBuilder().build().toParent();
         String requestBody = objectMapper.writeValueAsString(event);
         mvc.perform(post(url)
                 .contentType(MediaType.APPLICATION_JSON).content(requestBody))
@@ -112,7 +112,7 @@ public class ChatControllerIT {
     @WithAnonymousUser
     public void testSendChatLastMessageEvent_unauthorized() throws Exception {
         String url = ENDPOINT + "/last-message";
-        WsChatEvent event = TestWsChatEvent.defaultBuilder().build();
+        WsChatEvent event = TestWsChatEvent.defaultBuilder().build().toParent();
         String requestBody = objectMapper.writeValueAsString(event);
         mvc.perform(post(url)
                 .contentType(MediaType.APPLICATION_JSON).content(requestBody))
@@ -123,7 +123,7 @@ public class ChatControllerIT {
     @WithCustomSecurityContext
     public void testSendChatLastMessageUpdateEvent_ok() throws Exception {
         String url = ENDPOINT + "/last-message-update";
-        WsChatEvent event = TestWsChatEvent.defaultBuilder().build();
+        WsChatEvent event = TestWsChatEvent.defaultBuilder().build().toParent();
         String requestBody = objectMapper.writeValueAsString(event);
         mvc.perform(post(url)
                 .contentType(MediaType.APPLICATION_JSON).content(requestBody))
@@ -134,7 +134,7 @@ public class ChatControllerIT {
     @WithAnonymousUser
     public void testSendChatLastMessageUpdateEvent_unauthorized() throws Exception {
         String url = ENDPOINT + "/last-message-update";
-        WsChatEvent event = TestWsChatEvent.defaultBuilder().build();
+        WsChatEvent event = TestWsChatEvent.defaultBuilder().build().toParent();
         String requestBody = objectMapper.writeValueAsString(event);
         mvc.perform(post(url)
                 .contentType(MediaType.APPLICATION_JSON).content(requestBody))
@@ -145,7 +145,7 @@ public class ChatControllerIT {
     @WithCustomSecurityContext
     public void testSendMessageNewEvent_ok() throws Exception {
         String url = ENDPOINT + "/message-new";
-        WsChatMessageEvent event = TestWsChatMessageEvent.defaultBuilder().build();
+        WsChatMessageEvent event = TestWsChatMessageEvent.defaultBuilder().build().toParent();
         String requestBody = objectMapper.writeValueAsString(event);
         mvc.perform(post(url)
                 .contentType(MediaType.APPLICATION_JSON).content(requestBody))
@@ -156,7 +156,7 @@ public class ChatControllerIT {
     @WithAnonymousUser
     public void testSendMessageNewEvent_unauthorized() throws Exception {
         String url = ENDPOINT + "/message-new";
-        WsChatMessageEvent event = TestWsChatMessageEvent.defaultBuilder().build();
+        WsChatMessageEvent event = TestWsChatMessageEvent.defaultBuilder().build().toParent();
         String requestBody = objectMapper.writeValueAsString(event);
         mvc.perform(post(url)
                 .contentType(MediaType.APPLICATION_JSON).content(requestBody))
@@ -167,7 +167,7 @@ public class ChatControllerIT {
     @WithCustomSecurityContext
     public void testSendMessageUpdateEvent_ok() throws Exception {
         String url = ENDPOINT + "/message-update";
-        WsChatMessageEvent event = TestWsChatMessageEvent.defaultBuilder().build();
+        WsChatMessageEvent event = TestWsChatMessageEvent.defaultBuilder().build().toParent();
         String requestBody = objectMapper.writeValueAsString(event);
         mvc.perform(post(url)
                 .contentType(MediaType.APPLICATION_JSON).content(requestBody))
@@ -178,7 +178,7 @@ public class ChatControllerIT {
     @WithAnonymousUser
     public void testSendMessageUpdateEvent_unauthorized() throws Exception {
         String url = ENDPOINT + "/message-update";
-        WsChatMessageEvent event = TestWsChatMessageEvent.defaultBuilder().build();
+        WsChatMessageEvent event = TestWsChatMessageEvent.defaultBuilder().build().toParent();
         String requestBody = objectMapper.writeValueAsString(event);
         mvc.perform(post(url)
                 .contentType(MediaType.APPLICATION_JSON).content(requestBody))
@@ -189,7 +189,7 @@ public class ChatControllerIT {
     @WithCustomSecurityContext
     public void testSendStatusesEvent_ok() throws Exception {
         String url = ENDPOINT + "/statuses";
-        WsChatStatusesEvent event = TestWsChatStatusesEvent.defaultBuilder().build();
+        WsChatStatusesEvent event = TestWsChatStatusesEvent.defaultBuilder().build().toParent();
         String requestBody = objectMapper.writeValueAsString(event);
         mvc.perform(post(url)
                 .contentType(MediaType.APPLICATION_JSON).content(requestBody))
@@ -200,7 +200,7 @@ public class ChatControllerIT {
     @WithAnonymousUser
     public void testSendStatusesEvent_unauthorized() throws Exception {
         String url = ENDPOINT + "/statuses";
-        WsChatStatusesEvent event = TestWsChatStatusesEvent.defaultBuilder().build();
+        WsChatStatusesEvent event = TestWsChatStatusesEvent.defaultBuilder().build().toParent();
         String requestBody = objectMapper.writeValueAsString(event);
         mvc.perform(post(url)
                 .contentType(MediaType.APPLICATION_JSON).content(requestBody))
@@ -211,7 +211,7 @@ public class ChatControllerIT {
     @WithCustomSecurityContext
     public void testSendReactionsEvent_ok() throws Exception {
         String url = ENDPOINT + "/reactions";
-        WsChatReactionsEvent event = TestWsChatReactionsEvent.defaultBuilder().build();
+        WsChatReactionsEvent event = TestWsChatReactionsEvent.defaultBuilder().build().toParent();
         String requestBody = objectMapper.writeValueAsString(event);
         mvc.perform(post(url)
                 .contentType(MediaType.APPLICATION_JSON).content(requestBody))
@@ -222,7 +222,7 @@ public class ChatControllerIT {
     @WithAnonymousUser
     public void testSendReactionsEvent_unauthorized() throws Exception {
         String url = ENDPOINT + "/reactions";
-        WsChatReactionsEvent event = TestWsChatReactionsEvent.defaultBuilder().build();
+        WsChatReactionsEvent event = TestWsChatReactionsEvent.defaultBuilder().build().toParent();
         String requestBody = objectMapper.writeValueAsString(event);
         mvc.perform(post(url)
                 .contentType(MediaType.APPLICATION_JSON).content(requestBody))

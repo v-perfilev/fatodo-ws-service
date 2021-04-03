@@ -23,4 +23,11 @@ public class TestWsChatEvent extends WsChatEvent {
                 .chat(new Chat());
     }
 
+    public WsChatEvent toParent() {
+        WsChatEvent event = new WsChatEvent();
+        event.setUserIds(getUserIds());
+        event.setChat(getChat());
+        return event;
+    }
+
 }

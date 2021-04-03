@@ -23,4 +23,10 @@ public class TestWsChatReactionsEvent extends WsChatReactionsEvent {
                 .reactions(new ChatReactions());
     }
 
+    public WsChatReactionsEvent toParent() {
+        WsChatReactionsEvent event = new WsChatReactionsEvent();
+        event.setUserIds(getUserIds());
+        event.setReactions(getReactions());
+        return event;
+    }
 }
