@@ -22,10 +22,10 @@ public class UserServiceCT {
     UserServiceClient userServiceClient;
 
     @Test
-    void testDoesIdExist() {
+    void testGetAllUsernamesByIds() {
         List<UUID> idList = Collections.singletonList(UUID.randomUUID());
         List<String> usernameList = userServiceClient.getAllUsernamesByIds(idList);
-        assertThat(usernameList).isEmpty();
+        assertThat(usernameList).isNotEmpty();
     }
 
 }
