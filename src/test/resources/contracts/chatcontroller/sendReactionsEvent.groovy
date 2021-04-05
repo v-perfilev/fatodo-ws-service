@@ -21,25 +21,36 @@ Contract.make {
                         consumer(any()),
                         producer([uuid().generate()])
                 ),
-                "reactions": [[
-                                      "messageId": $(
-                                              consumer(anyUuid()),
-                                              producer(uuid().generate())
-                                      ),
-                                      "userId"   : $(
-                                              consumer(anyUuid()),
-                                              producer(uuid().generate())
-                                      ),
-//                                      "type"     : $(
-//                                              consumer(any()),
-//                                              producer("LIKE")
-//                                      ),
-//                                      "timestamp": $(
-//                                              consumer(anyDate()),
-//                                              producer(anyDate())
-//                                      ),
-                              ]]
+                "reactions": [
+                        "chatId"   : $(
+                                consumer(anyUuid()),
+                                producer(uuid().generate())
+                        ),
+                        "messageId": $(
+                                consumer(anyUuid()),
+                                producer(uuid().generate())
+                        ),
+                        "reactions": [[
+                                              "messageId": $(
+                                                      consumer(anyUuid()),
+                                                      producer(uuid().generate())
+                                              ),
+                                              "userId"   : $(
+                                                      consumer(anyUuid()),
+                                                      producer(uuid().generate())
+                                              ),
+                                              "type"     : $(
+                                                      consumer(anyNonBlankString()),
+                                                      producer("LIKE")
+                                              ),
+                                      ]]
+                ]
         )
+        bodyMatchers {
+            jsonPath('$.userIds', byType {
+                minOccurrence(1)
+            })
+        }
     }
     response {
         status 200

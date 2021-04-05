@@ -25,16 +25,17 @@ Contract.make {
                                 consumer(anyUuid()),
                                 producer(uuid().generate())
                         ),
-                        "title"   : $(
-                                consumer(any()),
-                                producer(any())
-                        ),
                         "isDirect": $(
                                 consumer(anyBoolean()),
                                 producer(anyBoolean().generate())
                         ),
                 ],
         )
+        bodyMatchers {
+            jsonPath('$.userIds', byType {
+                minOccurrence(1)
+            })
+        }
     }
     response {
         status 200

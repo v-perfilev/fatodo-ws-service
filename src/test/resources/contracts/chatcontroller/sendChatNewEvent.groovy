@@ -25,10 +25,6 @@ Contract.make {
                                 consumer(anyUuid()),
                                 producer(uuid().generate())
                         ),
-                        "title"   : $(
-                                consumer(any()),
-                                producer(any())
-                        ),
                         "isDirect": $(
                                 consumer(anyBoolean()),
                                 producer(anyBoolean().generate())

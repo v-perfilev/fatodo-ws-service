@@ -33,12 +33,13 @@ Contract.make {
                                 consumer(anyUuid()),
                                 producer(uuid().generate())
                         ),
-                        "text"  : $(
-                                consumer(any()),
-                                producer(any())
-                        ),
                 ],
         )
+        bodyMatchers {
+            jsonPath('$.userIds', byType {
+                minOccurrence(1)
+            })
+        }
     }
     response {
         status 200
