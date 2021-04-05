@@ -15,7 +15,7 @@ Contract.make {
                     producer("Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiI4ZjlhN2NhZS03M2M4LTRhZDYtYjEzNS01YmQxMDliNTFkMmUiLCJ1c2VybmFtZSI6InRlc3RfdXNlciIsImF1dGhvcml0aWVzIjoiUk9MRV9VU0VSIiwiaWF0IjowLCJleHAiOjMyNTAzNjc2NDAwfQ.Go0MIqfjREMHOLeqoX2Ej3DbeSG7ZxlL4UAvcxqNeO-RgrKUCrgEu77Ty1vgR_upxVGDAWZS-JfuSYPHSRtv-w")
             )
         }
-        body([
+        body(
                 "userIds": $(
                         consumer(any()),
                         producer([anyUuid()])
@@ -26,7 +26,7 @@ Contract.make {
                                 "id": anyUuid()
                         ])
                 ),
-        ])
+        )
     }
     response {
         status 200
