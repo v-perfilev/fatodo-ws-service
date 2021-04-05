@@ -15,24 +15,24 @@ Contract.make {
                     producer("Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiI4ZjlhN2NhZS03M2M4LTRhZDYtYjEzNS01YmQxMDliNTFkMmUiLCJ1c2VybmFtZSI6InRlc3RfdXNlciIsImF1dGhvcml0aWVzIjoiUk9MRV9VU0VSIiwiaWF0IjowLCJleHAiOjMyNTAzNjc2NDAwfQ.Go0MIqfjREMHOLeqoX2Ej3DbeSG7ZxlL4UAvcxqNeO-RgrKUCrgEu77Ty1vgR_upxVGDAWZS-JfuSYPHSRtv-w")
             )
         }
-        body(
-                "userIds": $(
+        body([
+                "userIds"  : $(
                         consumer(any()),
-                        producer([uuid().generate()])
+                        producer([anyUuid()])
                 ),
                 "reactions": $(
                         consumer(any()),
                         producer([
-                                "chatId"   : uuid().generate(),
-                                "messageId": uuid().generate(),
+                                "chatId"   : anyUuid(),
+                                "messageId": anyUuid(),
                                 "reactions": [
                                         [
-                                                "id": uuid().generate()
+                                                "id": anyUuid()
                                         ]
                                 ]
                         ])
                 ),
-        )
+        ])
     }
     response {
         status 200
