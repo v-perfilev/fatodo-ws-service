@@ -1,5 +1,6 @@
 package contracts.chatcontroller
 
+
 import org.springframework.cloud.contract.spec.Contract
 
 Contract.make {
@@ -18,20 +19,26 @@ Contract.make {
         body(
                 "userIds": $(
                         consumer(any()),
-                        producer([anyUuid()])
+                        producer([uuid().generate()])
                 ),
-                "statuses": $(
-                        consumer(any()),
-                        producer([
-                                "chatId"   : anyUuid(),
-                                "messageId": anyUuid(),
-                                "statuses" : [
-                                        [
-                                                "id": anyUuid()
-                                        ]
-                                ]
-                        ])
-                ),
+                "statuses": [[
+                                     "messageId": $(
+                                             consumer(anyUuid()),
+                                             producer(uuid().generate())
+                                     ),
+                                     "userId"   : $(
+                                             consumer(anyUuid()),
+                                             producer(uuid().generate())
+                                     ),
+//                                     "type"     : $(
+//                                             consumer(any()),
+//                                             producer("READ")
+//                                     ),
+//                                     "timestamp": $(
+//                                             consumer(anyDate()),
+//                                             producer(anyDate())
+//                                     ),
+                             ]]
         )
     }
     response {

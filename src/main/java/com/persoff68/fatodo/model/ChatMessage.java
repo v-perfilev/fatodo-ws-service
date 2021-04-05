@@ -10,7 +10,6 @@ import java.util.UUID;
 @Data
 @EqualsAndHashCode(callSuper = true)
 public class ChatMessage extends AbstractAuditingModel {
-    private UUID id;
 
     private UUID chatId;
     private UUID userId;

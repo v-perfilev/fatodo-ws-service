@@ -18,15 +18,28 @@ Contract.make {
         body(
                 "userIds": $(
                         consumer(any()),
-                        producer([anyUuid()])
+                        producer([uuid().generate()])
                 ),
-                "chat"   : $(
-                        consumer(any()),
-                        producer([
-                                "id": anyUuid()
-                        ])
-                ),
+                "chat": [
+                        "id"      : $(
+                                consumer(anyUuid()),
+                                producer(uuid().generate())
+                        ),
+                        "title"   : $(
+                                consumer(any()),
+                                producer(any())
+                        ),
+                        "isDirect": $(
+                                consumer(anyBoolean()),
+                                producer(anyBoolean().generate())
+                        ),
+                ],
         )
+        bodyMatchers {
+            jsonPath('$.userIds', byType {
+                minOccurrence(1)
+            })
+        }
     }
     response {
         status 200

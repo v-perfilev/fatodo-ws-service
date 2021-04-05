@@ -18,14 +18,26 @@ Contract.make {
         body(
                 "userIds": $(
                         consumer(any()),
-                        producer([anyUuid()])
+                        producer([uuid().generate()])
                 ),
-                "message": $(
-                        consumer(any()),
-                        producer([
-                                "id": anyUuid()
-                        ])
-                ),
+                "message": [
+                        "id"    : $(
+                                consumer(anyUuid()),
+                                producer(uuid().generate())
+                        ),
+                        "chatId": $(
+                                consumer(anyUuid()),
+                                producer(uuid().generate())
+                        ),
+                        "userId": $(
+                                consumer(anyUuid()),
+                                producer(uuid().generate())
+                        ),
+                        "text"  : $(
+                                consumer(any()),
+                                producer(any())
+                        ),
+                ],
         )
     }
     response {
