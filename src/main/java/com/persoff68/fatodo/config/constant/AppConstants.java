@@ -14,6 +14,8 @@ public class AppConstants {
 
     public static final long SERIAL_VERSION_UID = 1L;
 
+    public static final String WS_USER_PREFIX = "/user";
+
     private AppConstants() {
     }
 }

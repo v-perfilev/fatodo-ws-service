@@ -18,35 +18,47 @@ public class ChatEventService {
     private final WsService wsService;
 
     public void handleChatNewEvent(List<UUID> userIdList, Chat chat) {
-        wsService.sendMessageToManyUsers(userIdList, WsChatDestination.CHAT_NEW.getValue(), chat);
+        String destination = WsChatDestination.CHAT_NEW.getValue();
+        wsService.sendMessage(userIdList, destination, chat);
     }
 
     public void handleChatUpdateEvent(List<UUID> userIdList, Chat chat) {
-        wsService.sendMessageToManyUsers(userIdList, WsChatDestination.CHAT_UPDATE.getValue(), chat);
+        String destination = WsChatDestination.CHAT_UPDATE.getValue();
+        wsService.sendMessage(userIdList, destination, chat);
     }
 
     public void handleChatLastMessageEvent(List<UUID> userIdList, Chat chat) {
-        wsService.sendMessageToManyUsers(userIdList, WsChatDestination.CHAT_LAST_MESSAGE.getValue(), chat);
+        String destination = WsChatDestination.CHAT_LAST_MESSAGE.getValue();
+        wsService.sendMessage(userIdList, destination, chat);
     }
 
     public void handleChatLastMessageUpdateEvent(List<UUID> userIdList, Chat chat) {
-        wsService.sendMessageToManyUsers(userIdList, WsChatDestination.CHAT_LAST_MESSAGE_UPDATE.getValue(), chat);
+        String destination = WsChatDestination.CHAT_LAST_MESSAGE_UPDATE.getValue();
+        wsService.sendMessage(userIdList, destination, chat);
     }
 
     public void handleMessageNewEvent(List<UUID> userIdList, ChatMessage message) {
-        wsService.sendMessageToManyUsers(userIdList, WsChatDestination.MESSAGE_NEW.getValue(), message);
+        UUID chatId = message.getChatId();
+        String destination = WsChatDestination.MESSAGE_NEW.getValue() + chatId;
+        wsService.sendMessage(userIdList, destination, message);
     }
 
     public void handleMessageUpdateEvent(List<UUID> userIdList, ChatMessage message) {
-        wsService.sendMessageToManyUsers(userIdList, WsChatDestination.MESSAGE_UPDATE.getValue(), message);
+        UUID chatId = message.getChatId();
+        String destination = WsChatDestination.MESSAGE_UPDATE.getValue() + chatId;
+        wsService.sendMessage(userIdList, destination, message);
     }
 
     public void handleStatusesEvent(List<UUID> userIdList, ChatStatuses statuses) {
-        wsService.sendMessageToManyUsers(userIdList, WsChatDestination.MESSAGE_STATUS.getValue(), statuses);
+        UUID chatId = statuses.getChatId();
+        String destination = WsChatDestination.MESSAGE_STATUS.getValue() + chatId;
+        wsService.sendMessage(userIdList, destination, statuses);
     }
 
     public void handleReactionsEvent(List<UUID> userIdList, ChatReactions reactions) {
-        wsService.sendMessageToManyUsers(userIdList, WsChatDestination.MESSAGE_REACTION.getValue(), reactions);
+        UUID chatId = reactions.getChatId();
+        String destination = WsChatDestination.MESSAGE_REACTION.getValue() + chatId;
+        wsService.sendMessage(userIdList, destination, reactions);
     }
 
 }
