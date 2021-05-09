@@ -10,7 +10,7 @@ import java.util.UUID;
 @FeignClient(name = "user-service", primary = false)
 public interface UserServiceClient {
 
-    @PostMapping(value = "/api/user/all-usernames-by-ids")
+    @PostMapping(value = "/api/user-data/usernames/ids")
     List<String> getAllUsernamesByIds(@RequestBody List<UUID> userIdList);
 
 }
