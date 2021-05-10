@@ -16,6 +16,7 @@ stubrunner:
     contactservice: contact-service
     chatservice: chat-service
     wsservice: ws-service
+    commentservice: comment-service
   repositoryRoot: '@maven.repo.url@'
   username: '@maven.repo.username@'
   password: '@maven.repo.password@'
