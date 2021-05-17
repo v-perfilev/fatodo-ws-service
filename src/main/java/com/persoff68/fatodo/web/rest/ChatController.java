@@ -1,9 +1,10 @@
 package com.persoff68.fatodo.web.rest;
 
-import com.persoff68.fatodo.model.WsChatEvent;
-import com.persoff68.fatodo.model.WsChatMessageEvent;
-import com.persoff68.fatodo.model.WsChatReactionsEvent;
-import com.persoff68.fatodo.model.WsChatStatusesEvent;
+import com.persoff68.fatodo.model.Chat;
+import com.persoff68.fatodo.model.ChatMessage;
+import com.persoff68.fatodo.model.ChatReactions;
+import com.persoff68.fatodo.model.ChatStatuses;
+import com.persoff68.fatodo.model.WsEvent;
 import com.persoff68.fatodo.service.ChatEventService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -21,50 +22,50 @@ public class ChatController {
     private final ChatEventService chatEventService;
 
     @PostMapping(value = "/new")
-    public ResponseEntity<Void> sendChatNewEvent(@RequestBody WsChatEvent event) {
-        chatEventService.handleChatNewEvent(event.getUserIds(), event.getChat());
+    public ResponseEntity<Void> sendChatNewEvent(@RequestBody WsEvent<Chat> event) {
+        chatEventService.handleChatNewEvent(event.getUserIds(), event.getContent());
         return ResponseEntity.ok().build();
     }
 
     @PostMapping(value = "/update")
-    public ResponseEntity<Void> sendChatUpdateEvent(@RequestBody WsChatEvent event) {
-        chatEventService.handleChatUpdateEvent(event.getUserIds(), event.getChat());
+    public ResponseEntity<Void> sendChatUpdateEvent(@RequestBody WsEvent<Chat> event) {
+        chatEventService.handleChatUpdateEvent(event.getUserIds(), event.getContent());
         return ResponseEntity.ok().build();
     }
 
     @PostMapping(value = "/last-message")
-    public ResponseEntity<Void> sendChatLastMessageEvent(@RequestBody WsChatEvent event) {
-        chatEventService.handleChatLastMessageEvent(event.getUserIds(), event.getChat());
+    public ResponseEntity<Void> sendChatLastMessageEvent(@RequestBody WsEvent<Chat> event) {
+        chatEventService.handleChatLastMessageEvent(event.getUserIds(), event.getContent());
         return ResponseEntity.ok().build();
     }
 
     @PostMapping(value = "/last-message-update")
-    public ResponseEntity<Void> sendChatLastMessageUpdateEvent(@RequestBody WsChatEvent event) {
-        chatEventService.handleChatLastMessageUpdateEvent(event.getUserIds(), event.getChat());
+    public ResponseEntity<Void> sendChatLastMessageUpdateEvent(@RequestBody WsEvent<Chat> event) {
+        chatEventService.handleChatLastMessageUpdateEvent(event.getUserIds(), event.getContent());
         return ResponseEntity.ok().build();
     }
 
     @PostMapping(value = "/message-new")
-    public ResponseEntity<Void> sendMessageNewEvent(@RequestBody WsChatMessageEvent event) {
-        chatEventService.handleMessageNewEvent(event.getUserIds(), event.getMessage());
+    public ResponseEntity<Void> sendMessageNewEvent(@RequestBody WsEvent<ChatMessage> event) {
+        chatEventService.handleMessageNewEvent(event.getUserIds(), event.getContent());
         return ResponseEntity.ok().build();
     }
 
     @PostMapping(value = "/message-update")
-    public ResponseEntity<Void> sendMessageUpdateEvent(@RequestBody WsChatMessageEvent event) {
-        chatEventService.handleMessageUpdateEvent(event.getUserIds(), event.getMessage());
+    public ResponseEntity<Void> sendMessageUpdateEvent(@RequestBody WsEvent<ChatMessage> event) {
+        chatEventService.handleMessageUpdateEvent(event.getUserIds(), event.getContent());
         return ResponseEntity.ok().build();
     }
 
     @PostMapping(value = "/statuses")
-    public ResponseEntity<Void> sendStatusesEvent(@RequestBody WsChatStatusesEvent event) {
-        chatEventService.handleStatusesEvent(event.getUserIds(), event.getStatuses());
+    public ResponseEntity<Void> sendStatusesEvent(@RequestBody WsEvent<ChatStatuses> event) {
+        chatEventService.handleStatusesEvent(event.getUserIds(), event.getContent());
         return ResponseEntity.ok().build();
     }
 
     @PostMapping(value = "/reactions")
-    public ResponseEntity<Void> sendReactionsEvent(@RequestBody WsChatReactionsEvent event) {
-        chatEventService.handleReactionsEvent(event.getUserIds(),event.getReactions());
+    public ResponseEntity<Void> sendReactionsEvent(@RequestBody WsEvent<ChatReactions> event) {
+        chatEventService.handleReactionsEvent(event.getUserIds(), event.getContent());
         return ResponseEntity.ok().build();
     }
 

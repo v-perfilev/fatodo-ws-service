@@ -21,7 +21,7 @@ Contract.make {
                         consumer(any()),
                         producer([uuid().generate()])
                 ),
-                "reactions": [
+                "content": [
                         "chatId"   : $(
                                 consumer(anyUuid()),
                                 producer(uuid().generate())

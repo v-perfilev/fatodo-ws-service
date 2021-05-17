@@ -1,14 +1,13 @@
-package contracts.chatcontroller
-
+package contracts.commentcontroller
 
 import org.springframework.cloud.contract.spec.Contract
 
 Contract.make {
-    name 'send statuses event'
+    name 'send comment new event'
     description 'should return status 200'
     request {
         method POST()
-        url("/api/chat/statuses")
+        url("/api/comment/new")
         headers {
             contentType applicationJson()
             header 'Authorization': $(
@@ -22,29 +21,15 @@ Contract.make {
                         producer([uuid().generate()])
                 ),
                 "content": [
-                        "chatId"   : $(
+                        "id"      : $(
                                 consumer(anyUuid()),
                                 producer(uuid().generate())
                         ),
-                        "messageId": $(
+                        "threadId"      : $(
                                 consumer(anyUuid()),
                                 producer(uuid().generate())
                         ),
-                        "statuses" : [[
-                                              "messageId": $(
-                                                      consumer(anyUuid()),
-                                                      producer(uuid().generate())
-                                              ),
-                                              "userId"   : $(
-                                                      consumer(anyUuid()),
-                                                      producer(uuid().generate())
-                                              ),
-                                              "type"     : $(
-                                                      consumer(anyNonBlankString()),
-                                                      producer("READ")
-                                              ),
-                                      ]]
-                ]
+                ],
         )
         bodyMatchers {
             jsonPath('$.userIds', byType {

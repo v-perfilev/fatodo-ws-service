@@ -1,14 +1,14 @@
-package contracts.chatcontroller
+package contracts.commentcontroller
 
 
 import org.springframework.cloud.contract.spec.Contract
 
 Contract.make {
-    name 'send statuses event'
+    name 'send comment reactions event'
     description 'should return status 200'
     request {
         method POST()
-        url("/api/chat/statuses")
+        url("/api/comment/reactions")
         headers {
             contentType applicationJson()
             header 'Authorization': $(
@@ -22,16 +22,16 @@ Contract.make {
                         producer([uuid().generate()])
                 ),
                 "content": [
-                        "chatId"   : $(
+                        "threadId" : $(
                                 consumer(anyUuid()),
                                 producer(uuid().generate())
                         ),
-                        "messageId": $(
+                        "commentId": $(
                                 consumer(anyUuid()),
                                 producer(uuid().generate())
                         ),
-                        "statuses" : [[
-                                              "messageId": $(
+                        "reactions": [[
+                                              "commentId": $(
                                                       consumer(anyUuid()),
                                                       producer(uuid().generate())
                                               ),
@@ -41,7 +41,7 @@ Contract.make {
                                               ),
                                               "type"     : $(
                                                       consumer(anyNonBlankString()),
-                                                      producer("READ")
+                                                      producer("LIKE")
                                               ),
                                       ]]
                 ]

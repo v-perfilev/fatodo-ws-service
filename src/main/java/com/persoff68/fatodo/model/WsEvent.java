@@ -8,10 +8,10 @@ import java.util.List;
 import java.util.UUID;
 
 @Data
-public class WsChatStatusesEvent implements Serializable {
+public class WsEvent<T> implements Serializable {
     protected static final long serialVersionUID = AppConstants.SERIAL_VERSION_UID;
 
     private List<UUID> userIds;
-    private ChatStatuses statuses;
+    private T content;
 
 }
