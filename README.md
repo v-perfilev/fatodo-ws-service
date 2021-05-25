@@ -26,7 +26,7 @@ Very simple spring app that is used for development of base microservices.
     -Dmaven.repo.password=PASSWORD
 ```
 
-## Pipeline
+## CI/CD pipeline
 
 The following environment variables must be set:
 
