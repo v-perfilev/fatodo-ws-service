@@ -33,7 +33,10 @@ The following environment variables must be set:
 ```
 SONAR_URL
 SONAR_TOKEN
+
 MAVEN_URL
 MAVEN_USERNAME
 MAVEN_PASSWORD
+
+STAGE_URL
 ```
