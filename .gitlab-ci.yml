@@ -83,48 +83,48 @@ checkstyle:
   script:
     - ./mvnw $MAVEN_CLI_OPTS checkstyle:check $MAVEN_OPTS
 
-publish:
-  image: docker:latest
-  stage: publish
-  services:
-    - docker:dind
-  script:
-    - docker build -t $TAG_COMMIT -t $TAG_LATEST .
-    - docker login -u gitlab-ci-token -p $CI_BUILD_TOKEN $CI_REGISTRY
-    - docker push $TAG_COMMIT
-    - docker push $TAG_LATEST
-  only:
-    - develop
-    - master
-
-deploy-to-nexus:
-  stage: deploy
-  dependencies:
-    - compile
-  script:
-    - ./mvnw $MAVEN_CLI_OPTS deploy $MAVEN_OPTS
-      -Dmaven.test.skip=true
-      -Dmaven.repo.url=$MAVEN_URL
-      -Dmaven.repo.username=$MAVEN_USERNAME
-      -Dmaven.repo.password=$MAVEN_PASSWORD
-  artifacts:
-    paths:
-      - target/
-    expire_in: 1 day
-
-deploy-to-stage:
-  stage: deploy
-  tags:
-    - deployment
-  script:
-    - chmod og= $ID_RSA
-    - apk update && apk add openssh-client
-    - ssh -i $ID_RSA -o StrictHostKeyChecking=no $SERVER_USER@$SERVER_IP "docker login -u gitlab-ci-token -p $CI_BUILD_TOKEN $CI_REGISTRY"
-    - ssh -i $ID_RSA -o StrictHostKeyChecking=no $SERVER_USER@$SERVER_IP "docker pull $TAG_COMMIT"
-    - ssh -i $ID_RSA -o StrictHostKeyChecking=no $SERVER_USER@$SERVER_IP "docker container rm -f $APP_NAME || true"
-    - ssh -i $ID_RSA -o StrictHostKeyChecking=no $SERVER_USER@$SERVER_IP "docker run -d $APP_DOCKER_PARAMS $COMMON_DOCKER_PARAMS --name $APP_NAME $TAG_COMMIT"
-  environment:
-    name: staging
-    url: https://$SERVER_IP
-  only:
-    - develop
+#publish:
+#  image: docker:latest
+#  stage: publish
+#  services:
+#    - docker:dind
+#  script:
+#    - docker build -t $TAG_COMMIT -t $TAG_LATEST .
+#    - docker login -u gitlab-ci-token -p $CI_BUILD_TOKEN $CI_REGISTRY
+#    - docker push $TAG_COMMIT
+#    - docker push $TAG_LATEST
+#  only:
+#    - develop
+#    - master
+#
+#deploy-to-nexus:
+#  stage: deploy
+#  dependencies:
+#    - compile
+#  script:
+#    - ./mvnw $MAVEN_CLI_OPTS deploy $MAVEN_OPTS
+#      -Dmaven.test.skip=true
+#      -Dmaven.repo.url=$MAVEN_URL
+#      -Dmaven.repo.username=$MAVEN_USERNAME
+#      -Dmaven.repo.password=$MAVEN_PASSWORD
+#  artifacts:
+#    paths:
+#      - target/
+#    expire_in: 1 day
+#
+#deploy-to-stage:
+#  stage: deploy
+#  tags:
+#    - deployment
+#  script:
+#    - chmod og= $ID_RSA
+#    - apk update && apk add openssh-client
+#    - ssh -i $ID_RSA -o StrictHostKeyChecking=no $SERVER_USER@$SERVER_IP "docker login -u gitlab-ci-token -p $CI_BUILD_TOKEN $CI_REGISTRY"
+#    - ssh -i $ID_RSA -o StrictHostKeyChecking=no $SERVER_USER@$SERVER_IP "docker pull $TAG_COMMIT"
+#    - ssh -i $ID_RSA -o StrictHostKeyChecking=no $SERVER_USER@$SERVER_IP "docker container rm -f $APP_NAME || true"
+#    - ssh -i $ID_RSA -o StrictHostKeyChecking=no $SERVER_USER@$SERVER_IP "docker run -d $APP_DOCKER_PARAMS $COMMON_DOCKER_PARAMS --name $APP_NAME $TAG_COMMIT"
+#  environment:
+#    name: staging
+#    url: https://$SERVER_IP
+#  only:
+#    - develop
