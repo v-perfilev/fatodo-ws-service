@@ -90,6 +90,9 @@ checkstyle:
 #  stage: publish
 #  services:
 #    - docker:dind
+#  variables:
+#    DOCKER_HOST: tcp://docker:2375
+#    DOCKER_TLS_CERTDIR: ""
 #  script:
 #    - docker build -t $TAG_COMMIT -t $TAG_LATEST .
 #    - docker login -u gitlab-ci-token -p $CI_BUILD_TOKEN $CI_REGISTRY
@@ -116,8 +119,6 @@ checkstyle:
 #
 #deploy-to-stage:
 #  stage: deploy
-#  tags:
-#    - deployment
 #  script:
 #    - chmod og= $ID_RSA
 #    - apk update && apk add openssh-client
