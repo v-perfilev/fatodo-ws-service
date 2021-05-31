@@ -83,7 +83,7 @@ checkstyle:
   script:
     - ./mvnw $MAVEN_CLI_OPTS checkstyle:check $MAVEN_OPTS
 
-#publish:
+#publish-to-docker:
 #  image: docker:latest
 #  stage: publish
 #  services:
@@ -97,8 +97,8 @@ checkstyle:
 #    - develop
 #    - master
 #
-#deploy-to-nexus:
-#  stage: deploy
+#publish-to-nexus:
+#  stage: publish
 #  dependencies:
 #    - compile
 #  script:
