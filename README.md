@@ -28,7 +28,9 @@ Very simple spring app that is used for development of base microservices.
 
 ## CI/CD pipeline
 
-The following environment variables must be set:
+### The following environment variables must be set:
+
+Common for the project:
 
 ```
 SONAR_URL
@@ -38,5 +40,15 @@ MAVEN_URL
 MAVEN_USERNAME
 MAVEN_PASSWORD
 
-STAGE_URL
+SERVER_USER
+SERVER_IP
+
+COMMON_DOCKER_PARAMS
+```
+
+Unique for the app:
+
+```
+APP_NAME
+APP_DOCKER_PARAMS
 ```
