@@ -10,6 +10,7 @@ public class ProfileTest {
     void testEnum() {
         assertThat(Profile.DEVELOPMENT.getValue()).isEqualTo(Profile.Constants.DEVELOPMENT_VALUE);
         assertThat(Profile.DOCKER.getValue()).isEqualTo(Profile.Constants.DOCKER_VALUE);
+        assertThat(Profile.STAGING.getValue()).isEqualTo(Profile.Constants.STAGING_VALUE);
         assertThat(Profile.DEVELOPMENT.getValue()).isEqualTo(Profile.Constants.DEVELOPMENT_VALUE);
         assertThat(Profile.TEST.getValue()).isEqualTo(Profile.Constants.TEST_VALUE);
     }
