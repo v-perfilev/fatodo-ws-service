@@ -6,6 +6,6 @@ import org.springframework.web.bind.annotation.ControllerAdvice;
 
 @ControllerAdvice
 @Order(Ordered.HIGHEST_PRECEDENCE + 20)
-public class ServiceExceptionHandling {
+public class ServiceExceptionHandlerSet {
 
 }
