@@ -12,6 +12,7 @@ public class CommentReactions implements Serializable {
     protected static final long serialVersionUID = AppConstants.SERIAL_VERSION_UID;
 
     private UUID threadId;
+    private UUID targetId;
     private UUID commentId;
 
     private List<CommentReaction> reactions;

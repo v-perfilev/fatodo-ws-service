@@ -16,20 +16,20 @@ public class CommentEventService {
     private final WsService wsService;
 
     public void handleCommentNewEvent(List<UUID> userIdList, Comment comment) {
-        UUID threadId = comment.getThreadId();
-        String destination = WsCommentDestination.COMMENT_NEW.getValue() + threadId;
+        UUID targetId = comment.getTargetId();
+        String destination = WsCommentDestination.COMMENT_NEW.getValue() + targetId;
         wsService.sendMessage(userIdList, destination, comment);
     }
 
     public void handleCommentUpdateEvent(List<UUID> userIdList, Comment comment) {
-        UUID threadId = comment.getThreadId();
-        String destination = WsCommentDestination.COMMENT_UPDATE.getValue() + threadId;
+        UUID targetId = comment.getTargetId();
+        String destination = WsCommentDestination.COMMENT_UPDATE.getValue() + targetId;
         wsService.sendMessage(userIdList, destination, comment);
     }
 
     public void handleReactionsEvent(List<UUID> userIdList, CommentReactions reactions) {
-        UUID threadId = reactions.getThreadId();
-        String destination = WsCommentDestination.COMMENT_REACTION.getValue() + threadId;
+        UUID targetId = reactions.getTargetId();
+        String destination = WsCommentDestination.COMMENT_REACTION.getValue() + targetId;
         wsService.sendMessage(userIdList, destination, reactions);
     }
 
