@@ -12,14 +12,13 @@ import java.util.UUID;
 public class Comment extends AbstractAuditingModel {
     private UUID threadId;
     private UUID targetId;
-    private UUID parentId;
     private UUID userId;
     private String text;
 
     @JsonProperty("isDeleted")
     private boolean isDeleted;
 
-    private List<CommentReaction> reactions;
+    private Comment reference;
 
-    private List<Comment> children;
+    private List<CommentReaction> reactions;
 }
