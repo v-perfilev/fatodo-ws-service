@@ -20,13 +20,13 @@ public class CommentController {
     private final CommentEventService commentEventService;
 
     @PostMapping(value = "/new")
-    public ResponseEntity<Void> sendChatNewEvent(@RequestBody WsEvent<Comment> event) {
+    public ResponseEntity<Void> sendCommentNewEvent(@RequestBody WsEvent<Comment> event) {
         commentEventService.handleCommentNewEvent(event.getUserIds(), event.getContent());
         return ResponseEntity.ok().build();
     }
 
     @PostMapping(value = "/update")
-    public ResponseEntity<Void> sendChatUpdateEvent(@RequestBody WsEvent<Comment> event) {
+    public ResponseEntity<Void> sendCommentUpdateEvent(@RequestBody WsEvent<Comment> event) {
         commentEventService.handleCommentUpdateEvent(event.getUserIds(), event.getContent());
         return ResponseEntity.ok().build();
     }
