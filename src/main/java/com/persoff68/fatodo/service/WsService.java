@@ -32,6 +32,7 @@ public class WsService {
         return userRegistry.findSubscriptions(destinationMatcher(destination)).stream()
                 .map(extractUsernameFromSubscription())
                 .filter(Strings::isNotEmpty)
+                .distinct()
                 .filter(usernameList::contains)
                 .collect(Collectors.toList());
     }
