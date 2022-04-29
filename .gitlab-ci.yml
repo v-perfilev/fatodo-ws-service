@@ -1,4 +1,4 @@
-image: adoptopenjdk/openjdk15
+image: azul/zulu-openjdk:17
 
 variables:
   MAVEN_CLI_OPTS: -ntp --batch-mode -s etc/maven/settings.xml
