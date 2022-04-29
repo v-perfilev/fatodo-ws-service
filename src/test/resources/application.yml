@@ -4,3 +4,12 @@ app:
     authorizationPrefix: Bearer
     tokenSecret: test_tokenSecret
     tokenExpirationMSec: 864000000
+
+server:
+  address: localhost
+  port: 10344
+
+spring:
+  cloud:
+    config:
+      enabled: false
