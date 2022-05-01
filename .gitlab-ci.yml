@@ -26,7 +26,6 @@ compile:
   artifacts:
     paths:
       - target/
-    expire_in: 1 day
 
 unit-tests:
   stage: UT
@@ -37,7 +36,6 @@ unit-tests:
   artifacts:
     paths:
       - target/
-    expire_in: 1 day
   except:
     variables:
       - $DEPLOY_ONLY
@@ -52,7 +50,6 @@ integration-tests:
   artifacts:
     paths:
       - target/
-    expire_in: 1 day
   except:
     variables:
       - $DEPLOY_ONLY
@@ -70,7 +67,6 @@ contract-tests:
   artifacts:
     paths:
       - target/
-    expire_in: 1 day
   except:
     variables:
       - $DEPLOY_ONLY
@@ -87,7 +83,6 @@ sonar:
   artifacts:
     paths:
       - target/
-    expire_in: 1 day
   except:
     variables:
       - $DEPLOY_ONLY
@@ -128,10 +123,6 @@ checkstyle:
 #      -Dmaven.repo.url=$MAVEN_URL
 #      -Dmaven.repo.username=$MAVEN_USERNAME
 #      -Dmaven.repo.password=$MAVEN_PASSWORD
-#  artifacts:
-#    paths:
-#      - target/
-#    expire_in: 1 day
 #  except:
 #    variables:
 #      - $DEPLOY_ONLY
