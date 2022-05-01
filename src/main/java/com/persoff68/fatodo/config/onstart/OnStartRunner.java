@@ -59,9 +59,11 @@ public class OnStartRunner implements ApplicationRunner, ApplicationListener<Web
 
     private void logCommonInfo() {
         log.info(
-                "Application '{}' is running!\n\t"
-                        + "Access URL: \t{}://{}:{}\n\t"
-                        + "Profile(s): \t{}\n",
+                """
+                            Application '{}' is running!
+                            \tAccess URL: \t{}://{}:{}
+                            \tProfile(s): \t{}
+                        """,
                 appName,
                 protocol,
                 host,
