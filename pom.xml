@@ -45,7 +45,7 @@
         <sonar-maven-plugin.version>3.9.1.2184</sonar-maven-plugin.version>
         <jacoco-maven-plugin.version>0.8.8</jacoco-maven-plugin.version>
         <maven-checkstyle-plugin.version>3.1.2</maven-checkstyle-plugin.version>
-        <maven-checkstyle-toolkit.version>10.2</maven-checkstyle-toolkit.version>
+        <maven-checkstyle-toolkit.version>8.40</maven-checkstyle-toolkit.version>
         <spring-cloud-contract-maven-plugin.version>3.0.0</spring-cloud-contract-maven-plugin.version>
         <!-- Plugin variables -->
         <jacoco.ut-report-folder>${project.build.directory}/jacoco/test</jacoco.ut-report-folder>
