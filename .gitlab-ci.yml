@@ -124,6 +124,7 @@ checkstyle:
 #      - $DEPLOY_ONLY
 
 #deploy-to-stage:
+#  image: alpine:latest
 #  stage: deploy
 #  script:
 #    - chmod og= $SERVER_ID_RSA
