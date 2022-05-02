@@ -12,7 +12,6 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.UUID;
 import java.util.function.Function;
-import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -34,7 +33,7 @@ public class WsService {
                 .filter(Strings::isNotEmpty)
                 .distinct()
                 .filter(usernameList::contains)
-                .collect(Collectors.toList());
+                .toList();
     }
 
     private SimpSubscriptionMatcher destinationMatcher(String destination) {

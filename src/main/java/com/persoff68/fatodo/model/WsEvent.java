@@ -8,7 +8,7 @@ import java.util.List;
 import java.util.UUID;
 
 @Data
-public class WsEvent<T> implements Serializable {
+public class WsEvent<T extends Serializable> implements Serializable {
     protected static final long serialVersionUID = AppConstants.SERIAL_VERSION_UID;
 
     private List<UUID> userIds;

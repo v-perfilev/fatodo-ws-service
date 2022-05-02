@@ -28,7 +28,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 @SpringBootTest(classes = FatodoWsServiceApplication.class)
 @AutoConfigureMockMvc
-public class CommentControllerIT {
+class CommentControllerIT {
     private static final String ENDPOINT = "/api/comment";
 
     @Autowired
@@ -40,14 +40,14 @@ public class CommentControllerIT {
     UserServiceClient userServiceClient;
 
     @BeforeEach
-    public void setup() {
+    void setup() {
         List<String> usernameList = Collections.singletonList("test");
         when(userServiceClient.getAllUsernamesByIds(any())).thenReturn(usernameList);
     }
 
     @Test
     @WithCustomSecurityContext
-    public void testSendCommentNewEvent_ok() throws Exception {
+    void testSendCommentNewEvent_ok() throws Exception {
         String url = ENDPOINT + "/new";
         WsEvent<Comment> event = TestWsEvent.<Comment>defaultBuilder().content(new Comment()).build().toParent();
         String requestBody = objectMapper.writeValueAsString(event);
@@ -58,7 +58,7 @@ public class CommentControllerIT {
 
     @Test
     @WithAnonymousUser
-    public void testSendCommentNewEvent_unauthorized() throws Exception {
+    void testSendCommentNewEvent_unauthorized() throws Exception {
         String url = ENDPOINT + "/new";
         WsEvent<Comment> event = TestWsEvent.<Comment>defaultBuilder().content(new Comment()).build().toParent();
         String requestBody = objectMapper.writeValueAsString(event);
@@ -69,7 +69,7 @@ public class CommentControllerIT {
 
     @Test
     @WithCustomSecurityContext
-    public void testSendCommentUpdateEvent_ok() throws Exception {
+    void testSendCommentUpdateEvent_ok() throws Exception {
         String url = ENDPOINT + "/update";
         WsEvent<Comment> event = TestWsEvent.<Comment>defaultBuilder().content(new Comment()).build().toParent();
         String requestBody = objectMapper.writeValueAsString(event);
@@ -80,7 +80,7 @@ public class CommentControllerIT {
 
     @Test
     @WithAnonymousUser
-    public void testSendCommentUpdateEvent_unauthorized() throws Exception {
+    void testSendCommentUpdateEvent_unauthorized() throws Exception {
         String url = ENDPOINT + "/update";
         WsEvent<Comment> event = TestWsEvent.<Comment>defaultBuilder().content(new Comment()).build().toParent();
         String requestBody = objectMapper.writeValueAsString(event);
@@ -91,7 +91,7 @@ public class CommentControllerIT {
 
     @Test
     @WithCustomSecurityContext
-    public void testSendReactionsEvent_ok() throws Exception {
+    void testSendReactionsEvent_ok() throws Exception {
         String url = ENDPOINT + "/reactions";
         WsEvent<CommentReactions> event = TestWsEvent.<CommentReactions>defaultBuilder()
                 .content(new CommentReactions()).build().toParent();
@@ -103,7 +103,7 @@ public class CommentControllerIT {
 
     @Test
     @WithAnonymousUser
-    public void testSendReactionsEvent_unauthorized() throws Exception {
+    void testSendReactionsEvent_unauthorized() throws Exception {
         String url = ENDPOINT + "/reactions";
         WsEvent<CommentReactions> event = TestWsEvent.<CommentReactions>defaultBuilder()
                 .content(new CommentReactions()).build().toParent();
