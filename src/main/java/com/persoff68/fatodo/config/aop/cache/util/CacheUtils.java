@@ -6,6 +6,7 @@ import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 
 public class CacheUtils {
@@ -22,8 +23,7 @@ public class CacheUtils {
         return args[keyIndex];
     }
 
-    @SuppressWarnings("unchecked")
-    public static Collection<Object> getCollectionValue(String[] names, Object[] args, String key) {
+    public static Collection<?> getCollectionValue(String[] names, Object[] args, String key) {
         if (names.length != args.length) {
             throw new CacheException("Args not valid");
         }
@@ -32,13 +32,13 @@ public class CacheUtils {
         Object object = args[keyIndex];
         Object result = getValueFromObjectByKeyParts(object, keyParts);
         if (result instanceof Collection) {
-            return (Collection<Object>) result;
+            return (Collection<?>) result;
         } else {
-            return List.of(result);
+            return result != null ? List.of(result) : Collections.emptyList();
         }
     }
 
-    private static Object getValueFromObjectByKeyParts(Object object, String[] keyParts) {
+    public static Object getValueFromObjectByKeyParts(Object object, String[] keyParts) {
         if (keyParts.length == 1) {
             return object;
         }
