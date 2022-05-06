@@ -26,13 +26,9 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
     private static final String[] publicUrls = {
             "/actuator/**",
-            "/v2/api-docs",
-            "/configuration/ui",
-            "/swagger-resources/**",
-            "/configuration/security",
-            "/swagger-ui.html",
-            "/webjars/**",
-            "/ws/**"
+            "/v3/api-docs/**",
+            "/swagger-ui/**",
+            "/swagger-ui.html"
     };
 
     private final SecurityProblemSupport securityProblemSupport;
@@ -68,6 +64,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .addFilterAfter(securityLocaleFilter, UsernamePasswordAuthenticationFilter.class)
                 .authorizeRequests()
                 .antMatchers(publicUrls).permitAll()
+                .antMatchers("/ws/**").permitAll()
                 .anyRequest().authenticated();
     }
 
