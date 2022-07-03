@@ -139,7 +139,8 @@ class ChatControllerIT {
     @WithCustomSecurityContext
     void testSendMessageNewEvent_ok() throws Exception {
         String url = ENDPOINT + "/message-new";
-        WsEvent<Chat> event = TestWsEvent.<Chat>defaultBuilder().content(new Chat()).build().toParent();
+        WsEvent<ChatMessage> event = TestWsEvent.<ChatMessage>defaultBuilder()
+                .content(new ChatMessage()).build().toParent();
         String requestBody = objectMapper.writeValueAsString(event);
         mvc.perform(post(url)
                 .contentType(MediaType.APPLICATION_JSON).content(requestBody))
