@@ -3,7 +3,7 @@ package com.persoff68.fatodo.web.rest;
 import com.persoff68.fatodo.model.Comment;
 import com.persoff68.fatodo.model.CommentReactions;
 import com.persoff68.fatodo.model.WsEvent;
-import com.persoff68.fatodo.service.CommentEventService;
+import com.persoff68.fatodo.service.CommentService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -17,23 +17,23 @@ import org.springframework.web.bind.annotation.RestController;
 public class CommentController {
     static final String ENDPOINT = "/api/comment";
 
-    private final CommentEventService commentEventService;
+    private final CommentService commentService;
 
     @PostMapping(value = "/new")
     public ResponseEntity<Void> sendCommentNewEvent(@RequestBody WsEvent<Comment> event) {
-        commentEventService.handleCommentNewEvent(event.getUserIds(), event.getContent());
+        commentService.handleCommentNewEvent(event.getUserIds(), event.getContent());
         return ResponseEntity.ok().build();
     }
 
     @PostMapping(value = "/update")
     public ResponseEntity<Void> sendCommentUpdateEvent(@RequestBody WsEvent<Comment> event) {
-        commentEventService.handleCommentUpdateEvent(event.getUserIds(), event.getContent());
+        commentService.handleCommentUpdateEvent(event.getUserIds(), event.getContent());
         return ResponseEntity.ok().build();
     }
 
     @PostMapping(value = "/reactions")
     public ResponseEntity<Void> sendReactionsEvent(@RequestBody WsEvent<CommentReactions> event) {
-        commentEventService.handleReactionsEvent(event.getUserIds(), event.getContent());
+        commentService.handleReactionsEvent(event.getUserIds(), event.getContent());
         return ResponseEntity.ok().build();
     }
 

@@ -11,7 +11,7 @@ import java.util.UUID;
 
 @Service
 @RequiredArgsConstructor
-public class CommentEventService {
+public class CommentService {
 
     private final WsService wsService;
 

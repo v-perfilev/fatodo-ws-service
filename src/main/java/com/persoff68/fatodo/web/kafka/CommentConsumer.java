@@ -8,7 +8,7 @@ import com.persoff68.fatodo.exception.KafkaException;
 import com.persoff68.fatodo.model.Comment;
 import com.persoff68.fatodo.model.CommentReactions;
 import com.persoff68.fatodo.model.WsEvent;
-import com.persoff68.fatodo.service.CommentEventService;
+import com.persoff68.fatodo.service.CommentService;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.kafka.annotation.KafkaListener;
@@ -25,7 +25,7 @@ import java.util.concurrent.CountDownLatch;
 @ConditionalOnPropertyNotNull(value = "kafka.bootstrapAddress")
 public class CommentConsumer {
 
-    private final CommentEventService commentEventService;
+    private final CommentService commentService;
     private final ObjectMapper objectMapper;
 
     @Getter
@@ -44,17 +44,17 @@ public class CommentConsumer {
 
     private void handleCommentNewEvent(String value) {
         WsEvent<Comment> event = extractWsEvent(value, Comment.class);
-        commentEventService.handleCommentNewEvent(event.getUserIds(), event.getContent());
+        commentService.handleCommentNewEvent(event.getUserIds(), event.getContent());
     }
 
     private void handleCommentUpdateEvent(String value) {
         WsEvent<Comment> event = extractWsEvent(value, Comment.class);
-        commentEventService.handleCommentUpdateEvent(event.getUserIds(), event.getContent());
+        commentService.handleCommentUpdateEvent(event.getUserIds(), event.getContent());
     }
 
     private void handleReactionsEvent(String value) {
         WsEvent<CommentReactions> event = extractWsEvent(value, CommentReactions.class);
-        commentEventService.handleReactionsEvent(event.getUserIds(), event.getContent());
+        commentService.handleReactionsEvent(event.getUserIds(), event.getContent());
     }
 
     private <T extends Serializable> WsEvent<T> extractWsEvent(String value, Class<T> clazz) {

@@ -13,7 +13,7 @@ import java.util.UUID;
 
 @Service
 @RequiredArgsConstructor
-public class ChatEventService {
+public class ChatService {
 
     private final WsService wsService;
 
