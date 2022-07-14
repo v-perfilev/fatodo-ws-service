@@ -22,6 +22,9 @@ import java.util.Map;
 
 public class KafkaUtils {
 
+    private KafkaUtils() {
+    }
+
     public static KafkaAdmin buildKafkaAdmin(String bootstrapAddress) {
         Map<String, Object> configs = new HashMap<>();
         configs.put(AdminClientConfig.BOOTSTRAP_SERVERS_CONFIG, bootstrapAddress);

@@ -27,13 +27,15 @@ import java.util.concurrent.CountDownLatch;
 @ConditionalOnPropertyNotNull(value = "kafka.bootstrapAddress")
 public class ChatConsumer {
 
+    private final static String WS_CHAT_TOPIC = "ws_chat";
+
     private final ChatService chatService;
     private final ObjectMapper objectMapper;
 
     @Getter
     private CountDownLatch latch = new CountDownLatch(1);
 
-    @KafkaListener(topics = "ws_chat", containerFactory = "chatContainerFactory")
+    @KafkaListener(topics = WS_CHAT_TOPIC, containerFactory = "chatContainerFactory")
     public void sendChatEvent(@Payload String value, @Header(KafkaHeaders.RECEIVED_MESSAGE_KEY) String key) {
         switch (key) {
             case "new" -> handleChatNewEvent(value);

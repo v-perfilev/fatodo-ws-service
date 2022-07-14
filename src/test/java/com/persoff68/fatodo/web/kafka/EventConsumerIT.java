@@ -37,7 +37,7 @@ import static org.mockito.Mockito.when;
 })
 @DirtiesContext
 @EmbeddedKafka(partitions = 1, brokerProperties = {"listeners=PLAINTEXT://localhost:9092", "port=9092"})
-public class EventConsumerIT {
+class EventConsumerIT {
 
     @Autowired
     private EmbeddedKafkaBroker embeddedKafkaBroker;

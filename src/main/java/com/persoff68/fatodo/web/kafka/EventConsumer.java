@@ -16,12 +16,14 @@ import java.util.concurrent.CountDownLatch;
 @ConditionalOnPropertyNotNull(value = "kafka.bootstrapAddress")
 public class EventConsumer {
 
+    private static final String WS_EVENT_TOPIC = "ws_event";
+
     private final EventService eventService;
 
     @Getter
     private CountDownLatch latch = new CountDownLatch(1);
 
-    @KafkaListener(topics = "ws_event", containerFactory = "eventContainerFactory")
+    @KafkaListener(topics = WS_EVENT_TOPIC, containerFactory = "eventContainerFactory")
     public void sendEvent(WsEvent<Event> event) {
         eventService.handleEvent(event.getUserIds(), event.getContent());
         resetLatch();

@@ -25,13 +25,15 @@ import java.util.concurrent.CountDownLatch;
 @ConditionalOnPropertyNotNull(value = "kafka.bootstrapAddress")
 public class CommentConsumer {
 
+    private static final String WS_COMMENT_TOPIC = "ws_comment";
+
     private final CommentService commentService;
     private final ObjectMapper objectMapper;
 
     @Getter
     private CountDownLatch latch = new CountDownLatch(1);
 
-    @KafkaListener(topics = "ws_comment", containerFactory = "commentContainerFactory")
+    @KafkaListener(topics = WS_COMMENT_TOPIC, containerFactory = "commentContainerFactory")
     public void sendCommentEvent(@Payload String value, @Header(KafkaHeaders.RECEIVED_MESSAGE_KEY) String key) {
         switch (key) {
             case "new" -> handleCommentNewEvent(value);
