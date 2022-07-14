@@ -1,6 +1,7 @@
 package com.persoff68.fatodo.service;
 
 import com.persoff68.fatodo.config.constant.AppConstants;
+import com.persoff68.fatodo.service.client.UserService;
 import lombok.RequiredArgsConstructor;
 import org.mapstruct.ap.internal.util.Strings;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
