@@ -27,7 +27,7 @@ import java.util.concurrent.CountDownLatch;
 @ConditionalOnPropertyNotNull(value = "kafka.bootstrapAddress")
 public class ChatConsumer {
 
-    private final static String WS_CHAT_TOPIC = "ws_chat";
+    private static final String WS_CHAT_TOPIC = "ws_chat";
 
     private final ChatService chatService;
     private final ObjectMapper objectMapper;
