@@ -108,7 +108,7 @@ checkstyle:
 #  only:
 #    - develop
 #    - master
-#
+
 #publish-to-nexus:
 #  stage: publish
 #  dependencies:
