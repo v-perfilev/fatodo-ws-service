@@ -19,7 +19,6 @@ import org.springframework.messaging.handler.annotation.Header;
 import org.springframework.messaging.handler.annotation.Payload;
 import org.springframework.stereotype.Component;
 
-import java.io.Serializable;
 import java.util.concurrent.CountDownLatch;
 
 @Component
@@ -91,7 +90,7 @@ public class ChatConsumer {
         chatService.handleReactionsEvent(event.getUserIds(), event.getContent());
     }
 
-    private <T extends Serializable> WsEvent<T> extractWsEvent(String value, Class<T> clazz) {
+    private <T> WsEvent<T> extractWsEvent(String value, Class<T> clazz) {
         try {
             JavaType javaType = objectMapper.getTypeFactory().constructParametricType(WsEvent.class, clazz);
             return objectMapper.readValue(value, javaType);

@@ -3,12 +3,11 @@ package com.persoff68.fatodo.builder;
 import com.persoff68.fatodo.model.WsEvent;
 import lombok.Builder;
 
-import java.io.Serializable;
 import java.util.Collections;
 import java.util.List;
 import java.util.UUID;
 
-public class TestWsEvent<T extends Serializable> extends WsEvent<T> {
+public class TestWsEvent<T> extends WsEvent<T> {
 
     @Builder
     TestWsEvent(List<UUID> userIds, T content) {
@@ -17,7 +16,7 @@ public class TestWsEvent<T extends Serializable> extends WsEvent<T> {
         super.setContent(content);
     }
 
-    public static <Z extends Serializable> TestWsEventBuilder<Z> defaultBuilder() {
+    public static <Z> TestWsEventBuilder<Z> defaultBuilder() {
         return TestWsEvent.<Z>builder()
                 .userIds(Collections.singletonList(UUID.randomUUID()));
     }
