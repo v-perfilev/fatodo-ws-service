@@ -1,7 +1,7 @@
 package com.persoff68.fatodo.service;
 
+import com.persoff68.fatodo.client.UserServiceClient;
 import com.persoff68.fatodo.config.constant.AppConstants;
-import com.persoff68.fatodo.service.client.UserService;
 import lombok.RequiredArgsConstructor;
 import org.mapstruct.ap.internal.util.Strings;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
@@ -20,10 +20,10 @@ public class WsService {
 
     private final SimpUserRegistry userRegistry;
     private final SimpMessagingTemplate messagingTemplate;
-    private final UserService userService;
+    private final UserServiceClient userServiceClient;
 
     public void sendMessage(List<UUID> userIdList, String destination, Object payload) {
-        List<String> usernameList = userService.getAllUsernamesByIds(userIdList);
+        List<String> usernameList = userServiceClient.getAllUsernamesByIds(userIdList);
         List<String> subscribedList = filterSubscribedUsers(usernameList, destination);
         subscribedList.forEach(username -> messagingTemplate.convertAndSendToUser(username, destination, payload));
     }
