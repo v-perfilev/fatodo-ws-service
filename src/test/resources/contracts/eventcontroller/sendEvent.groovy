@@ -21,17 +21,13 @@ Contract.make {
                         producer([uuid().generate()])
                 ),
                 "content": [
-                        "id"       : $(
+                        "id"  : $(
                                 consumer(anyUuid()),
                                 producer(uuid().generate())
                         ),
-                        "type"     : $(
+                        "type": $(
                                 consumer(anyNonBlankString()),
                                 producer("WELCOME")
-                        ),
-                        "createdAt": $(
-                                consumer(any()),
-                                producer(any())
                         ),
                 ],
         )
