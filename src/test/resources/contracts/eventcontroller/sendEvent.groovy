@@ -30,8 +30,8 @@ Contract.make {
                                 producer("WELCOME")
                         ),
                         "createdAt": $(
-                                consumer(anyDateTime()),
-                                producer(anyDateTime())
+                                consumer(any()),
+                                producer(any())
                         ),
                 ],
         )
