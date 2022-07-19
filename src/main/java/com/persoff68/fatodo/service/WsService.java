@@ -3,7 +3,6 @@ package com.persoff68.fatodo.service;
 import com.persoff68.fatodo.client.UserServiceClient;
 import com.persoff68.fatodo.config.constant.AppConstants;
 import lombok.RequiredArgsConstructor;
-import org.mapstruct.ap.internal.util.Strings;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.messaging.simp.user.SimpSubscription;
 import org.springframework.messaging.simp.user.SimpSubscriptionMatcher;
@@ -31,7 +30,7 @@ public class WsService {
     private List<String> filterSubscribedUsers(List<String> usernameList, String destination) {
         return userRegistry.findSubscriptions(destinationMatcher(destination)).stream()
                 .map(extractUsernameFromSubscription())
-                .filter(Strings::isNotEmpty)
+                .filter(s -> !s.isBlank())
                 .distinct()
                 .filter(usernameList::contains)
                 .toList();
