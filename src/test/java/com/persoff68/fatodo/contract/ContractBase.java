@@ -16,7 +16,7 @@ import static org.mockito.Mockito.when;
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.MOCK)
 @AutoConfigureMessageVerifier
-public abstract class ContractBase {
+class ContractBase {
 
     @Autowired
     WebApplicationContext context;
@@ -25,7 +25,7 @@ public abstract class ContractBase {
     UserServiceClient userServiceClient;
 
     @BeforeEach
-    public void setup() {
+    void setup() {
         RestAssuredMockMvc.webAppContextSetup(context);
 
         when(userServiceClient.getAllUsernamesByIds(any())).thenReturn(Collections.singletonList("test"));
