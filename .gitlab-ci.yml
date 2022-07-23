@@ -113,9 +113,6 @@ checkstyle:
 #  only:
 #    - develop
 #    - master
-#  except:
-#    variables:
-#      - NEXUS_ONLY
 
 #publish-to-nexus:
 #  stage: publish
@@ -146,6 +143,3 @@ checkstyle:
 #    url: $SERVER_URL
 #  only:
 #    - develop
-#  except:
-#    variables:
-#      - NEXUS_ONLY
