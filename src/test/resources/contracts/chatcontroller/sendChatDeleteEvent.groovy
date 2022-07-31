@@ -1,13 +1,13 @@
-package contracts.clearcontroller
+package contracts.chatcontroller
 
 import org.springframework.cloud.contract.spec.Contract
 
 Contract.make {
-    name 'send clear event'
+    name 'send chat delete event'
     description 'should return status 200'
     request {
         method POST()
-        url("/api/clear")
+        url("/api/chat/delete")
         headers {
             contentType applicationJson()
             header 'Authorization': $(
@@ -20,16 +20,10 @@ Contract.make {
                         consumer(any()),
                         producer([uuid().generate()])
                 ),
-                "content": [
-                        "id"  : $(
-                                consumer(anyUuid()),
-                                producer(uuid().generate())
-                        ),
-                        "type": $(
-                                consumer(anyNonBlankString()),
-                                producer("CHAT")
-                        ),
-                ],
+                "content": $(
+                        consumer(anyUuid()),
+                        producer(uuid().generate())
+                ),
         )
         bodyMatchers {
             jsonPath('$.userIds', byType {

@@ -22,6 +22,7 @@ import org.springframework.test.web.servlet.MockMvc;
 
 import java.util.Collections;
 import java.util.List;
+import java.util.UUID;
 
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
@@ -54,7 +55,7 @@ class ChatControllerIT {
         WsEvent<Chat> event = TestWsEvent.<Chat>defaultBuilder().content(new Chat()).build().toParent();
         String requestBody = objectMapper.writeValueAsString(event);
         mvc.perform(post(url)
-                .contentType(MediaType.APPLICATION_JSON).content(requestBody))
+                        .contentType(MediaType.APPLICATION_JSON).content(requestBody))
                 .andExpect(status().isOk());
     }
 
@@ -65,7 +66,7 @@ class ChatControllerIT {
         WsEvent<Chat> event = TestWsEvent.<Chat>defaultBuilder().content(new Chat()).build().toParent();
         String requestBody = objectMapper.writeValueAsString(event);
         mvc.perform(post(url)
-                .contentType(MediaType.APPLICATION_JSON).content(requestBody))
+                        .contentType(MediaType.APPLICATION_JSON).content(requestBody))
                 .andExpect(status().isUnauthorized());
     }
 
@@ -76,7 +77,7 @@ class ChatControllerIT {
         WsEvent<Chat> event = TestWsEvent.<Chat>defaultBuilder().content(new Chat()).build().toParent();
         String requestBody = objectMapper.writeValueAsString(event);
         mvc.perform(post(url)
-                .contentType(MediaType.APPLICATION_JSON).content(requestBody))
+                        .contentType(MediaType.APPLICATION_JSON).content(requestBody))
                 .andExpect(status().isOk());
     }
 
@@ -87,7 +88,29 @@ class ChatControllerIT {
         WsEvent<Chat> event = TestWsEvent.<Chat>defaultBuilder().content(new Chat()).build().toParent();
         String requestBody = objectMapper.writeValueAsString(event);
         mvc.perform(post(url)
-                .contentType(MediaType.APPLICATION_JSON).content(requestBody))
+                        .contentType(MediaType.APPLICATION_JSON).content(requestBody))
+                .andExpect(status().isUnauthorized());
+    }
+
+    @Test
+    @WithCustomSecurityContext
+    void testSendChatDeleteEvent_ok() throws Exception {
+        String url = ENDPOINT + "/delete";
+        WsEvent<UUID> event = TestWsEvent.<UUID>defaultBuilder().content(UUID.randomUUID()).build().toParent();
+        String requestBody = objectMapper.writeValueAsString(event);
+        mvc.perform(post(url)
+                        .contentType(MediaType.APPLICATION_JSON).content(requestBody))
+                .andExpect(status().isOk());
+    }
+
+    @Test
+    @WithAnonymousUser
+    void testSendChatDeleteEvent_unauthorized() throws Exception {
+        String url = ENDPOINT + "/delete";
+        WsEvent<UUID> event = TestWsEvent.<UUID>defaultBuilder().content(UUID.randomUUID()).build().toParent();
+        String requestBody = objectMapper.writeValueAsString(event);
+        mvc.perform(post(url)
+                        .contentType(MediaType.APPLICATION_JSON).content(requestBody))
                 .andExpect(status().isUnauthorized());
     }
 
@@ -98,7 +121,7 @@ class ChatControllerIT {
         WsEvent<Chat> event = TestWsEvent.<Chat>defaultBuilder().content(new Chat()).build().toParent();
         String requestBody = objectMapper.writeValueAsString(event);
         mvc.perform(post(url)
-                .contentType(MediaType.APPLICATION_JSON).content(requestBody))
+                        .contentType(MediaType.APPLICATION_JSON).content(requestBody))
                 .andExpect(status().isOk());
     }
 
@@ -109,7 +132,7 @@ class ChatControllerIT {
         WsEvent<Chat> event = TestWsEvent.<Chat>defaultBuilder().content(new Chat()).build().toParent();
         String requestBody = objectMapper.writeValueAsString(event);
         mvc.perform(post(url)
-                .contentType(MediaType.APPLICATION_JSON).content(requestBody))
+                        .contentType(MediaType.APPLICATION_JSON).content(requestBody))
                 .andExpect(status().isUnauthorized());
     }
 
@@ -120,7 +143,7 @@ class ChatControllerIT {
         WsEvent<Chat> event = TestWsEvent.<Chat>defaultBuilder().content(new Chat()).build().toParent();
         String requestBody = objectMapper.writeValueAsString(event);
         mvc.perform(post(url)
-                .contentType(MediaType.APPLICATION_JSON).content(requestBody))
+                        .contentType(MediaType.APPLICATION_JSON).content(requestBody))
                 .andExpect(status().isOk());
     }
 
@@ -131,7 +154,7 @@ class ChatControllerIT {
         WsEvent<Chat> event = TestWsEvent.<Chat>defaultBuilder().content(new Chat()).build().toParent();
         String requestBody = objectMapper.writeValueAsString(event);
         mvc.perform(post(url)
-                .contentType(MediaType.APPLICATION_JSON).content(requestBody))
+                        .contentType(MediaType.APPLICATION_JSON).content(requestBody))
                 .andExpect(status().isUnauthorized());
     }
 
@@ -143,7 +166,7 @@ class ChatControllerIT {
                 .content(new ChatMessage()).build().toParent();
         String requestBody = objectMapper.writeValueAsString(event);
         mvc.perform(post(url)
-                .contentType(MediaType.APPLICATION_JSON).content(requestBody))
+                        .contentType(MediaType.APPLICATION_JSON).content(requestBody))
                 .andExpect(status().isOk());
     }
 
@@ -155,7 +178,7 @@ class ChatControllerIT {
                 .content(new ChatMessage()).build().toParent();
         String requestBody = objectMapper.writeValueAsString(event);
         mvc.perform(post(url)
-                .contentType(MediaType.APPLICATION_JSON).content(requestBody))
+                        .contentType(MediaType.APPLICATION_JSON).content(requestBody))
                 .andExpect(status().isUnauthorized());
     }
 
@@ -167,7 +190,7 @@ class ChatControllerIT {
                 .content(new ChatMessage()).build().toParent();
         String requestBody = objectMapper.writeValueAsString(event);
         mvc.perform(post(url)
-                .contentType(MediaType.APPLICATION_JSON).content(requestBody))
+                        .contentType(MediaType.APPLICATION_JSON).content(requestBody))
                 .andExpect(status().isOk());
     }
 
@@ -179,7 +202,7 @@ class ChatControllerIT {
                 .content(new ChatMessage()).build().toParent();
         String requestBody = objectMapper.writeValueAsString(event);
         mvc.perform(post(url)
-                .contentType(MediaType.APPLICATION_JSON).content(requestBody))
+                        .contentType(MediaType.APPLICATION_JSON).content(requestBody))
                 .andExpect(status().isUnauthorized());
     }
 
@@ -191,7 +214,7 @@ class ChatControllerIT {
                 .content(new ChatStatuses()).build().toParent();
         String requestBody = objectMapper.writeValueAsString(event);
         mvc.perform(post(url)
-                .contentType(MediaType.APPLICATION_JSON).content(requestBody))
+                        .contentType(MediaType.APPLICATION_JSON).content(requestBody))
                 .andExpect(status().isOk());
     }
 
@@ -203,7 +226,7 @@ class ChatControllerIT {
                 .content(new ChatStatuses()).build().toParent();
         String requestBody = objectMapper.writeValueAsString(event);
         mvc.perform(post(url)
-                .contentType(MediaType.APPLICATION_JSON).content(requestBody))
+                        .contentType(MediaType.APPLICATION_JSON).content(requestBody))
                 .andExpect(status().isUnauthorized());
     }
 
@@ -215,7 +238,7 @@ class ChatControllerIT {
                 .content(new ChatReactions()).build().toParent();
         String requestBody = objectMapper.writeValueAsString(event);
         mvc.perform(post(url)
-                .contentType(MediaType.APPLICATION_JSON).content(requestBody))
+                        .contentType(MediaType.APPLICATION_JSON).content(requestBody))
                 .andExpect(status().isOk());
     }
 
@@ -227,7 +250,7 @@ class ChatControllerIT {
                 .content(new ChatReactions()).build().toParent();
         String requestBody = objectMapper.writeValueAsString(event);
         mvc.perform(post(url)
-                .contentType(MediaType.APPLICATION_JSON).content(requestBody))
+                        .contentType(MediaType.APPLICATION_JSON).content(requestBody))
                 .andExpect(status().isUnauthorized());
     }
 

@@ -5,7 +5,6 @@ import com.persoff68.fatodo.FatodoWsServiceApplication;
 import com.persoff68.fatodo.annotation.WithCustomSecurityContext;
 import com.persoff68.fatodo.builder.TestWsEvent;
 import com.persoff68.fatodo.client.UserServiceClient;
-import com.persoff68.fatodo.model.Request;
 import com.persoff68.fatodo.model.WsEvent;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -19,6 +18,7 @@ import org.springframework.test.web.servlet.MockMvc;
 
 import java.util.Collections;
 import java.util.List;
+import java.util.UUID;
 
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
@@ -48,7 +48,7 @@ class ContactControllerIT {
     @WithCustomSecurityContext
     void testSendRequestIncomingEvent_ok() throws Exception {
         String url = ENDPOINT + "/request-incoming";
-        WsEvent<Request> event = TestWsEvent.<Request>defaultBuilder().content(new Request()).build().toParent();
+        WsEvent<UUID> event = TestWsEvent.<UUID>defaultBuilder().content(UUID.randomUUID()).build().toParent();
         String requestBody = objectMapper.writeValueAsString(event);
         mvc.perform(post(url)
                         .contentType(MediaType.APPLICATION_JSON).content(requestBody))
@@ -59,7 +59,7 @@ class ContactControllerIT {
     @WithAnonymousUser
     void testSendRequestIncomingEvent_unauthorized() throws Exception {
         String url = ENDPOINT + "/request-incoming";
-        WsEvent<Request> event = TestWsEvent.<Request>defaultBuilder().content(new Request()).build().toParent();
+        WsEvent<UUID> event = TestWsEvent.<UUID>defaultBuilder().content(UUID.randomUUID()).build().toParent();
         String requestBody = objectMapper.writeValueAsString(event);
         mvc.perform(post(url)
                         .contentType(MediaType.APPLICATION_JSON).content(requestBody))
@@ -71,7 +71,7 @@ class ContactControllerIT {
     @WithCustomSecurityContext
     void testSendRequestOutcomingEvent_ok() throws Exception {
         String url = ENDPOINT + "/request-outcoming";
-        WsEvent<Request> event = TestWsEvent.<Request>defaultBuilder().content(new Request()).build().toParent();
+        WsEvent<UUID> event = TestWsEvent.<UUID>defaultBuilder().content(UUID.randomUUID()).build().toParent();
         String requestBody = objectMapper.writeValueAsString(event);
         mvc.perform(post(url)
                         .contentType(MediaType.APPLICATION_JSON).content(requestBody))
@@ -82,7 +82,7 @@ class ContactControllerIT {
     @WithAnonymousUser
     void testSendRequestOutcomingEvent_unauthorized() throws Exception {
         String url = ENDPOINT + "/request-outcoming";
-        WsEvent<Request> event = TestWsEvent.<Request>defaultBuilder().content(new Request()).build().toParent();
+        WsEvent<UUID> event = TestWsEvent.<UUID>defaultBuilder().content(UUID.randomUUID()).build().toParent();
         String requestBody = objectMapper.writeValueAsString(event);
         mvc.perform(post(url)
                         .contentType(MediaType.APPLICATION_JSON).content(requestBody))
@@ -94,7 +94,7 @@ class ContactControllerIT {
     @WithCustomSecurityContext
     void testSendAcceptIncomingEvent_ok() throws Exception {
         String url = ENDPOINT + "/accept-incoming";
-        WsEvent<Request> event = TestWsEvent.<Request>defaultBuilder().content(new Request()).build().toParent();
+        WsEvent<UUID> event = TestWsEvent.<UUID>defaultBuilder().content(UUID.randomUUID()).build().toParent();
         String requestBody = objectMapper.writeValueAsString(event);
         mvc.perform(post(url)
                         .contentType(MediaType.APPLICATION_JSON).content(requestBody))
@@ -105,7 +105,7 @@ class ContactControllerIT {
     @WithAnonymousUser
     void testSendAcceptIncomingEvent_unauthorized() throws Exception {
         String url = ENDPOINT + "/accept-incoming";
-        WsEvent<Request> event = TestWsEvent.<Request>defaultBuilder().content(new Request()).build().toParent();
+        WsEvent<UUID> event = TestWsEvent.<UUID>defaultBuilder().content(UUID.randomUUID()).build().toParent();
         String requestBody = objectMapper.writeValueAsString(event);
         mvc.perform(post(url)
                         .contentType(MediaType.APPLICATION_JSON).content(requestBody))
@@ -117,7 +117,7 @@ class ContactControllerIT {
     @WithCustomSecurityContext
     void testSendAcceptOutcomingEvent_ok() throws Exception {
         String url = ENDPOINT + "/accept-outcoming";
-        WsEvent<Request> event = TestWsEvent.<Request>defaultBuilder().content(new Request()).build().toParent();
+        WsEvent<UUID> event = TestWsEvent.<UUID>defaultBuilder().content(UUID.randomUUID()).build().toParent();
         String requestBody = objectMapper.writeValueAsString(event);
         mvc.perform(post(url)
                         .contentType(MediaType.APPLICATION_JSON).content(requestBody))
@@ -128,7 +128,73 @@ class ContactControllerIT {
     @WithAnonymousUser
     void testSendAcceptOutcomingEvent_unauthorized() throws Exception {
         String url = ENDPOINT + "/accept-outcoming";
-        WsEvent<Request> event = TestWsEvent.<Request>defaultBuilder().content(new Request()).build().toParent();
+        WsEvent<UUID> event = TestWsEvent.<UUID>defaultBuilder().content(UUID.randomUUID()).build().toParent();
+        String requestBody = objectMapper.writeValueAsString(event);
+        mvc.perform(post(url)
+                        .contentType(MediaType.APPLICATION_JSON).content(requestBody))
+                .andExpect(status().isUnauthorized());
+    }
+
+    @Test
+    @WithCustomSecurityContext
+    void testSendDeleteRequestIncomingEvent_ok() throws Exception {
+        String url = ENDPOINT + "/delete-request-incoming";
+        WsEvent<UUID> event = TestWsEvent.<UUID>defaultBuilder().content(UUID.randomUUID()).build().toParent();
+        String requestBody = objectMapper.writeValueAsString(event);
+        mvc.perform(post(url)
+                        .contentType(MediaType.APPLICATION_JSON).content(requestBody))
+                .andExpect(status().isOk());
+    }
+
+    @Test
+    @WithAnonymousUser
+    void testSendDeleteRequestIncomingEvent_unauthorized() throws Exception {
+        String url = ENDPOINT + "/delete-request-incoming";
+        WsEvent<UUID> event = TestWsEvent.<UUID>defaultBuilder().content(UUID.randomUUID()).build().toParent();
+        String requestBody = objectMapper.writeValueAsString(event);
+        mvc.perform(post(url)
+                        .contentType(MediaType.APPLICATION_JSON).content(requestBody))
+                .andExpect(status().isUnauthorized());
+    }
+
+    @Test
+    @WithCustomSecurityContext
+    void testSendDeleteRequestOutcomingEvent_ok() throws Exception {
+        String url = ENDPOINT + "/delete-request-outcoming";
+        WsEvent<UUID> event = TestWsEvent.<UUID>defaultBuilder().content(UUID.randomUUID()).build().toParent();
+        String requestBody = objectMapper.writeValueAsString(event);
+        mvc.perform(post(url)
+                        .contentType(MediaType.APPLICATION_JSON).content(requestBody))
+                .andExpect(status().isOk());
+    }
+
+    @Test
+    @WithAnonymousUser
+    void testSendDeleteRequestOutcomingEvent_unauthorized() throws Exception {
+        String url = ENDPOINT + "/delete-request-outcoming";
+        WsEvent<UUID> event = TestWsEvent.<UUID>defaultBuilder().content(UUID.randomUUID()).build().toParent();
+        String requestBody = objectMapper.writeValueAsString(event);
+        mvc.perform(post(url)
+                        .contentType(MediaType.APPLICATION_JSON).content(requestBody))
+                .andExpect(status().isUnauthorized());
+    }
+
+    @Test
+    @WithCustomSecurityContext
+    void testSendDeleteRelationEvent_ok() throws Exception {
+        String url = ENDPOINT + "/delete-relation";
+        WsEvent<UUID> event = TestWsEvent.<UUID>defaultBuilder().content(UUID.randomUUID()).build().toParent();
+        String requestBody = objectMapper.writeValueAsString(event);
+        mvc.perform(post(url)
+                        .contentType(MediaType.APPLICATION_JSON).content(requestBody))
+                .andExpect(status().isOk());
+    }
+
+    @Test
+    @WithAnonymousUser
+    void testSendDeleteRelationEvent_unauthorized() throws Exception {
+        String url = ENDPOINT + "/delete-relation";
+        WsEvent<UUID> event = TestWsEvent.<UUID>defaultBuilder().content(UUID.randomUUID()).build().toParent();
         String requestBody = objectMapper.writeValueAsString(event);
         mvc.perform(post(url)
                         .contentType(MediaType.APPLICATION_JSON).content(requestBody))

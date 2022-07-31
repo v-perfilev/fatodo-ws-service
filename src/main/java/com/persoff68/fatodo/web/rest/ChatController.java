@@ -13,6 +13,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.UUID;
+
 @RestController
 @RequestMapping(ChatController.ENDPOINT)
 @RequiredArgsConstructor
@@ -30,6 +32,12 @@ public class ChatController {
     @PostMapping(value = "/update")
     public ResponseEntity<Void> sendChatUpdateEvent(@RequestBody WsEvent<Chat> event) {
         chatService.handleChatUpdateEvent(event.getUserIds(), event.getContent());
+        return ResponseEntity.ok().build();
+    }
+
+    @PostMapping(value = "/delete")
+    public ResponseEntity<Void> sendDeleteEvent(@RequestBody WsEvent<UUID> event) {
+        chatService.handleChatDeleteEvent(event.getUserIds(), event.getContent());
         return ResponseEntity.ok().build();
     }
 

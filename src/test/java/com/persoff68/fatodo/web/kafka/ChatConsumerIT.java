@@ -23,6 +23,7 @@ import org.springframework.test.annotation.DirtiesContext;
 
 import java.util.Collections;
 import java.util.List;
+import java.util.UUID;
 import java.util.concurrent.TimeUnit;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -58,6 +59,7 @@ class ChatConsumerIT {
     private KafkaTemplate<String, WsEvent<ChatMessage>> chatMessageKafkaTemplate;
     private KafkaTemplate<String, WsEvent<ChatStatuses>> chatStatusesKafkaTemplate;
     private KafkaTemplate<String, WsEvent<ChatReactions>> chatReactionsKafkaTemplate;
+    private KafkaTemplate<String, WsEvent<UUID>> chatDeleteKafkaTemplate;
 
     @BeforeEach
     void setup() {
@@ -65,6 +67,7 @@ class ChatConsumerIT {
         chatMessageKafkaTemplate = buildKafkaTemplate();
         chatStatusesKafkaTemplate = buildKafkaTemplate();
         chatReactionsKafkaTemplate = buildKafkaTemplate();
+        chatDeleteKafkaTemplate = buildKafkaTemplate();
 
         List<String> usernameList = Collections.singletonList("test");
         when(userServiceClient.getAllUsernamesByIds(any())).thenReturn(usernameList);
@@ -88,6 +91,16 @@ class ChatConsumerIT {
 
         assertThat(messageConsumed).isTrue();
         verify(wsService, times(1)).sendMessage(any(), eq(WsChatDestination.CHAT_UPDATE.getValue()), any());
+    }
+
+    @Test
+    void testSendChatDeleteEvent() throws InterruptedException {
+        WsEvent<UUID> event = TestWsEvent.<UUID>defaultBuilder().content(UUID.randomUUID()).build().toParent();
+        chatDeleteKafkaTemplate.send("ws_chat", "delete", event);
+        boolean messageConsumed = chatConsumer.getLatch().await(5, TimeUnit.SECONDS);
+
+        assertThat(messageConsumed).isTrue();
+        verify(wsService, times(1)).sendMessage(any(), eq(WsChatDestination.CHAT_DELETE.getValue()), any());
     }
 
     @Test

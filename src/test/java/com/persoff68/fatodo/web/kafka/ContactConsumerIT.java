@@ -3,7 +3,6 @@ package com.persoff68.fatodo.web.kafka;
 import com.persoff68.fatodo.builder.TestWsEvent;
 import com.persoff68.fatodo.client.UserServiceClient;
 import com.persoff68.fatodo.config.util.KafkaUtils;
-import com.persoff68.fatodo.model.Request;
 import com.persoff68.fatodo.model.WsEvent;
 import com.persoff68.fatodo.model.constants.WsContactDestination;
 import com.persoff68.fatodo.service.WsService;
@@ -20,6 +19,7 @@ import org.springframework.test.annotation.DirtiesContext;
 
 import java.util.Collections;
 import java.util.List;
+import java.util.UUID;
 import java.util.concurrent.TimeUnit;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -50,7 +50,7 @@ class ContactConsumerIT {
     @MockBean
     UserServiceClient userServiceClient;
 
-    private KafkaTemplate<String, WsEvent<Request>> contactKafkaTemplate;
+    private KafkaTemplate<String, WsEvent<UUID>> contactKafkaTemplate;
 
     @BeforeEach
     void setup() {
@@ -62,7 +62,7 @@ class ContactConsumerIT {
 
     @Test
     void testSendRequestIncomingEvent() throws InterruptedException {
-        WsEvent<Request> event = TestWsEvent.<Request>defaultBuilder().content(new Request()).build().toParent();
+        WsEvent<UUID> event = TestWsEvent.<UUID>defaultBuilder().content(UUID.randomUUID()).build().toParent();
         contactKafkaTemplate.send("ws_contact", "request-incoming", event);
         boolean messageConsumed = contactConsumer.getLatch().await(5, TimeUnit.SECONDS);
 
@@ -73,7 +73,7 @@ class ContactConsumerIT {
 
     @Test
     void testSendRequestOutcomingEvent() throws InterruptedException {
-        WsEvent<Request> event = TestWsEvent.<Request>defaultBuilder().content(new Request()).build().toParent();
+        WsEvent<UUID> event = TestWsEvent.<UUID>defaultBuilder().content(UUID.randomUUID()).build().toParent();
         contactKafkaTemplate.send("ws_contact", "request-outcoming", event);
         boolean messageConsumed = contactConsumer.getLatch().await(5, TimeUnit.SECONDS);
 
@@ -84,7 +84,7 @@ class ContactConsumerIT {
 
     @Test
     void testSendAcceptIncomingEvent() throws InterruptedException {
-        WsEvent<Request> event = TestWsEvent.<Request>defaultBuilder().content(new Request()).build().toParent();
+        WsEvent<UUID> event = TestWsEvent.<UUID>defaultBuilder().content(UUID.randomUUID()).build().toParent();
         contactKafkaTemplate.send("ws_contact", "accept-incoming", event);
         boolean messageConsumed = contactConsumer.getLatch().await(5, TimeUnit.SECONDS);
 
@@ -95,13 +95,46 @@ class ContactConsumerIT {
 
     @Test
     void testSendAcceptOutcomingEvent() throws InterruptedException {
-        WsEvent<Request> event = TestWsEvent.<Request>defaultBuilder().content(new Request()).build().toParent();
+        WsEvent<UUID> event = TestWsEvent.<UUID>defaultBuilder().content(UUID.randomUUID()).build().toParent();
         contactKafkaTemplate.send("ws_contact", "accept-outcoming", event);
         boolean messageConsumed = contactConsumer.getLatch().await(5, TimeUnit.SECONDS);
 
         assertThat(messageConsumed).isTrue();
         verify(wsService, times(1))
                 .sendMessage(any(), eq(WsContactDestination.CONTACT_ACCEPT_OUTCOMING.getValue()), any());
+    }
+
+    @Test
+    void testSendDeleteRequestIncomingEvent() throws InterruptedException {
+        WsEvent<UUID> event = TestWsEvent.<UUID>defaultBuilder().content(UUID.randomUUID()).build().toParent();
+        contactKafkaTemplate.send("ws_contact", "delete-request-incoming", event);
+        boolean messageConsumed = contactConsumer.getLatch().await(5, TimeUnit.SECONDS);
+
+        assertThat(messageConsumed).isTrue();
+        verify(wsService, times(1))
+                .sendMessage(any(), eq(WsContactDestination.CONTACT_DELETE_REQUEST_INCOMING.getValue()), any());
+    }
+
+    @Test
+    void testSendDeleteRequestOutcomingEvent() throws InterruptedException {
+        WsEvent<UUID> event = TestWsEvent.<UUID>defaultBuilder().content(UUID.randomUUID()).build().toParent();
+        contactKafkaTemplate.send("ws_contact", "delete-request-outcoming", event);
+        boolean messageConsumed = contactConsumer.getLatch().await(5, TimeUnit.SECONDS);
+
+        assertThat(messageConsumed).isTrue();
+        verify(wsService, times(1))
+                .sendMessage(any(), eq(WsContactDestination.CONTACT_DELETE_REQUEST_OUTCOMING.getValue()), any());
+    }
+
+    @Test
+    void testSendDeleteRelationEvent() throws InterruptedException {
+        WsEvent<UUID> event = TestWsEvent.<UUID>defaultBuilder().content(UUID.randomUUID()).build().toParent();
+        contactKafkaTemplate.send("ws_contact", "delete-relation", event);
+        boolean messageConsumed = contactConsumer.getLatch().await(5, TimeUnit.SECONDS);
+
+        assertThat(messageConsumed).isTrue();
+        verify(wsService, times(1))
+                .sendMessage(any(), eq(WsContactDestination.CONTACT_DELETE_RELATION.getValue()), any());
     }
 
     private <T> KafkaTemplate<String, T> buildKafkaTemplate() {

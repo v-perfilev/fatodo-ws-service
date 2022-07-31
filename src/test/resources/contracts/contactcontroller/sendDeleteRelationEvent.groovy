@@ -3,11 +3,11 @@ package contracts.contactcontroller
 import org.springframework.cloud.contract.spec.Contract
 
 Contract.make {
-    name 'send request incoming event'
+    name 'send delete relation event'
     description 'should return status 200'
     request {
         method POST()
-        url("/api/contact/request-incoming")
+        url("/api/contact/delete-relation")
         headers {
             contentType applicationJson()
             header 'Authorization': $(

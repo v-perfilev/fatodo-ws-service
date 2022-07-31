@@ -19,6 +19,7 @@ import org.springframework.messaging.handler.annotation.Header;
 import org.springframework.messaging.handler.annotation.Payload;
 import org.springframework.stereotype.Component;
 
+import java.util.UUID;
 import java.util.concurrent.CountDownLatch;
 
 @Component
@@ -45,6 +46,7 @@ public class ChatConsumer {
             case "message-update" -> handleMessageUpdateEvent(value);
             case "statuses" -> handleStatusesEvent(value);
             case "reactions" -> handleReactionsEvent(value);
+            case "delete" -> handleChatDeleteEvent(value);
             default -> throw new KafkaException();
         }
         resetLatch();
@@ -58,6 +60,11 @@ public class ChatConsumer {
     private void handleChatUpdateEvent(String value) {
         WsEvent<Chat> event = extractWsEvent(value, Chat.class);
         chatService.handleChatUpdateEvent(event.getUserIds(), event.getContent());
+    }
+
+    private void handleChatDeleteEvent(String value) {
+        WsEvent<UUID> event = extractWsEvent(value, UUID.class);
+        chatService.handleChatDeleteEvent(event.getUserIds(), event.getContent());
     }
 
     private void handleLastMessageEvent(String value) {

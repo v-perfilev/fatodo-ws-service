@@ -4,7 +4,6 @@ import com.fasterxml.jackson.databind.JavaType;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.persoff68.fatodo.config.annotation.ConditionalOnPropertyNotNull;
 import com.persoff68.fatodo.config.util.KafkaUtils;
-import com.persoff68.fatodo.model.ClearEvent;
 import com.persoff68.fatodo.model.Event;
 import com.persoff68.fatodo.model.WsEvent;
 import lombok.RequiredArgsConstructor;
@@ -57,11 +56,6 @@ public class KafkaConfiguration {
     }
 
     @Bean
-    public NewTopic clearNewTopic() {
-        return KafkaUtils.buildTopic("ws_clear", partitions);
-    }
-
-    @Bean
     public NewTopic contactNewTopic() {
         return KafkaUtils.buildTopic("ws_contact", partitions);
     }
@@ -79,12 +73,6 @@ public class KafkaConfiguration {
     @Bean
     public ConcurrentKafkaListenerContainerFactory<String, WsEvent<Event>> eventContainerFactory() {
         JavaType javaType = objectMapper.getTypeFactory().constructParametricType(WsEvent.class, Event.class);
-        return KafkaUtils.buildJsonContainerFactory(bootstrapAddress, groupId, autoOffsetResetConfig, javaType);
-    }
-
-    @Bean
-    public ConcurrentKafkaListenerContainerFactory<String, WsEvent<ClearEvent>> clearContainerFactory() {
-        JavaType javaType = objectMapper.getTypeFactory().constructParametricType(WsEvent.class, ClearEvent.class);
         return KafkaUtils.buildJsonContainerFactory(bootstrapAddress, groupId, autoOffsetResetConfig, javaType);
     }
 

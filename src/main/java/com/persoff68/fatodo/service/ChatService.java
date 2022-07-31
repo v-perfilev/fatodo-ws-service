@@ -27,6 +27,11 @@ public class ChatService {
         wsService.sendMessage(userIdList, destination, chat);
     }
 
+    public void handleChatDeleteEvent(List<UUID> userIdList, UUID chatId) {
+        String destination = WsChatDestination.CHAT_DELETE.getValue();
+        wsService.sendMessage(userIdList, destination, chatId);
+    }
+
     public void handleChatLastMessageEvent(List<UUID> userIdList, Chat chat) {
         String destination = WsChatDestination.CHAT_LAST_MESSAGE.getValue();
         wsService.sendMessage(userIdList, destination, chat);
