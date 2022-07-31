@@ -4,7 +4,7 @@ public enum WsContactDestination {
     CONTACT_REQUEST_INCOMING("/contact/request-incoming"),
     CONTACT_REQUEST_OUTCOMING("/contact/request-outcoming"),
     CONTACT_ACCEPT_INCOMING("/contact/accept-incoming"),
-    CONTACT_ACCEPT_OUTCOMING("/contact/accept-outcoing");
+    CONTACT_ACCEPT_OUTCOMING("/contact/accept-outcoming");
 
     private final String value;
 
