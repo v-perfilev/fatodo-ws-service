@@ -1,6 +1,6 @@
 package com.persoff68.fatodo.model.constants;
 
-public enum EventDeleteType {
+public enum ClearEventType {
     GROUP,
     ITEM,
     CONTACT,

@@ -5,7 +5,7 @@ import com.persoff68.fatodo.FatodoWsServiceApplication;
 import com.persoff68.fatodo.annotation.WithCustomSecurityContext;
 import com.persoff68.fatodo.builder.TestWsEvent;
 import com.persoff68.fatodo.client.UserServiceClient;
-import com.persoff68.fatodo.model.Event;
+import com.persoff68.fatodo.model.ClearEvent;
 import com.persoff68.fatodo.model.WsEvent;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -27,8 +27,8 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 @SpringBootTest(classes = FatodoWsServiceApplication.class)
 @AutoConfigureMockMvc
-class EventControllerIT {
-    private static final String ENDPOINT = "/api/event";
+class ClearControllerIT {
+    private static final String ENDPOINT = "/api/clear";
 
     @Autowired
     MockMvc mvc;
@@ -44,10 +44,12 @@ class EventControllerIT {
         when(userServiceClient.getAllUsernamesByIds(any())).thenReturn(usernameList);
     }
 
+
     @Test
     @WithCustomSecurityContext
-    void testSendEvent_ok() throws Exception {
-        WsEvent<Event> event = TestWsEvent.<Event>defaultBuilder().content(new Event()).build().toParent();
+    void testSendClearEvent_ok() throws Exception {
+        WsEvent<ClearEvent> event = TestWsEvent.<ClearEvent>defaultBuilder().content(new ClearEvent())
+                .build().toParent();
         String requestBody = objectMapper.writeValueAsString(event);
         mvc.perform(post(ENDPOINT)
                         .contentType(MediaType.APPLICATION_JSON).content(requestBody))
@@ -56,8 +58,9 @@ class EventControllerIT {
 
     @Test
     @WithAnonymousUser
-    void testSendEvent_unauthorized() throws Exception {
-        WsEvent<Event> event = TestWsEvent.<Event>defaultBuilder().content(new Event()).build().toParent();
+    void testSendClearEvent_unauthorized() throws Exception {
+        WsEvent<ClearEvent> event = TestWsEvent.<ClearEvent>defaultBuilder().content(new ClearEvent())
+                .build().toParent();
         String requestBody = objectMapper.writeValueAsString(event);
         mvc.perform(post(ENDPOINT)
                         .contentType(MediaType.APPLICATION_JSON).content(requestBody))

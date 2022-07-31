@@ -1,7 +1,6 @@
 package com.persoff68.fatodo.service;
 
 import com.persoff68.fatodo.model.Event;
-import com.persoff68.fatodo.model.EventDelete;
 import com.persoff68.fatodo.model.constants.WsEventDestination;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -18,11 +17,6 @@ public class EventService {
     public void handleEvent(List<UUID> userIdList, Event event) {
         String destination = WsEventDestination.EVENT.getValue();
         wsService.sendMessage(userIdList, destination, event);
-    }
-
-    public void handleEventDelete(List<UUID> userIdList, EventDelete eventDelete) {
-        String destination = WsEventDestination.EVENT_DELETE.getValue();
-        wsService.sendMessage(userIdList, destination, eventDelete);
     }
 
 }

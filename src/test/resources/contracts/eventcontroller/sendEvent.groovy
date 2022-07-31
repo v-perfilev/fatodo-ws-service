@@ -3,11 +3,11 @@ package contracts.eventcontroller
 import org.springframework.cloud.contract.spec.Contract
 
 Contract.make {
-    name 'send event new'
+    name 'send event'
     description 'should return status 200'
     request {
         method POST()
-        url("/api/event/new")
+        url("/api/event")
         headers {
             contentType applicationJson()
             header 'Authorization': $(
