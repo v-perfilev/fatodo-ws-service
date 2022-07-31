@@ -62,6 +62,11 @@ public class KafkaConfiguration {
     }
 
     @Bean
+    public NewTopic contactNewTopic() {
+        return KafkaUtils.buildTopic("ws_contact", partitions);
+    }
+
+    @Bean
     public ConcurrentKafkaListenerContainerFactory<String, String> chatContainerFactory() {
         return KafkaUtils.buildStringContainerFactory(bootstrapAddress, groupId, autoOffsetResetConfig);
     }
@@ -81,6 +86,11 @@ public class KafkaConfiguration {
     public ConcurrentKafkaListenerContainerFactory<String, WsEvent<ClearEvent>> clearContainerFactory() {
         JavaType javaType = objectMapper.getTypeFactory().constructParametricType(WsEvent.class, ClearEvent.class);
         return KafkaUtils.buildJsonContainerFactory(bootstrapAddress, groupId, autoOffsetResetConfig, javaType);
+    }
+
+    @Bean
+    public ConcurrentKafkaListenerContainerFactory<String, String> contactContainerFactory() {
+        return KafkaUtils.buildStringContainerFactory(bootstrapAddress, groupId, autoOffsetResetConfig);
     }
 
 }
