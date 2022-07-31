@@ -40,15 +40,6 @@ public class KafkaUtils {
         return new KafkaTemplate<>(producerFactory);
     }
 
-    public static <T> ConcurrentKafkaListenerContainerFactory<String, T> buildJsonContainerFactory(
-            String bootstrapAddress, String groupId, String autoOffsetResetConfig, JavaType javaType) {
-        ConsumerFactory<String, T> consumerFactory = buildJsonConsumerFactory(bootstrapAddress, groupId,
-                autoOffsetResetConfig, javaType);
-        ConcurrentKafkaListenerContainerFactory<String, T> factory = new ConcurrentKafkaListenerContainerFactory<>();
-        factory.setConsumerFactory(consumerFactory);
-        return factory;
-    }
-
     public static ConcurrentKafkaListenerContainerFactory<String, String> buildStringContainerFactory(
             String bootstrapAddress, String groupId, String autoOffsetResetConfig) {
         ConsumerFactory<String, String> consumerFactory = buildStringConsumerFactory(bootstrapAddress, groupId,

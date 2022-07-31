@@ -1,11 +1,7 @@
 package com.persoff68.fatodo.config;
 
-import com.fasterxml.jackson.databind.JavaType;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.persoff68.fatodo.config.annotation.ConditionalOnPropertyNotNull;
 import com.persoff68.fatodo.config.util.KafkaUtils;
-import com.persoff68.fatodo.model.Event;
-import com.persoff68.fatodo.model.WsEvent;
 import lombok.RequiredArgsConstructor;
 import org.apache.kafka.clients.admin.NewTopic;
 import org.springframework.beans.factory.annotation.Value;
@@ -32,8 +28,6 @@ public class KafkaConfiguration {
 
     @Value(value = "${kafka.autoOffsetResetConfig:latest}")
     private String autoOffsetResetConfig;
-
-    private final ObjectMapper objectMapper;
 
     @Bean
     public KafkaAdmin kafkaAdmin() {
@@ -66,9 +60,8 @@ public class KafkaConfiguration {
     }
 
     @Bean
-    public ConcurrentKafkaListenerContainerFactory<String, WsEvent<Event>> eventContainerFactory() {
-        JavaType javaType = objectMapper.getTypeFactory().constructParametricType(WsEvent.class, Event.class);
-        return KafkaUtils.buildJsonContainerFactory(bootstrapAddress, groupId, autoOffsetResetConfig, javaType);
+    public ConcurrentKafkaListenerContainerFactory<String, String> eventContainerFactory() {
+        return KafkaUtils.buildStringContainerFactory(bootstrapAddress, groupId, autoOffsetResetConfig);
     }
 
 }

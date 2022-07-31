@@ -6,6 +6,7 @@ import com.persoff68.fatodo.annotation.WithCustomSecurityContext;
 import com.persoff68.fatodo.builder.TestWsEvent;
 import com.persoff68.fatodo.client.UserServiceClient;
 import com.persoff68.fatodo.model.Event;
+import com.persoff68.fatodo.model.EventDelete;
 import com.persoff68.fatodo.model.WsEvent;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -47,9 +48,10 @@ class EventControllerIT {
     @Test
     @WithCustomSecurityContext
     void testSendEvent_ok() throws Exception {
+        String url = ENDPOINT + "/new";
         WsEvent<Event> event = TestWsEvent.<Event>defaultBuilder().content(new Event()).build().toParent();
         String requestBody = objectMapper.writeValueAsString(event);
-        mvc.perform(post(ENDPOINT)
+        mvc.perform(post(url)
                         .contentType(MediaType.APPLICATION_JSON).content(requestBody))
                 .andExpect(status().isOk());
     }
@@ -57,12 +59,37 @@ class EventControllerIT {
     @Test
     @WithAnonymousUser
     void testSendEvent_unauthorized() throws Exception {
+        String url = ENDPOINT + "/new";
         WsEvent<Event> event = TestWsEvent.<Event>defaultBuilder().content(new Event()).build().toParent();
         String requestBody = objectMapper.writeValueAsString(event);
-        mvc.perform(post(ENDPOINT)
+        mvc.perform(post(url)
                         .contentType(MediaType.APPLICATION_JSON).content(requestBody))
                 .andExpect(status().isUnauthorized());
     }
 
+
+    @Test
+    @WithCustomSecurityContext
+    void testSendEventDelete_ok() throws Exception {
+        String url = ENDPOINT + "/delete";
+        WsEvent<EventDelete> event = TestWsEvent.<EventDelete>defaultBuilder().content(new EventDelete())
+                .build().toParent();
+        String requestBody = objectMapper.writeValueAsString(event);
+        mvc.perform(post(url)
+                        .contentType(MediaType.APPLICATION_JSON).content(requestBody))
+                .andExpect(status().isOk());
+    }
+
+    @Test
+    @WithAnonymousUser
+    void testSendEventDelete_unauthorized() throws Exception {
+        String url = ENDPOINT + "/delete";
+        WsEvent<EventDelete> event = TestWsEvent.<EventDelete>defaultBuilder().content(new EventDelete())
+                .build().toParent();
+        String requestBody = objectMapper.writeValueAsString(event);
+        mvc.perform(post(url)
+                        .contentType(MediaType.APPLICATION_JSON).content(requestBody))
+                .andExpect(status().isUnauthorized());
+    }
 
 }

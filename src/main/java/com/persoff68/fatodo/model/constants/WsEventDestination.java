@@ -1,7 +1,8 @@
 package com.persoff68.fatodo.model.constants;
 
 public enum WsEventDestination {
-    EVENT("/event");
+    EVENT("/event"),
+    EVENT_DELETE("/event-delete");
 
     private final String value;
 

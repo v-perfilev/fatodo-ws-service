@@ -4,6 +4,7 @@ import com.persoff68.fatodo.builder.TestWsEvent;
 import com.persoff68.fatodo.client.UserServiceClient;
 import com.persoff68.fatodo.config.util.KafkaUtils;
 import com.persoff68.fatodo.model.Event;
+import com.persoff68.fatodo.model.EventDelete;
 import com.persoff68.fatodo.model.WsEvent;
 import com.persoff68.fatodo.model.constants.WsEventDestination;
 import com.persoff68.fatodo.service.WsService;
@@ -51,10 +52,12 @@ class EventConsumerIT {
     UserServiceClient userServiceClient;
 
     private KafkaTemplate<String, WsEvent<Event>> eventKafkaTemplate;
+    private KafkaTemplate<String, WsEvent<EventDelete>> eventDeleteKafkaTemplate;
 
     @BeforeEach
     void setup() {
         eventKafkaTemplate = buildKafkaTemplate();
+        eventDeleteKafkaTemplate = buildKafkaTemplate();
 
         List<String> usernameList = Collections.singletonList("test");
         when(userServiceClient.getAllUsernamesByIds(any())).thenReturn(usernameList);
@@ -63,7 +66,18 @@ class EventConsumerIT {
     @Test
     void testSendEvent() throws InterruptedException {
         WsEvent<Event> event = TestWsEvent.<Event>defaultBuilder().content(new Event()).build().toParent();
-        eventKafkaTemplate.send("ws_event", event);
+        eventKafkaTemplate.send("ws_event", "new", event);
+        boolean messageConsumed = eventConsumer.getLatch().await(5, TimeUnit.SECONDS);
+
+        assertThat(messageConsumed).isTrue();
+        verify(wsService, times(1)).sendMessage(any(), startsWith(WsEventDestination.EVENT.getValue()), any());
+    }
+
+    @Test
+    void testSendEventDelete() throws InterruptedException {
+        WsEvent<EventDelete> event = TestWsEvent.<EventDelete>defaultBuilder().content(new EventDelete())
+                .build().toParent();
+        eventDeleteKafkaTemplate.send("ws_event", "delete", event);
         boolean messageConsumed = eventConsumer.getLatch().await(5, TimeUnit.SECONDS);
 
         assertThat(messageConsumed).isTrue();
