@@ -20,7 +20,7 @@ Contract.make {
                         consumer(any()),
                         producer([uuid().generate()])
                 ),
-                "request": [
+                "content": [
                         "requesterId": $(
                                 consumer(anyUuid()),
                                 producer(uuid().generate())
