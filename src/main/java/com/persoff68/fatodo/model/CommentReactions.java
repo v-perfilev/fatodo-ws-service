@@ -8,8 +8,6 @@ import java.util.UUID;
 @Data
 public class CommentReactions {
 
-    private UUID threadId;
-
     private UUID targetId;
 
     private UUID commentId;

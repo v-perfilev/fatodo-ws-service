@@ -22,7 +22,7 @@ Contract.make {
                         producer([uuid().generate()])
                 ),
                 "content": [
-                        "threadId" : $(
+                        "targetId" : $(
                                 consumer(anyUuid()),
                                 producer(uuid().generate())
                         ),
