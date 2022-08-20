@@ -24,13 +24,13 @@ public class WebSocketConfiguration implements WebSocketMessageBrokerConfigurer 
 
     private final Environment environment;
 
-    @Value("${wsBrokerRelay.host}")
+    @Value("${wsBrokerRelay.host:}")
     private String wsBrokerRelayHost;
-    @Value("${wsBrokerRelay.port}")
+    @Value("${wsBrokerRelay.port:}")
     private String wsBrokerRelayPort;
-    @Value("${wsBrokerRelay.login}")
+    @Value("${wsBrokerRelay.login:}")
     private String wsBrokerRelayLogin;
-    @Value("${wsBrokerRelay.passcode}")
+    @Value("${wsBrokerRelay.passcode:}")
     private String wsBrokerRelayPasscode;
 
     @Override
