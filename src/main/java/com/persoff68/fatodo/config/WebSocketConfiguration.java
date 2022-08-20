@@ -4,6 +4,7 @@ import com.persoff68.fatodo.config.constant.AppConstants;
 import com.persoff68.fatodo.config.constant.Profile;
 import io.jsonwebtoken.lang.Strings;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.env.Environment;
@@ -18,6 +19,7 @@ import java.util.List;
 @Configuration
 @EnableWebSocketMessageBroker
 @RequiredArgsConstructor
+@Slf4j
 public class WebSocketConfiguration implements WebSocketMessageBrokerConfigurer {
 
     private static final String[] DESTINATIONS = {"/chat", "/message", "/comment", "/event", "/contact"};
@@ -61,10 +63,12 @@ public class WebSocketConfiguration implements WebSocketMessageBrokerConfigurer 
     }
 
     private void enableSimpleBroker(MessageBrokerRegistry registry) {
+        log.info("Simple websocket broker used");
         registry.enableSimpleBroker(DESTINATIONS);
     }
 
     private void enableStompBrokerRelay(MessageBrokerRegistry registry) {
+        log.info("Stomp websocket broker used");
         String[] utilDestinations = {"/util"};
         String[] destinations = Strings.concatenateStringArrays(utilDestinations, DESTINATIONS);
         registry.enableStompBrokerRelay(destinations)
