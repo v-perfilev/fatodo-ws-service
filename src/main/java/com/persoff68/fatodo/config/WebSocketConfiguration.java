@@ -69,11 +69,11 @@ public class WebSocketConfiguration implements WebSocketMessageBrokerConfigurer 
 
     private void enableStompBrokerRelay(MessageBrokerRegistry registry) {
         log.info("Stomp websocket broker used");
-        String[] utilDestinations = {"/util"};
+        String[] utilDestinations = {"/topic"};
         String[] destinations = Strings.concatenateStringArrays(utilDestinations, DESTINATIONS);
         registry.enableStompBrokerRelay(destinations)
-                .setUserDestinationBroadcast("/util/destination.broadcast")
-                .setUserRegistryBroadcast("/util/registry.broadcast")
+                .setUserDestinationBroadcast("/topic/destination.broadcast")
+                .setUserRegistryBroadcast("/topic/registry.broadcast")
                 .setRelayHost(wsBrokerRelayHost)
                 .setRelayPort(wsBrokerRelayPort)
                 .setClientLogin(wsBrokerRelayLogin)
