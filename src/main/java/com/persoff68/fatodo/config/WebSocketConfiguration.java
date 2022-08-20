@@ -4,6 +4,7 @@ import com.persoff68.fatodo.config.constant.AppConstants;
 import com.persoff68.fatodo.config.constant.Profile;
 import io.jsonwebtoken.lang.Strings;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.env.Environment;
 import org.springframework.messaging.simp.config.MessageBrokerRegistry;
@@ -22,7 +23,15 @@ public class WebSocketConfiguration implements WebSocketMessageBrokerConfigurer 
     private static final String[] DESTINATIONS = {"/chat", "/message", "/comment", "/event", "/contact"};
 
     private final Environment environment;
-    private final AppProperties appProperties;
+
+    @Value("${wsBrokerRelay.host}")
+    private String wsBrokerRelayHost;
+    @Value("${wsBrokerRelay.port}")
+    private String wsBrokerRelayPort;
+    @Value("${wsBrokerRelay.login}")
+    private String wsBrokerRelayLogin;
+    @Value("${wsBrokerRelay.passcode}")
+    private String wsBrokerRelayPasscode;
 
     @Override
     public void configureMessageBroker(MessageBrokerRegistry registry) {
@@ -39,7 +48,7 @@ public class WebSocketConfiguration implements WebSocketMessageBrokerConfigurer 
         boolean isBrokerRelayProfile = Arrays.stream(activeProfiles).anyMatch(brokerRelayProfiles::contains);
 
         if (isBrokerRelayProfile) {
-            enableStompBrokerRelay(registry, appProperties);
+            enableStompBrokerRelay(registry);
         } else {
             enableSimpleBroker(registry);
         }
@@ -51,21 +60,20 @@ public class WebSocketConfiguration implements WebSocketMessageBrokerConfigurer 
         registry.addEndpoint("/ws").setAllowedOriginPatterns("*").withSockJS();
     }
 
-    private static void enableSimpleBroker(MessageBrokerRegistry registry) {
+    private void enableSimpleBroker(MessageBrokerRegistry registry) {
         registry.enableSimpleBroker(DESTINATIONS);
     }
 
-    private static void enableStompBrokerRelay(MessageBrokerRegistry registry, AppProperties appProperties) {
-        AppProperties.WsBrokerRelay wsBrokerRelay = appProperties.getWsBrokerRelay();
+    private void enableStompBrokerRelay(MessageBrokerRegistry registry) {
         String[] utilDestinations = {"/util"};
         String[] destinations = Strings.concatenateStringArrays(utilDestinations, DESTINATIONS);
         registry.enableStompBrokerRelay(destinations)
                 .setUserDestinationBroadcast("/util/destination.broadcast")
                 .setUserRegistryBroadcast("/util/registry.broadcast")
-                .setRelayHost(wsBrokerRelay.getHost())
-                .setRelayPort(wsBrokerRelay.getPort())
-                .setClientLogin(wsBrokerRelay.getLogin())
-                .setClientPasscode(wsBrokerRelay.getPasscode());
+                .setRelayHost(wsBrokerRelayHost)
+                .setRelayPort(Integer.parseInt(wsBrokerRelayPort))
+                .setClientLogin(wsBrokerRelayLogin)
+                .setClientPasscode(wsBrokerRelayPasscode);
     }
 
 }
