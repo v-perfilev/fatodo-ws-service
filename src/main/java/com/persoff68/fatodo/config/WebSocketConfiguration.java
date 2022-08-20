@@ -24,9 +24,9 @@ public class WebSocketConfiguration implements WebSocketMessageBrokerConfigurer 
 
     private final Environment environment;
 
-    @Value("${wsBrokerRelay.host:localhost}")
+    @Value("${wsBrokerRelay.host:rabbitmq}")
     private String wsBrokerRelayHost;
-    @Value("${wsBrokerRelay.port:5672}")
+    @Value("${wsBrokerRelay.port:61613}")
     private int wsBrokerRelayPort;
 
     @Override
