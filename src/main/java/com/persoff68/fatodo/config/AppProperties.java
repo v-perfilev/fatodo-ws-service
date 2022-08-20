@@ -9,6 +9,7 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
 public class AppProperties {
     private final Common common = new Common();
     private final Auth auth = new Auth();
+    private final WsBrokerRelay wsBrokerRelay = new WsBrokerRelay();
 
     @Getter
     @Setter
@@ -25,6 +26,15 @@ public class AppProperties {
         private String tokenSecret;
         private long tokenExpirationSec;
         private String captchaSecret;
+    }
+
+    @Getter
+    @Setter
+    public static class WsBrokerRelay {
+        private String host;
+        private int port;
+        private String login;
+        private String passcode;
     }
 }
 
