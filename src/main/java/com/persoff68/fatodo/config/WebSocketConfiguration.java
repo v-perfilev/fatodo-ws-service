@@ -24,14 +24,10 @@ public class WebSocketConfiguration implements WebSocketMessageBrokerConfigurer 
 
     private final Environment environment;
 
-    @Value("${wsBrokerRelay.host:}")
+    @Value("${wsBrokerRelay.host:localhost}")
     private String wsBrokerRelayHost;
-    @Value("${wsBrokerRelay.port:}")
-    private String wsBrokerRelayPort;
-    @Value("${wsBrokerRelay.login:}")
-    private String wsBrokerRelayLogin;
-    @Value("${wsBrokerRelay.passcode:}")
-    private String wsBrokerRelayPasscode;
+    @Value("${wsBrokerRelay.port:5672}")
+    private int wsBrokerRelayPort;
 
     @Override
     public void configureMessageBroker(MessageBrokerRegistry registry) {
@@ -71,9 +67,7 @@ public class WebSocketConfiguration implements WebSocketMessageBrokerConfigurer 
                 .setUserDestinationBroadcast("/util/destination.broadcast")
                 .setUserRegistryBroadcast("/util/registry.broadcast")
                 .setRelayHost(wsBrokerRelayHost)
-                .setRelayPort(Integer.parseInt(wsBrokerRelayPort))
-                .setClientLogin(wsBrokerRelayLogin)
-                .setClientPasscode(wsBrokerRelayPasscode);
+                .setRelayPort(wsBrokerRelayPort);
     }
 
 }
