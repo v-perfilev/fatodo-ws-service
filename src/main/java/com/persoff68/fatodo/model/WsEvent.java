@@ -8,7 +8,7 @@ public class WsEvent {
 
     private WsEventType type;
 
-    private String payload;
+    private Object payload;
 
     public static WsEvent of(WsEventWithUsers wsEventWithUsers) {
         WsEvent event = new WsEvent();

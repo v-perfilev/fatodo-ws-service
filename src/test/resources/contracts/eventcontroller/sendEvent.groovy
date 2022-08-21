@@ -20,16 +20,10 @@ Contract.make {
                         consumer(any()),
                         producer([uuid().generate()])
                 ),
-                "content": [
-                        "id"  : $(
-                                consumer(anyUuid()),
-                                producer(uuid().generate())
-                        ),
-                        "type": $(
-                                consumer(anyNonBlankString()),
-                                producer("WELCOME")
-                        ),
-                ],
+                "type": $(
+                        consumer(anyNonBlankString()),
+                        producer("WELCOME")
+                ),
         )
         bodyMatchers {
             jsonPath('$.userIds', byType {
