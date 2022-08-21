@@ -1,13 +1,13 @@
 package com.persoff68.fatodo.model;
 
 import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.EqualsAndHashCode;
 
 import java.util.UUID;
 
 @Data
-@NoArgsConstructor
-public class EventContactEvent {
+@EqualsAndHashCode(callSuper = true)
+public class ContactRelation extends AbstractAuditingModel {
 
     private UUID firstUserId;
 

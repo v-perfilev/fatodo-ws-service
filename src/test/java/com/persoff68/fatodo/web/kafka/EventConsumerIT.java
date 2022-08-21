@@ -1,11 +1,16 @@
 package com.persoff68.fatodo.web.kafka;
 
-import com.persoff68.fatodo.builder.TestWsEvent;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.persoff68.fatodo.builder.TestContactRequest;
+import com.persoff68.fatodo.builder.TestUserInfo;
+import com.persoff68.fatodo.builder.TestWsEventWithUsers;
 import com.persoff68.fatodo.client.UserServiceClient;
 import com.persoff68.fatodo.config.util.KafkaUtils;
-import com.persoff68.fatodo.model.Event;
-import com.persoff68.fatodo.model.WsEvent;
-import com.persoff68.fatodo.model.constants.WsEventDestination;
+import com.persoff68.fatodo.model.ContactRequest;
+import com.persoff68.fatodo.model.UserInfo;
+import com.persoff68.fatodo.model.WsEventWithUsers;
+import com.persoff68.fatodo.model.constants.WsDestination;
+import com.persoff68.fatodo.model.constants.WsEventType;
 import com.persoff68.fatodo.service.WsService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -18,7 +23,6 @@ import org.springframework.kafka.test.EmbeddedKafkaBroker;
 import org.springframework.kafka.test.context.EmbeddedKafka;
 import org.springframework.test.annotation.DirtiesContext;
 
-import java.util.Collections;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
@@ -44,30 +48,37 @@ class EventConsumerIT {
 
     @Autowired
     private EventConsumer eventConsumer;
+    @Autowired
+    private ObjectMapper objectMapper;
     @SpyBean
     private WsService wsService;
 
     @MockBean
     UserServiceClient userServiceClient;
 
-    private KafkaTemplate<String, WsEvent<Event>> eventKafkaTemplate;
+    private KafkaTemplate<String, WsEventWithUsers> wsKafkaTemplate;
 
     @BeforeEach
     void setup() {
-        eventKafkaTemplate = buildKafkaTemplate();
+        wsKafkaTemplate = buildKafkaTemplate();
 
-        List<String> usernameList = Collections.singletonList("test");
-        when(userServiceClient.getAllUsernamesByIds(any())).thenReturn(usernameList);
+        UserInfo userInfo = TestUserInfo.defaultBuilder().build().toParent();
+        List<UserInfo> userInfoList = List.of(userInfo);
+        when(userServiceClient.getAllUserInfoByIds(any())).thenReturn(userInfoList);
     }
 
     @Test
-    void testSendEvent() throws InterruptedException {
-        WsEvent<Event> event = TestWsEvent.<Event>defaultBuilder().content(new Event()).build().toParent();
-        eventKafkaTemplate.send("ws_event", event);
+    void testSendEvent() throws Exception {
+        ContactRequest contactRequest = TestContactRequest.defaultBuilder().build().toParent();
+        String payload = objectMapper.writeValueAsString(contactRequest);
+        WsEventWithUsers event = TestWsEventWithUsers.defaultBuilder()
+                .type(WsEventType.CONTACT_REQUEST_INCOMING).payload(payload).build().toParent();
+
+        wsKafkaTemplate.send("ws", event);
         boolean messageConsumed = eventConsumer.getLatch().await(5, TimeUnit.SECONDS);
 
         assertThat(messageConsumed).isTrue();
-        verify(wsService, times(1)).sendMessage(any(), startsWith(WsEventDestination.EVENT.getValue()), any());
+        verify(wsService, times(1)).sendMessages(any(), startsWith(WsDestination.EVENT.getValue()), any());
     }
 
     private <T> KafkaTemplate<String, T> buildKafkaTemplate() {

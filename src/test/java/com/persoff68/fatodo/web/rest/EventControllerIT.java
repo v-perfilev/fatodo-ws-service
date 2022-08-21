@@ -3,10 +3,14 @@ package com.persoff68.fatodo.web.rest;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.persoff68.fatodo.FatodoWsServiceApplication;
 import com.persoff68.fatodo.annotation.WithCustomSecurityContext;
-import com.persoff68.fatodo.builder.TestWsEvent;
+import com.persoff68.fatodo.builder.TestContactRequest;
+import com.persoff68.fatodo.builder.TestUserInfo;
+import com.persoff68.fatodo.builder.TestWsEventWithUsers;
 import com.persoff68.fatodo.client.UserServiceClient;
-import com.persoff68.fatodo.model.Event;
-import com.persoff68.fatodo.model.WsEvent;
+import com.persoff68.fatodo.model.ContactRequest;
+import com.persoff68.fatodo.model.UserInfo;
+import com.persoff68.fatodo.model.WsEventWithUsers;
+import com.persoff68.fatodo.model.constants.WsEventType;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,7 +21,6 @@ import org.springframework.http.MediaType;
 import org.springframework.security.test.context.support.WithAnonymousUser;
 import org.springframework.test.web.servlet.MockMvc;
 
-import java.util.Collections;
 import java.util.List;
 
 import static org.mockito.ArgumentMatchers.any;
@@ -40,14 +43,18 @@ class EventControllerIT {
 
     @BeforeEach
     void setup() {
-        List<String> usernameList = Collections.singletonList("test");
-        when(userServiceClient.getAllUsernamesByIds(any())).thenReturn(usernameList);
+        UserInfo userInfo = TestUserInfo.defaultBuilder().build().toParent();
+        List<UserInfo> userInfoList = List.of(userInfo);
+        when(userServiceClient.getAllUserInfoByIds(any())).thenReturn(userInfoList);
     }
 
     @Test
     @WithCustomSecurityContext
     void testSendEvent_ok() throws Exception {
-        WsEvent<Event> event = TestWsEvent.<Event>defaultBuilder().content(new Event()).build().toParent();
+        ContactRequest contactRequest = TestContactRequest.defaultBuilder().build().toParent();
+        String payload = objectMapper.writeValueAsString(contactRequest);
+        WsEventWithUsers event = TestWsEventWithUsers.defaultBuilder()
+                .type(WsEventType.CONTACT_REQUEST_INCOMING).payload(payload).build().toParent();
         String requestBody = objectMapper.writeValueAsString(event);
         mvc.perform(post(ENDPOINT)
                         .contentType(MediaType.APPLICATION_JSON).content(requestBody))
@@ -57,7 +64,10 @@ class EventControllerIT {
     @Test
     @WithAnonymousUser
     void testSendEvent_unauthorized() throws Exception {
-        WsEvent<Event> event = TestWsEvent.<Event>defaultBuilder().content(new Event()).build().toParent();
+        ContactRequest contactRequest = TestContactRequest.defaultBuilder().build().toParent();
+        String payload = objectMapper.writeValueAsString(contactRequest);
+        WsEventWithUsers event = TestWsEventWithUsers.defaultBuilder()
+                .type(WsEventType.CONTACT_REQUEST_INCOMING).payload(payload).build().toParent();
         String requestBody = objectMapper.writeValueAsString(event);
         mvc.perform(post(ENDPOINT)
                         .contentType(MediaType.APPLICATION_JSON).content(requestBody))

@@ -4,8 +4,7 @@ import com.fasterxml.jackson.databind.JavaType;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.persoff68.fatodo.config.annotation.ConditionalOnPropertyNotNull;
 import com.persoff68.fatodo.config.util.KafkaUtils;
-import com.persoff68.fatodo.model.Event;
-import com.persoff68.fatodo.model.WsEvent;
+import com.persoff68.fatodo.model.WsEventWithUsers;
 import lombok.RequiredArgsConstructor;
 import org.apache.kafka.clients.admin.NewTopic;
 import org.springframework.beans.factory.annotation.Value;
@@ -41,44 +40,14 @@ public class KafkaConfiguration {
     }
 
     @Bean
-    public NewTopic chatNewTopic() {
-        return KafkaUtils.buildTopic("ws_chat", partitions);
+    public NewTopic wsNewTopic() {
+        return KafkaUtils.buildTopic("ws", partitions);
     }
 
     @Bean
-    public NewTopic commentNewTopic() {
-        return KafkaUtils.buildTopic("ws_comment", partitions);
-    }
-
-    @Bean
-    public NewTopic eventNewTopic() {
-        return KafkaUtils.buildTopic("ws_event", partitions);
-    }
-
-    @Bean
-    public NewTopic contactNewTopic() {
-        return KafkaUtils.buildTopic("ws_contact", partitions);
-    }
-
-    @Bean
-    public ConcurrentKafkaListenerContainerFactory<String, String> chatContainerFactory() {
-        return KafkaUtils.buildStringContainerFactory(bootstrapAddress, groupId, autoOffsetResetConfig);
-    }
-
-    @Bean
-    public ConcurrentKafkaListenerContainerFactory<String, String> commentContainerFactory() {
-        return KafkaUtils.buildStringContainerFactory(bootstrapAddress, groupId, autoOffsetResetConfig);
-    }
-
-    @Bean
-    public ConcurrentKafkaListenerContainerFactory<String, WsEvent<Event>> eventContainerFactory() {
-        JavaType javaType = objectMapper.getTypeFactory().constructParametricType(WsEvent.class, Event.class);
+    public ConcurrentKafkaListenerContainerFactory<String, WsEventWithUsers> eventContainerFactory() {
+        JavaType javaType = objectMapper.getTypeFactory().constructType(WsEventWithUsers.class);
         return KafkaUtils.buildJsonContainerFactory(bootstrapAddress, groupId, autoOffsetResetConfig, javaType);
-    }
-
-    @Bean
-    public ConcurrentKafkaListenerContainerFactory<String, String> contactContainerFactory() {
-        return KafkaUtils.buildStringContainerFactory(bootstrapAddress, groupId, autoOffsetResetConfig);
     }
 
 }

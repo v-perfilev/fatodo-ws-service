@@ -1,7 +1,6 @@
 package com.persoff68.fatodo.web.rest;
 
-import com.persoff68.fatodo.model.Event;
-import com.persoff68.fatodo.model.WsEvent;
+import com.persoff68.fatodo.model.WsEventWithUsers;
 import com.persoff68.fatodo.service.EventService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -19,8 +18,8 @@ public class EventController {
     private final EventService eventService;
 
     @PostMapping
-    public ResponseEntity<Void> sendEvent(@RequestBody WsEvent<Event> event) {
-        eventService.handleEvent(event.getUserIds(), event.getContent());
+    public ResponseEntity<Void> sendEvent(@RequestBody WsEventWithUsers event) {
+        eventService.handleEvent(event);
         return ResponseEntity.ok().build();
     }
 

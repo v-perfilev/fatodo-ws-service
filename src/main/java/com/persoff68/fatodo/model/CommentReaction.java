@@ -1,6 +1,5 @@
 package com.persoff68.fatodo.model;
 
-import com.persoff68.fatodo.model.constants.CommentReactionType;
 import lombok.Data;
 
 import java.util.Date;
@@ -8,6 +7,8 @@ import java.util.UUID;
 
 @Data
 public class CommentReaction {
+
+    private UUID targetId;
 
     private UUID commentId;
 
@@ -17,4 +18,9 @@ public class CommentReaction {
 
     private Date timestamp;
 
+    public enum CommentReactionType {
+        LIKE,
+        DISLIKE,
+        NONE
+    }
 }

@@ -1,6 +1,7 @@
 package com.persoff68.fatodo.contract;
 
 import com.persoff68.fatodo.client.UserServiceClient;
+import com.persoff68.fatodo.model.UserInfo;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -24,8 +25,8 @@ class UserServiceCT {
     @Test
     void testGetAllUsernamesByIds() {
         List<UUID> idList = Collections.singletonList(UUID.randomUUID());
-        List<String> usernameList = userServiceClient.getAllUsernamesByIds(idList);
-        assertThat(usernameList).isNotEmpty();
+        List<UserInfo> userInfoList = userServiceClient.getAllUserInfoByIds(idList);
+        assertThat(userInfoList).isNotEmpty();
     }
 
 }

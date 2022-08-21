@@ -1,11 +1,13 @@
 package com.persoff68.fatodo.model.constants;
 
-public enum WsEventDestination {
-    EVENT("/event");
+public enum WsDestination {
+    STATE("/state"),
+    EVENT("/event"),
+    PUSH("/push");
 
     private final String value;
 
-    WsEventDestination(String value) {
+    WsDestination(String value) {
         this.value = value;
     }
 

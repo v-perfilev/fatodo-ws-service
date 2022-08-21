@@ -1,8 +1,7 @@
 package com.persoff68.fatodo.web.kafka;
 
 import com.persoff68.fatodo.config.annotation.ConditionalOnPropertyNotNull;
-import com.persoff68.fatodo.model.Event;
-import com.persoff68.fatodo.model.WsEvent;
+import com.persoff68.fatodo.model.WsEventWithUsers;
 import com.persoff68.fatodo.service.EventService;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
@@ -16,7 +15,7 @@ import java.util.concurrent.CountDownLatch;
 @ConditionalOnPropertyNotNull(value = "kafka.bootstrapAddress")
 public class EventConsumer {
 
-    private static final String WS_EVENT_TOPIC = "ws_event";
+    private static final String WS_EVENT_TOPIC = "ws";
 
     private final EventService eventService;
 
@@ -24,8 +23,8 @@ public class EventConsumer {
     private CountDownLatch latch = new CountDownLatch(1);
 
     @KafkaListener(topics = WS_EVENT_TOPIC, containerFactory = "eventContainerFactory")
-    public void sendEvent(WsEvent<Event> event) {
-        eventService.handleEvent(event.getUserIds(), event.getContent());
+    public void sendEvent(WsEventWithUsers event) {
+        eventService.handleEvent(event);
         resetLatch();
     }
 

@@ -1,6 +1,7 @@
 package com.persoff68.fatodo.client;
 
 import com.persoff68.fatodo.client.configuration.FeignSystemConfiguration;
+import com.persoff68.fatodo.model.UserInfo;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -13,8 +14,8 @@ import java.util.UUID;
         qualifiers = {"feignUserServiceClient"})
 public interface UserServiceClient {
 
-    @GetMapping(value = "/api/user-data/username")
-    List<String> getAllUsernamesByIds(@RequestParam("ids") List<UUID> userIdList);
+    @GetMapping(value = "/api/info/user")
+    List<UserInfo> getAllUserInfoByIds(@RequestParam("ids") List<UUID> userIdList);
 
 }
 

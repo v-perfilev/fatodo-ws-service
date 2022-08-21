@@ -1,6 +1,5 @@
 package com.persoff68.fatodo.model;
 
-import com.persoff68.fatodo.model.constants.ChatStatusType;
 import lombok.Data;
 
 import java.util.Date;
@@ -9,6 +8,8 @@ import java.util.UUID;
 @Data
 public class ChatStatus {
 
+    private UUID chatId;
+
     private UUID messageId;
 
     private UUID userId;
@@ -16,5 +17,9 @@ public class ChatStatus {
     private ChatStatusType type;
 
     private Date timestamp;
+
+    public enum ChatStatusType {
+        READ
+    }
 
 }
