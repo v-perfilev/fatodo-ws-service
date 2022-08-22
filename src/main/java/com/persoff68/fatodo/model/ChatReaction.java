@@ -16,7 +16,7 @@ public class ChatReaction {
 
     private ChatReactionType type;
 
-    private Date timestamp;
+    private Date date;
 
     public enum ChatReactionType {
         LIKE,

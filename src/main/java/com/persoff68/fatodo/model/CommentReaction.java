@@ -16,7 +16,7 @@ public class CommentReaction {
 
     private CommentReactionType type;
 
-    private Date timestamp;
+    private Date date;
 
     public enum CommentReactionType {
         LIKE,

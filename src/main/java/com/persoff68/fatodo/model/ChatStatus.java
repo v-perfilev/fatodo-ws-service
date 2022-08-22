@@ -16,7 +16,7 @@ public class ChatStatus {
 
     private ChatStatusType type;
 
-    private Date timestamp;
+    private Date date;
 
     public enum ChatStatusType {
         READ
