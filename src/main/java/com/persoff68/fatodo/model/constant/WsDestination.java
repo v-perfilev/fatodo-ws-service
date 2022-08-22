@@ -1,4 +1,4 @@
-package com.persoff68.fatodo.model.constants;
+package com.persoff68.fatodo.model.constant;
 
 public enum WsDestination {
     STATE("/state"),

@@ -1,6 +1,6 @@
 package com.persoff68.fatodo.model;
 
-import com.persoff68.fatodo.model.constants.WsEventType;
+import com.persoff68.fatodo.model.constant.WsEventType;
 import lombok.Data;
 
 @Data

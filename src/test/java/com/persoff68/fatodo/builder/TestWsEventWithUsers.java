@@ -1,7 +1,7 @@
 package com.persoff68.fatodo.builder;
 
 import com.persoff68.fatodo.model.WsEventWithUsers;
-import com.persoff68.fatodo.model.constants.WsEventType;
+import com.persoff68.fatodo.model.constant.WsEventType;
 import lombok.Builder;
 
 import java.util.Collections;

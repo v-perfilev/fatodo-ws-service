@@ -5,7 +5,7 @@ import com.persoff68.fatodo.model.AbstractModel;
 import com.persoff68.fatodo.model.UserInfo;
 import com.persoff68.fatodo.model.WsEvent;
 import com.persoff68.fatodo.model.WsEventWithUsers;
-import com.persoff68.fatodo.model.constants.WsDestination;
+import com.persoff68.fatodo.model.constant.WsDestination;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 

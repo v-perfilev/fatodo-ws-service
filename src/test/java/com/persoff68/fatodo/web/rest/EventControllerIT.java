@@ -10,7 +10,7 @@ import com.persoff68.fatodo.client.UserServiceClient;
 import com.persoff68.fatodo.model.ContactRequest;
 import com.persoff68.fatodo.model.UserInfo;
 import com.persoff68.fatodo.model.WsEventWithUsers;
-import com.persoff68.fatodo.model.constants.WsEventType;
+import com.persoff68.fatodo.model.constant.WsEventType;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
