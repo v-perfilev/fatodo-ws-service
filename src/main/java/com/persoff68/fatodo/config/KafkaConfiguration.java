@@ -4,7 +4,7 @@ import com.fasterxml.jackson.databind.JavaType;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.persoff68.fatodo.config.annotation.ConditionalOnPropertyNotNull;
 import com.persoff68.fatodo.config.util.KafkaUtils;
-import com.persoff68.fatodo.model.WsEventWithUsers;
+import com.persoff68.fatodo.model.WsEvent;
 import lombok.RequiredArgsConstructor;
 import org.apache.kafka.clients.admin.NewTopic;
 import org.springframework.beans.factory.annotation.Value;
@@ -45,8 +45,8 @@ public class KafkaConfiguration {
     }
 
     @Bean
-    public ConcurrentKafkaListenerContainerFactory<String, WsEventWithUsers> eventContainerFactory() {
-        JavaType javaType = objectMapper.getTypeFactory().constructType(WsEventWithUsers.class);
+    public ConcurrentKafkaListenerContainerFactory<String, WsEvent> eventContainerFactory() {
+        JavaType javaType = objectMapper.getTypeFactory().constructType(WsEvent.class);
         return KafkaUtils.buildJsonContainerFactory(bootstrapAddress, groupId, autoOffsetResetConfig, javaType);
     }
 

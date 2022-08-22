@@ -1,7 +1,7 @@
 package com.persoff68.fatodo.web.kafka;
 
 import com.persoff68.fatodo.config.annotation.ConditionalOnPropertyNotNull;
-import com.persoff68.fatodo.model.WsEventWithUsers;
+import com.persoff68.fatodo.model.WsEvent;
 import com.persoff68.fatodo.service.EventService;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
@@ -23,7 +23,7 @@ public class EventConsumer {
     private CountDownLatch latch = new CountDownLatch(1);
 
     @KafkaListener(topics = WS_EVENT_TOPIC, containerFactory = "eventContainerFactory")
-    public void sendEvent(WsEventWithUsers event) {
+    public void sendEvent(WsEvent event) {
         eventService.handleEvent(event);
         resetLatch();
     }

@@ -5,11 +5,11 @@ import com.persoff68.fatodo.FatodoWsServiceApplication;
 import com.persoff68.fatodo.annotation.WithCustomSecurityContext;
 import com.persoff68.fatodo.builder.TestContactRequest;
 import com.persoff68.fatodo.builder.TestUserInfo;
-import com.persoff68.fatodo.builder.TestWsEventWithUsers;
+import com.persoff68.fatodo.builder.TestWsEvent;
 import com.persoff68.fatodo.client.UserServiceClient;
 import com.persoff68.fatodo.model.ContactRequest;
 import com.persoff68.fatodo.model.UserInfo;
-import com.persoff68.fatodo.model.WsEventWithUsers;
+import com.persoff68.fatodo.model.WsEvent;
 import com.persoff68.fatodo.model.constant.WsEventType;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -53,7 +53,7 @@ class EventControllerIT {
     void testSendEvent_ok() throws Exception {
         ContactRequest contactRequest = TestContactRequest.defaultBuilder().build().toParent();
         String payload = objectMapper.writeValueAsString(contactRequest);
-        WsEventWithUsers event = TestWsEventWithUsers.defaultBuilder()
+        WsEvent event = TestWsEvent.defaultBuilder()
                 .type(WsEventType.CONTACT_REQUEST_INCOMING).payload(payload).build().toParent();
         String requestBody = objectMapper.writeValueAsString(event);
         mvc.perform(post(ENDPOINT)
@@ -66,7 +66,7 @@ class EventControllerIT {
     void testSendEvent_unauthorized() throws Exception {
         ContactRequest contactRequest = TestContactRequest.defaultBuilder().build().toParent();
         String payload = objectMapper.writeValueAsString(contactRequest);
-        WsEventWithUsers event = TestWsEventWithUsers.defaultBuilder()
+        WsEvent event = TestWsEvent.defaultBuilder()
                 .type(WsEventType.CONTACT_REQUEST_INCOMING).payload(payload).build().toParent();
         String requestBody = objectMapper.writeValueAsString(event);
         mvc.perform(post(ENDPOINT)

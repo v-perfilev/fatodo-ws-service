@@ -3,12 +3,12 @@ package com.persoff68.fatodo.web.kafka;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.persoff68.fatodo.builder.TestContactRequest;
 import com.persoff68.fatodo.builder.TestUserInfo;
-import com.persoff68.fatodo.builder.TestWsEventWithUsers;
+import com.persoff68.fatodo.builder.TestWsEvent;
 import com.persoff68.fatodo.client.UserServiceClient;
 import com.persoff68.fatodo.config.util.KafkaUtils;
 import com.persoff68.fatodo.model.ContactRequest;
 import com.persoff68.fatodo.model.UserInfo;
-import com.persoff68.fatodo.model.WsEventWithUsers;
+import com.persoff68.fatodo.model.WsEvent;
 import com.persoff68.fatodo.model.constant.WsDestination;
 import com.persoff68.fatodo.model.constant.WsEventType;
 import com.persoff68.fatodo.service.WsService;
@@ -29,7 +29,6 @@ import java.util.concurrent.TimeUnit;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.startsWith;
-import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
@@ -56,7 +55,7 @@ class EventConsumerIT {
     @MockBean
     UserServiceClient userServiceClient;
 
-    private KafkaTemplate<String, WsEventWithUsers> wsKafkaTemplate;
+    private KafkaTemplate<String, WsEvent> wsKafkaTemplate;
 
     @BeforeEach
     void setup() {
@@ -71,14 +70,14 @@ class EventConsumerIT {
     void testSendEvent() throws Exception {
         ContactRequest contactRequest = TestContactRequest.defaultBuilder().build().toParent();
         String payload = objectMapper.writeValueAsString(contactRequest);
-        WsEventWithUsers event = TestWsEventWithUsers.defaultBuilder()
+        WsEvent event = TestWsEvent.defaultBuilder()
                 .type(WsEventType.CONTACT_REQUEST_INCOMING).payload(payload).build().toParent();
 
         wsKafkaTemplate.send("ws", event);
         boolean messageConsumed = eventConsumer.getLatch().await(5, TimeUnit.SECONDS);
 
         assertThat(messageConsumed).isTrue();
-        verify(wsService, times(1)).sendMessages(any(), startsWith(WsDestination.EVENT.getValue()), any());
+        verify(wsService).sendMessages(any(), startsWith(WsDestination.EVENT.getValue()), any());
     }
 
     private <T> KafkaTemplate<String, T> buildKafkaTemplate() {
