@@ -11,6 +11,8 @@ public enum WsEventType {
     ITEM_GROUP_DELETE(),
     ITEM_CREATE(true),
     ITEM_UPDATE(),
+    ITEM_UPDATE_STATUS(),
+    ITEM_UPDATE_ARCHIVED(),
     ITEM_DELETE(),
     ITEM_MEMBER_ADD(true),
     ITEM_MEMBER_DELETE(),
@@ -19,7 +21,6 @@ public enum WsEventType {
 
     CHAT_CREATE(true),
     CHAT_UPDATE(),
-    CHAT_DELETE(true),
     CHAT_MEMBER_ADD(),
     CHAT_MEMBER_DELETE(),
     CHAT_MEMBER_LEAVE(),
