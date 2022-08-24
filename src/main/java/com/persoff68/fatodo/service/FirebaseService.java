@@ -10,7 +10,7 @@ import java.util.UUID;
 @RequiredArgsConstructor
 public class FirebaseService {
 
-    public void sendMessages(List<UUID> userIdList, Object payload) {
+    public void sendMessages(List<UUID> userIdList, String payload) {
         System.out.println(userIdList);
         System.out.println(payload);
     }

@@ -17,7 +17,7 @@ public class WsService {
     private final SimpUserRegistry userRegistry;
     private final SimpMessagingTemplate messagingTemplate;
 
-    public void sendMessages(List<String> usernameList, String destination, Object payload) {
+    public void sendMessages(List<String> usernameList, String destination, String payload) {
         usernameList.forEach(username -> messagingTemplate.convertAndSendToUser(username, destination, payload));
     }
 

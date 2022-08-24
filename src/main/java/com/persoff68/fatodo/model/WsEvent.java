@@ -3,6 +3,7 @@ package com.persoff68.fatodo.model;
 import com.persoff68.fatodo.model.constant.WsEventType;
 import lombok.Data;
 
+import java.util.Date;
 import java.util.List;
 import java.util.UUID;
 
@@ -13,6 +14,10 @@ public class WsEvent {
 
     private WsEventType type;
 
-    private Object payload;
+    private String payload;
+
+    private UUID userId;
+
+    private Date date;
 
 }
