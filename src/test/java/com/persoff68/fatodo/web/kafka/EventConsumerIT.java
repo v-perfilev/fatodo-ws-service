@@ -77,7 +77,7 @@ class EventConsumerIT {
         boolean messageConsumed = eventConsumer.getLatch().await(5, TimeUnit.SECONDS);
 
         assertThat(messageConsumed).isTrue();
-        verify(wsService).sendMessages(any(), startsWith(WsDestination.EVENT.getValue()), any());
+        verify(wsService).sendMessages(any(), startsWith(WsDestination.ROOT.getValue()), any());
     }
 
     private <T> KafkaTemplate<String, T> buildKafkaTemplate() {

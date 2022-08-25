@@ -36,6 +36,7 @@
         <guava.version>31.1-jre</guava.version>
         <lombok.version>1.18.24</lombok.version>
         <mapstruct.version>1.4.2.Final</mapstruct.version>
+        <firebase.version>9.0.0</firebase.version>
         <logback-kafka-appender.version>0.2.0-RC2</logback-kafka-appender.version>
         <micrometer-registry-influx.version>1.8.5</micrometer-registry-influx.version>
         <swagger.version>1.6.8</swagger.version>
@@ -131,6 +132,13 @@
                 <groupId>org.mapstruct</groupId>
                 <artifactId>mapstruct-processor</artifactId>
                 <version>${mapstruct.version}</version>
+            </dependency>
+
+            <!-- Firebase management -->
+            <dependency>
+                <groupId>com.google.firebase</groupId>
+                <artifactId>firebase-admin</artifactId>
+                <version>${firebase.version}</version>
             </dependency>
 
             <!-- Logging management -->
@@ -295,6 +303,12 @@
             <artifactId>mapstruct-processor</artifactId>
             <scope>provided</scope>
             <optional>true</optional>
+        </dependency>
+
+        <!-- Firebase management -->
+        <dependency>
+            <groupId>com.google.firebase</groupId>
+            <artifactId>firebase-admin</artifactId>
         </dependency>
 
         <!-- Logging -->
