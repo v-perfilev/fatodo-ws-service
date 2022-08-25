@@ -1,9 +1,7 @@
 package com.persoff68.fatodo.model.constant;
 
 public enum WsDestination {
-    STATE("/state"),
-    EVENT("/event"),
-    PUSH("/push");
+    ROOT("/root");
 
     private final String value;
 
