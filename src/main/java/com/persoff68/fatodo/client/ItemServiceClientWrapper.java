@@ -1,4 +1,4 @@
-package com.persoff68.fatodo.client.configuration;
+package com.persoff68.fatodo.client;
 
 import com.persoff68.fatodo.exception.ClientException;
 import com.persoff68.fatodo.model.ItemInfo;
@@ -16,7 +16,6 @@ public class ItemServiceClientWrapper implements ItemServiceClient {
     @Qualifier("feignItemServiceClient")
     private final ItemServiceClient itemServiceClient;
 
-
     @Override
     public List<ItemInfo> getAllItemInfoByIds(List<UUID> itemIdList) {
         try {
@@ -25,4 +24,5 @@ public class ItemServiceClientWrapper implements ItemServiceClient {
             throw new ClientException();
         }
     }
+
 }

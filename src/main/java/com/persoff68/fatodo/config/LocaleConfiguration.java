@@ -22,7 +22,7 @@ public class LocaleConfiguration {
     @Bean
     public MessageSource messageSource() {
         ResourceBundleMessageSource messageSource = new ResourceBundleMessageSource();
-        messageSource.setBasename("classpath:messages/messages");
+        messageSource.setBasename("messages/messages");
         return messageSource;
     }
 

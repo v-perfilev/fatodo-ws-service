@@ -1,5 +1,6 @@
 package com.persoff68.fatodo.config;
 
+import com.persoff68.fatodo.client.ItemServiceClient;
 import com.persoff68.fatodo.client.UserServiceClient;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.BeanFactory;
@@ -12,6 +13,12 @@ import org.springframework.context.annotation.Primary;
 public class ClientConfiguration {
 
     private final BeanFactory beanFactory;
+
+    @Bean
+    @Primary
+    public ItemServiceClient itemClient() {
+        return (ItemServiceClient) beanFactory.getBean("itemServiceClientWrapper");
+    }
 
     @Bean
     @Primary
