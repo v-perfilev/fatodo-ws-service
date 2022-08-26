@@ -1,6 +1,6 @@
 package com.persoff68.fatodo.builder;
 
-import com.persoff68.fatodo.model.ContactRequest;
+import com.persoff68.fatodo.model.event.ContactRequest;
 import lombok.Builder;
 
 import java.util.UUID;

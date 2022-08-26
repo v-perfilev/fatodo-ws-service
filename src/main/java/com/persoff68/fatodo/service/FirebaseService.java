@@ -5,7 +5,7 @@ import com.google.firebase.messaging.FirebaseMessagingException;
 import com.google.firebase.messaging.Message;
 import com.google.firebase.messaging.Notification;
 import com.persoff68.fatodo.client.UserServiceClient;
-import com.persoff68.fatodo.client.configuration.ItemServiceClient;
+import com.persoff68.fatodo.client.ItemServiceClient;
 import com.persoff68.fatodo.model.ItemInfo;
 import com.persoff68.fatodo.model.UserInfo;
 import com.persoff68.fatodo.model.constant.WsEventType;
