@@ -1,5 +1,6 @@
 package com.persoff68.fatodo.contract;
 
+import com.persoff68.fatodo.annotation.WithCustomSecurityContext;
 import com.persoff68.fatodo.client.UserServiceClient;
 import com.persoff68.fatodo.model.UserInfo;
 import org.junit.jupiter.api.Test;
@@ -16,7 +17,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 @SpringBootTest
 @AutoConfigureStubRunner(ids = {"com.persoff68.fatodo:userservice:+:stubs"},
-        stubsMode = StubRunnerProperties.StubsMode.REMOTE)
+        stubsMode = StubRunnerProperties.StubsMode.LOCAL)
 class UserServiceCT {
 
     @Autowired
