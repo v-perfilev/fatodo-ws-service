@@ -3,7 +3,6 @@ package com.persoff68.fatodo.service;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.persoff68.fatodo.client.UserServiceClient;
-import com.persoff68.fatodo.model.AbstractModel;
 import com.persoff68.fatodo.model.UserInfo;
 import com.persoff68.fatodo.model.WsEvent;
 import com.persoff68.fatodo.model.constant.WsDestination;
@@ -12,7 +11,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.UUID;
 
 @Service
 @RequiredArgsConstructor
@@ -47,11 +45,11 @@ public class EventService {
         boolean hasInactiveUsers = activeUsernameList.size() != userList.size();
 
         if (isPushEvent && hasInactiveUsers) {
-            List<UUID> inactiveUserIdList = userList.stream()
+            List<UserInfo> inactiveUserList = userList.stream()
                     .filter(user -> !activeUsernameList.contains(user.getUsername()))
-                    .map(AbstractModel::getId)
+                    .filter(user -> !user.getId().equals(event.getUserId()))
                     .toList();
-            firebaseService.sendMessages(inactiveUserIdList, event.getType(), event.getPayload());
+            firebaseService.sendMessages(inactiveUserList, event.getType(), event.getPayload());
         }
     }
 
