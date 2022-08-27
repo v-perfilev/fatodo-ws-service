@@ -4,8 +4,8 @@ import com.google.firebase.messaging.FirebaseMessaging;
 import com.google.firebase.messaging.FirebaseMessagingException;
 import com.google.firebase.messaging.Message;
 import com.google.firebase.messaging.Notification;
-import com.persoff68.fatodo.client.UserServiceClient;
 import com.persoff68.fatodo.client.ItemServiceClient;
+import com.persoff68.fatodo.client.UserServiceClient;
 import com.persoff68.fatodo.model.ItemInfo;
 import com.persoff68.fatodo.model.UserInfo;
 import com.persoff68.fatodo.model.constant.WsEventType;
@@ -37,11 +37,11 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 public class FirebaseService {
 
-    private final static String ITEM_ID = "itemId";
-    private final static String GROUP_ID = "groupId";
-    private final static String CHAT_ID = "chatId";
-    private final static String USER_ID = "userId";
-    private final static String TARGET_ID = "targetId";
+    private static final String ITEM_ID = "itemId";
+    private static final String GROUP_ID = "groupId";
+    private static final String CHAT_ID = "chatId";
+    private static final String USER_ID = "userId";
+    private static final String TARGET_ID = "targetId";
 
     private final FirebaseMessaging firebaseMessaging;
     private final JsonService jsonService;

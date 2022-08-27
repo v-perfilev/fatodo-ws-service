@@ -18,22 +18,20 @@ public class FirebaseConfiguration {
 
     @Bean
     FirebaseMessaging firebaseMessaging() throws IOException {
-        FirebaseApp firebaseApp = Optional.ofNullable(findExistingFirebaseApp())
-                .orElse(createNewFirebaseApp());
+        FirebaseApp firebaseApp = Optional.ofNullable(findExistingFirebaseApp()).orElse(createNewFirebaseApp());
         return FirebaseMessaging.getInstance(firebaseApp);
     }
 
     private static FirebaseApp findExistingFirebaseApp() {
         FirebaseApp firebaseApp = null;
-
         List<FirebaseApp> firebaseApps = FirebaseApp.getApps();
         if (firebaseApps != null && !firebaseApps.isEmpty()) {
             for (FirebaseApp app : firebaseApps) {
-                if (app.getName().equals(FirebaseApp.DEFAULT_APP_NAME))
+                if (app.getName().equals(FirebaseApp.DEFAULT_APP_NAME)) {
                     firebaseApp = app;
+                }
             }
         }
-
         return firebaseApp;
     }
 
@@ -41,10 +39,7 @@ public class FirebaseConfiguration {
         FirebaseApp firebaseApp;
         InputStream firebaseInputStream = new ClassPathResource("firebase-service-account.json").getInputStream();
         GoogleCredentials googleCredentials = GoogleCredentials.fromStream(firebaseInputStream);
-        FirebaseOptions firebaseOptions = FirebaseOptions
-                .builder()
-                .setCredentials(googleCredentials)
-                .build();
+        FirebaseOptions firebaseOptions = FirebaseOptions.builder().setCredentials(googleCredentials).build();
         firebaseApp = FirebaseApp.initializeApp(firebaseOptions);
         return firebaseApp;
     }
