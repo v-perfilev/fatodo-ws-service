@@ -22,7 +22,7 @@ import java.util.List;
 @Slf4j
 public class WebSocketConfiguration implements WebSocketMessageBrokerConfigurer {
 
-    private static final String[] DESTINATIONS = {"/chat", "/message", "/comment", "/event", "/contact"};
+    private static final String[] DESTINATIONS = {"/root"};
 
     private final Environment environment;
 
