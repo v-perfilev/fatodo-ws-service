@@ -24,6 +24,7 @@ Contract.make {
                         consumer(anyNonBlankString()),
                         producer("WELCOME")
                 ),
+                "date"   : anyNumber(),
         )
         bodyMatchers {
             jsonPath('$.userIds', byType {
