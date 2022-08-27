@@ -54,7 +54,6 @@ import java.util.Set;
 import java.util.UUID;
 
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -91,9 +90,9 @@ class EventControllerIT {
                 .id(ACTIVE_USER_ID).username(ACTIVE_USER_NAME).build().toParent();
         UserInfo inactiveUserInfo = TestUserInfo.defaultBuilder()
                 .id(INACTIVE_USER_ID).username(INACTIVE_USER_NAME).language("ru").build().toParent();
-        when(userServiceClient.getAllUserInfoByIds(eq(List.of(ACTIVE_USER_ID))))
+        when(userServiceClient.getAllUserInfoByIds(List.of(ACTIVE_USER_ID)))
                 .thenReturn(List.of(activeUserInfo));
-        when(userServiceClient.getAllUserInfoByIds(eq(List.of(INACTIVE_USER_ID))))
+        when(userServiceClient.getAllUserInfoByIds(List.of(INACTIVE_USER_ID)))
                 .thenReturn(List.of(inactiveUserInfo));
         when(userServiceClient.getAllUserInfoByIds(any()))
                 .thenReturn(List.of(activeUserInfo, inactiveUserInfo));
