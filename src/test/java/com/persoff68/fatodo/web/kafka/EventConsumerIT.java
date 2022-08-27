@@ -40,7 +40,6 @@ import java.util.concurrent.TimeUnit;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.ArgumentMatchers.startsWith;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
@@ -91,9 +90,9 @@ class EventConsumerIT {
                 .id(ACTIVE_USER_ID).username(ACTIVE_USER_NAME).build().toParent();
         UserInfo inactiveUserInfo = TestUserInfo.defaultBuilder()
                 .id(INACTIVE_USER_ID).username(INACTIVE_USER_NAME).language("ru").build().toParent();
-        when(userServiceClient.getAllUserInfoByIds(eq(List.of(ACTIVE_USER_ID))))
+        when(userServiceClient.getAllUserInfoByIds(List.of(ACTIVE_USER_ID)))
                 .thenReturn(List.of(activeUserInfo));
-        when(userServiceClient.getAllUserInfoByIds(eq(List.of(INACTIVE_USER_ID))))
+        when(userServiceClient.getAllUserInfoByIds(List.of(INACTIVE_USER_ID)))
                 .thenReturn(List.of(inactiveUserInfo));
         when(userServiceClient.getAllUserInfoByIds(any()))
                 .thenReturn(List.of(activeUserInfo, inactiveUserInfo));
