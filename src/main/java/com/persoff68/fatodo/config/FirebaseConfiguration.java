@@ -13,6 +13,7 @@ import java.io.InputStream;
 
 @Configuration
 public class FirebaseConfiguration {
+    private static final String FIREBASE_APP_NAME = "fatodo";
 
     @Bean
     FirebaseMessaging firebaseMessaging() throws IOException {
@@ -22,7 +23,12 @@ public class FirebaseConfiguration {
                 .builder()
                 .setCredentials(googleCredentials)
                 .build();
-        FirebaseApp app = FirebaseApp.initializeApp(firebaseOptions, "fatodo");
+
+        FirebaseApp app = FirebaseApp.getApps().stream()
+                .filter(ap -> ap.getName().equals(FIREBASE_APP_NAME))
+                .findFirst()
+                .orElse(FirebaseApp.initializeApp(firebaseOptions, FIREBASE_APP_NAME));
+
         return FirebaseMessaging.getInstance(app);
     }
 
