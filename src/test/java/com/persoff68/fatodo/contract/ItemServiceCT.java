@@ -1,10 +1,12 @@
 package com.persoff68.fatodo.contract;
 
+import com.google.firebase.messaging.FirebaseMessaging;
 import com.persoff68.fatodo.client.ItemServiceClient;
 import com.persoff68.fatodo.model.ItemInfo;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.cloud.contract.stubrunner.spring.AutoConfigureStubRunner;
 import org.springframework.cloud.contract.stubrunner.spring.StubRunnerProperties;
 
@@ -21,6 +23,8 @@ class ItemServiceCT {
 
     @Autowired
     ItemServiceClient itemServiceClient;
+    @MockBean
+    FirebaseMessaging firebaseMessaging;
 
     @Test
     void testGetAllItemInfoByIds() {
