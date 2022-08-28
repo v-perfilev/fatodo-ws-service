@@ -61,14 +61,14 @@ public class WebSocketConfiguration implements WebSocketMessageBrokerConfigurer 
 
     private void enableSimpleBroker(MessageBrokerRegistry registry) {
         log.info("Simple websocket broker used");
-        registry.enableSimpleBroker("/topic");
+        registry.enableSimpleBroker(AppConstants.WS_DESTINATION_PREFIX);
     }
 
     private void enableStompBrokerRelay(MessageBrokerRegistry registry) {
         log.info("Stomp websocket broker used");
-        registry.enableStompBrokerRelay("/topic")
-                .setUserDestinationBroadcast("/topic/destination.broadcast")
-                .setUserRegistryBroadcast("/topic/registry.broadcast")
+        registry.enableStompBrokerRelay(AppConstants.WS_DESTINATION_PREFIX)
+                .setUserDestinationBroadcast(AppConstants.WS_DESTINATION_PREFIX + "destination.broadcast")
+                .setUserRegistryBroadcast(AppConstants.WS_DESTINATION_PREFIX + "registry.broadcast")
                 .setRelayHost(wsBrokerRelayHost)
                 .setRelayPort(wsBrokerRelayPort)
                 .setClientLogin(wsBrokerRelayLogin)
