@@ -4,8 +4,6 @@ import java.util.List;
 
 public enum WsEventType {
 
-    WELCOME,
-
     ITEM_GROUP_CREATE,
     ITEM_GROUP_UPDATE,
     ITEM_GROUP_DELETE,
