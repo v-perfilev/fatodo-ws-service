@@ -1,7 +1,7 @@
 package com.persoff68.fatodo.model.constant;
 
 public enum WsDestination {
-    ROOT("/root");
+    ROOT("/topic/root");
 
     private final String value;
 

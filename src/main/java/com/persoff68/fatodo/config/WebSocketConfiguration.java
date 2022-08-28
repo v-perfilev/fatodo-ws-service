@@ -2,7 +2,6 @@ package com.persoff68.fatodo.config;
 
 import com.persoff68.fatodo.config.constant.AppConstants;
 import com.persoff68.fatodo.config.constant.Profile;
-import io.jsonwebtoken.lang.Strings;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
@@ -21,8 +20,6 @@ import java.util.List;
 @RequiredArgsConstructor
 @Slf4j
 public class WebSocketConfiguration implements WebSocketMessageBrokerConfigurer {
-
-    private static final String[] DESTINATIONS = {"/root"};
 
     private final Environment environment;
 
@@ -64,14 +61,12 @@ public class WebSocketConfiguration implements WebSocketMessageBrokerConfigurer 
 
     private void enableSimpleBroker(MessageBrokerRegistry registry) {
         log.info("Simple websocket broker used");
-        registry.enableSimpleBroker(DESTINATIONS);
+        registry.enableSimpleBroker("/topic");
     }
 
     private void enableStompBrokerRelay(MessageBrokerRegistry registry) {
         log.info("Stomp websocket broker used");
-        String[] utilDestinations = {"/topic"};
-        String[] destinations = Strings.concatenateStringArrays(utilDestinations, DESTINATIONS);
-        registry.enableStompBrokerRelay(destinations)
+        registry.enableStompBrokerRelay("/topic")
                 .setUserDestinationBroadcast("/topic/destination.broadcast")
                 .setUserRegistryBroadcast("/topic/registry.broadcast")
                 .setRelayHost(wsBrokerRelayHost)
