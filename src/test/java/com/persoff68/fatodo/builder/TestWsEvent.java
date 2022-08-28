@@ -24,7 +24,7 @@ public class TestWsEvent extends WsEvent {
     public static TestWsEventBuilder defaultBuilder() {
         return TestWsEvent.builder()
                 .userIds(Collections.singletonList(UUID.randomUUID()))
-                .type(WsEventType.WELCOME)
+                .type(WsEventType.REMINDER)
                 .userId(UUID.randomUUID())
                 .date(new Date());
     }

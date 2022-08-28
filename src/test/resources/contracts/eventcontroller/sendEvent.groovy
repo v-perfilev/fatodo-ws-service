@@ -22,7 +22,7 @@ Contract.make {
                 ),
                 "type": $(
                         consumer(anyNonBlankString()),
-                        producer("WELCOME")
+                        producer("REMINDER")
                 ),
                 "date"   : anyNumber(),
         )
