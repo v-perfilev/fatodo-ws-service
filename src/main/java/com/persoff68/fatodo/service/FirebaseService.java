@@ -10,6 +10,7 @@ import com.persoff68.fatodo.model.ItemInfo;
 import com.persoff68.fatodo.model.UserInfo;
 import com.persoff68.fatodo.model.constant.WsEventType;
 import com.persoff68.fatodo.model.event.Chat;
+import com.persoff68.fatodo.model.event.ChatMember;
 import com.persoff68.fatodo.model.event.ChatMessage;
 import com.persoff68.fatodo.model.event.ChatReaction;
 import com.persoff68.fatodo.model.event.Comment;
@@ -122,7 +123,7 @@ public class FirebaseService {
 
     private Map<Locale, FirebaseMessageData> buildChatCreateData(String payload, List<Locale> localeList) {
         Chat chat = jsonService.deserialize(payload, Chat.class);
-        List<UUID> userIdList = chat.getMembers();
+        List<UUID> userIdList = chat.getMembers().stream().map(ChatMember::getUserId).toList();
         String usernamesString = getUsernames(userIdList);
         return localeList.stream().map(locale -> {
             String title = messageSource.getMessage("chat.create", null, locale);

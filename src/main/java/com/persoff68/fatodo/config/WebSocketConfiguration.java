@@ -26,7 +26,7 @@ public class WebSocketConfiguration implements WebSocketMessageBrokerConfigurer 
     @Value("${wsBrokerRelay.host:localhost}")
     private String wsBrokerRelayHost;
     @Value("${wsBrokerRelay.port:5672}")
-    private int wsBrokerRelayPort;
+    private String wsBrokerRelayPort;
     @Value("${wsBrokerRelay.login:guest}")
     private String wsBrokerRelayLogin;
     @Value("${wsBrokerRelay.passcode:guest}")
@@ -70,7 +70,7 @@ public class WebSocketConfiguration implements WebSocketMessageBrokerConfigurer 
                 .setUserDestinationBroadcast(AppConstants.WS_DESTINATION_PREFIX + "destination.broadcast")
                 .setUserRegistryBroadcast(AppConstants.WS_DESTINATION_PREFIX + "registry.broadcast")
                 .setRelayHost(wsBrokerRelayHost)
-                .setRelayPort(wsBrokerRelayPort)
+                .setRelayPort(Integer.parseInt(wsBrokerRelayPort))
                 .setClientLogin(wsBrokerRelayLogin)
                 .setClientPasscode(wsBrokerRelayPasscode);
     }

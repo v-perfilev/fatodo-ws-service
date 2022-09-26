@@ -28,7 +28,6 @@ public class EventService {
 
         handleWsEvent(event, activeUsernameList);
         handleFirebaseEvent(event, userList, activeUsernameList);
-
     }
 
     private void handleWsEvent(WsEvent event, List<String> activeUsernameList) {
