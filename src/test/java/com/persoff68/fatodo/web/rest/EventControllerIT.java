@@ -14,7 +14,7 @@ import com.persoff68.fatodo.builder.TestItem;
 import com.persoff68.fatodo.builder.TestItemGroup;
 import com.persoff68.fatodo.builder.TestItemGroupMember;
 import com.persoff68.fatodo.builder.TestItemInfo;
-import com.persoff68.fatodo.builder.TestReminder;
+import com.persoff68.fatodo.builder.TestReminderMeta;
 import com.persoff68.fatodo.builder.TestUserInfo;
 import com.persoff68.fatodo.builder.TestWsEvent;
 import com.persoff68.fatodo.client.ItemServiceClient;
@@ -32,7 +32,7 @@ import com.persoff68.fatodo.model.event.ContactRequest;
 import com.persoff68.fatodo.model.event.Item;
 import com.persoff68.fatodo.model.event.ItemGroup;
 import com.persoff68.fatodo.model.event.ItemGroupMember;
-import com.persoff68.fatodo.model.event.Reminder;
+import com.persoff68.fatodo.model.event.ReminderMeta;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
@@ -244,8 +244,8 @@ class EventControllerIT {
     @Test
     @WithCustomSecurityContext
     void testSendReminderEvent_ok() throws Exception {
-        Reminder reminder = TestReminder.defaultBuilder().build().toParent();
-        String payload = objectMapper.writeValueAsString(reminder);
+        ReminderMeta reminderMeta = TestReminderMeta.defaultBuilder().build().toParent();
+        String payload = objectMapper.writeValueAsString(reminderMeta);
         WsEvent event = TestWsEvent.defaultBuilder()
                 .type(WsEventType.REMINDER).payload(payload).build().toParent();
         String requestBody = objectMapper.writeValueAsString(event);
