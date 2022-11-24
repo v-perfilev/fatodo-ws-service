@@ -19,7 +19,7 @@ import com.persoff68.fatodo.model.event.ContactRequest;
 import com.persoff68.fatodo.model.event.Item;
 import com.persoff68.fatodo.model.event.ItemGroup;
 import com.persoff68.fatodo.model.event.ItemGroupMember;
-import com.persoff68.fatodo.model.event.Reminder;
+import com.persoff68.fatodo.model.event.ReminderMeta;
 import com.persoff68.fatodo.service.exception.MessagingException;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -208,13 +208,13 @@ public class FirebaseService {
     }
 
     private Map<Locale, FirebaseMessageData> buildReminderData(String payload, List<Locale> localeList) {
-        Reminder reminder = jsonService.deserialize(payload, Reminder.class);
-        List<UUID> itemIdList = List.of(reminder.getTargetId());
+        ReminderMeta reminderMeta = jsonService.deserialize(payload, ReminderMeta.class);
+        List<UUID> itemIdList = List.of(reminderMeta.getItemId());
         List<ItemInfo> itemInfoList = itemServiceClient.getAllItemInfoByIds(itemIdList);
         return localeList.stream().map(locale -> {
             String title = messageSource.getMessage("reminder", null, locale);
             String body = itemInfoList.get(0).getTitle();
-            Map<String, String> dataMap = Map.of(ITEM_ID, reminder.getTargetId().toString());
+            Map<String, String> dataMap = Map.of(ITEM_ID, reminderMeta.getItemId().toString());
             FirebaseMessageData data = new FirebaseMessageData(title, body, dataMap);
             return Pair.of(locale, data);
         }).collect(Collectors.toMap(Pair::getKey, Pair::getValue));
