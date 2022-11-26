@@ -72,7 +72,9 @@ public class WebSocketConfiguration implements WebSocketMessageBrokerConfigurer 
                 .setRelayHost(wsBrokerRelayHost)
                 .setRelayPort(Integer.parseInt(wsBrokerRelayPort))
                 .setClientLogin(wsBrokerRelayLogin)
-                .setClientPasscode(wsBrokerRelayPasscode);
+                .setClientPasscode(wsBrokerRelayPasscode)
+                .setSystemLogin(wsBrokerRelayLogin)
+                .setSystemPasscode(wsBrokerRelayPasscode);
     }
 
 }
