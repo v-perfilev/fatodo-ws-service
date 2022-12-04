@@ -4,13 +4,13 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.firebase.messaging.FirebaseMessaging;
 import com.persoff68.fatodo.builder.TestContactRequest;
 import com.persoff68.fatodo.builder.TestItemInfo;
-import com.persoff68.fatodo.builder.TestUserInfo;
+import com.persoff68.fatodo.builder.TestUser;
 import com.persoff68.fatodo.builder.TestWsEvent;
-import com.persoff68.fatodo.client.ItemServiceClient;
-import com.persoff68.fatodo.client.UserServiceClient;
+import com.persoff68.fatodo.client.ItemSystemServiceClient;
+import com.persoff68.fatodo.client.UserSystemServiceClient;
 import com.persoff68.fatodo.config.util.KafkaUtils;
 import com.persoff68.fatodo.model.ItemInfo;
-import com.persoff68.fatodo.model.UserInfo;
+import com.persoff68.fatodo.model.User;
 import com.persoff68.fatodo.model.WsEvent;
 import com.persoff68.fatodo.model.constant.WsDestination;
 import com.persoff68.fatodo.model.constant.WsEventType;
@@ -70,9 +70,9 @@ class EventConsumerIT {
     private WsService wsService;
 
     @MockBean
-    UserServiceClient userServiceClient;
+    UserSystemServiceClient userSystemServiceClient;
     @MockBean
-    ItemServiceClient itemServiceClient;
+    ItemSystemServiceClient itemSystemServiceClient;
     @MockBean
     SimpMessagingTemplate messagingTemplate;
     @MockBean
@@ -86,19 +86,19 @@ class EventConsumerIT {
     void setup() {
         wsKafkaTemplate = buildKafkaTemplate();
 
-        UserInfo activeUserInfo = TestUserInfo.defaultBuilder()
+        User activeUser = TestUser.defaultBuilder()
                 .id(ACTIVE_USER_ID).username(ACTIVE_USER_NAME).build().toParent();
-        UserInfo inactiveUserInfo = TestUserInfo.defaultBuilder()
+        User inactiveUser = TestUser.defaultBuilder()
                 .id(INACTIVE_USER_ID).username(INACTIVE_USER_NAME).language("ru").build().toParent();
-        when(userServiceClient.getAllUserInfoByIds(List.of(ACTIVE_USER_ID)))
-                .thenReturn(List.of(activeUserInfo));
-        when(userServiceClient.getAllUserInfoByIds(List.of(INACTIVE_USER_ID)))
-                .thenReturn(List.of(inactiveUserInfo));
-        when(userServiceClient.getAllUserInfoByIds(any()))
-                .thenReturn(List.of(activeUserInfo, inactiveUserInfo));
+        when(userSystemServiceClient.getAllUserDataByIds(List.of(ACTIVE_USER_ID)))
+                .thenReturn(List.of(activeUser));
+        when(userSystemServiceClient.getAllUserDataByIds(List.of(INACTIVE_USER_ID)))
+                .thenReturn(List.of(inactiveUser));
+        when(userSystemServiceClient.getAllUserDataByIds(any()))
+                .thenReturn(List.of(activeUser, inactiveUser));
 
         ItemInfo itemInfo = TestItemInfo.defaultBuilder().build().toParent();
-        when(itemServiceClient.getAllItemInfoByIds(any())).thenReturn(List.of(itemInfo));
+        when(itemSystemServiceClient.getAllItemInfoByIds(any())).thenReturn(List.of(itemInfo));
 
         SimpSubscription simpSubscription = Mockito.mock(SimpSubscription.class);
         SimpSession simpSession = Mockito.mock(SimpSession.class);

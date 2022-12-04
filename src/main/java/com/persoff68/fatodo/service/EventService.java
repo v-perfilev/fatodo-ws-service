@@ -2,8 +2,8 @@ package com.persoff68.fatodo.service;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.persoff68.fatodo.client.UserServiceClient;
-import com.persoff68.fatodo.model.UserInfo;
+import com.persoff68.fatodo.client.UserSystemServiceClient;
+import com.persoff68.fatodo.model.User;
 import com.persoff68.fatodo.model.WsEvent;
 import com.persoff68.fatodo.model.constant.WsDestination;
 import com.persoff68.fatodo.service.exception.ModelInvalidException;
@@ -18,12 +18,12 @@ public class EventService {
 
     private final WsService wsService;
     private final FirebaseService firebaseService;
-    private final UserServiceClient userServiceClient;
+    private final UserSystemServiceClient userSystemServiceClient;
     private final ObjectMapper objectMapper;
 
     public void handleEvent(WsEvent event) {
-        List<UserInfo> userList = userServiceClient.getAllUserInfoByIds(event.getUserIds());
-        List<String> usernameList = userList.stream().map(UserInfo::getUsername).toList();
+        List<User> userList = userSystemServiceClient.getAllUserDataByIds(event.getUserIds());
+        List<String> usernameList = userList.stream().map(User::getUsername).toList();
         List<String> activeUsernameList = wsService.filterSubscribedUsers(usernameList);
 
         handleWsEvent(event, activeUsernameList);
@@ -39,12 +39,12 @@ public class EventService {
         }
     }
 
-    private void handleFirebaseEvent(WsEvent event, List<UserInfo> userList, List<String> activeUsernameList) {
+    private void handleFirebaseEvent(WsEvent event, List<User> userList, List<String> activeUsernameList) {
         boolean isPushEvent = event.getType().isPushEvent();
         boolean hasInactiveUsers = activeUsernameList.size() != userList.size();
 
         if (isPushEvent && hasInactiveUsers) {
-            List<UserInfo> inactiveUserList = userList.stream()
+            List<User> inactiveUserList = userList.stream()
                     .filter(user -> !activeUsernameList.contains(user.getUsername()))
                     .filter(user -> !user.getId().equals(event.getUserId()))
                     .toList();
