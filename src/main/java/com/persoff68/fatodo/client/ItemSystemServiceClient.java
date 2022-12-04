@@ -11,7 +11,7 @@ import java.util.UUID;
 
 @FeignClient(name = "item-service", primary = false,
         configuration = {FeignSystemConfiguration.class},
-        qualifiers = {"feignSystemItemServiceClient"})
+        qualifiers = {"feignItemSystemServiceClient"})
 public interface ItemSystemServiceClient {
 
     @GetMapping(value = "/api/info/item")
