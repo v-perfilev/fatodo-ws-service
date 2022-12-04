@@ -4,10 +4,10 @@ import com.google.firebase.messaging.FirebaseMessaging;
 import com.google.firebase.messaging.FirebaseMessagingException;
 import com.google.firebase.messaging.Message;
 import com.google.firebase.messaging.Notification;
-import com.persoff68.fatodo.client.ItemServiceClient;
-import com.persoff68.fatodo.client.UserServiceClient;
+import com.persoff68.fatodo.client.ItemSystemServiceClient;
+import com.persoff68.fatodo.client.UserSystemServiceClient;
 import com.persoff68.fatodo.model.ItemInfo;
-import com.persoff68.fatodo.model.UserInfo;
+import com.persoff68.fatodo.model.User;
 import com.persoff68.fatodo.model.constant.WsEventType;
 import com.persoff68.fatodo.model.event.Chat;
 import com.persoff68.fatodo.model.event.ChatMember;
@@ -47,12 +47,12 @@ public class FirebaseService {
     private final FirebaseMessaging firebaseMessaging;
     private final JsonService jsonService;
     private final MessageSource messageSource;
-    private final UserServiceClient userServiceClient;
-    private final ItemServiceClient itemServiceClient;
+    private final UserSystemServiceClient userSystemServiceClient;
+    private final ItemSystemServiceClient itemSystemServiceClient;
 
-    public void sendMessages(List<UserInfo> userList, WsEventType type, String payload) {
+    public void sendMessages(List<User> userList, WsEventType type, String payload) {
         List<Locale> localeList = userList.stream()
-                .map(UserInfo::getLanguage)
+                .map(User::getLanguage)
                 .distinct()
                 .map(Locale::forLanguageTag)
                 .toList();
@@ -210,7 +210,7 @@ public class FirebaseService {
     private Map<Locale, FirebaseMessageData> buildReminderData(String payload, List<Locale> localeList) {
         ReminderMeta reminderMeta = jsonService.deserialize(payload, ReminderMeta.class);
         List<UUID> itemIdList = List.of(reminderMeta.getItemId());
-        List<ItemInfo> itemInfoList = itemServiceClient.getAllItemInfoByIds(itemIdList);
+        List<ItemInfo> itemInfoList = itemSystemServiceClient.getAllItemInfoByIds(itemIdList);
         return localeList.stream().map(locale -> {
             String title = messageSource.getMessage("reminder", null, locale);
             String body = itemInfoList.get(0).getTitle();
@@ -240,8 +240,8 @@ public class FirebaseService {
     }
 
     private String getUsernames(List<UUID> userIdList) {
-        List<UserInfo> userList = userServiceClient.getAllUserInfoByIds(userIdList);
-        List<String> usernameList = userList.stream().map(UserInfo::getUsername).toList();
+        List<User> userList = userSystemServiceClient.getAllUserDataByIds(userIdList);
+        List<String> usernameList = userList.stream().map(User::getUsername).toList();
         return String.join(", ", usernameList);
     }
 

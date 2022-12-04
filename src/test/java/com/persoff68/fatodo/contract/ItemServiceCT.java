@@ -1,7 +1,7 @@
 package com.persoff68.fatodo.contract;
 
 import com.google.firebase.messaging.FirebaseMessaging;
-import com.persoff68.fatodo.client.ItemServiceClient;
+import com.persoff68.fatodo.client.ItemSystemServiceClient;
 import com.persoff68.fatodo.model.ItemInfo;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,14 +22,14 @@ import static org.assertj.core.api.Assertions.assertThat;
 class ItemServiceCT {
 
     @Autowired
-    ItemServiceClient itemServiceClient;
+    ItemSystemServiceClient itemSystemServiceClient;
     @MockBean
     FirebaseMessaging firebaseMessaging;
 
     @Test
     void testGetAllItemInfoByIds() {
         List<UUID> idList = Collections.singletonList(UUID.randomUUID());
-        List<ItemInfo> itemInfoList = itemServiceClient.getAllItemInfoByIds(idList);
+        List<ItemInfo> itemInfoList = itemSystemServiceClient.getAllItemInfoByIds(idList);
         assertThat(itemInfoList).isNotEmpty();
     }
 

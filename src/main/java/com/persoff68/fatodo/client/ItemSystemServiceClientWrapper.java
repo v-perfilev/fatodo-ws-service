@@ -1,26 +1,25 @@
 package com.persoff68.fatodo.client;
 
 import com.persoff68.fatodo.exception.ClientException;
-import com.persoff68.fatodo.model.UserInfo;
+import com.persoff68.fatodo.model.ItemInfo;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
-import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.List;
 import java.util.UUID;
 
 @Component
 @RequiredArgsConstructor
-public class UserServiceClientWrapper implements UserServiceClient {
+public class ItemSystemServiceClientWrapper implements ItemSystemServiceClient {
 
-    @Qualifier("feignUserServiceClient")
-    private final UserServiceClient userServiceClient;
+    @Qualifier("feignItemSystemServiceClient")
+    private final ItemSystemServiceClient itemSystemServiceClient;
 
     @Override
-    public List<UserInfo> getAllUserInfoByIds(@RequestParam("ids") List<UUID> userIdList) {
+    public List<ItemInfo> getAllItemInfoByIds(List<UUID> itemIdList) {
         try {
-            return userServiceClient.getAllUserInfoByIds(userIdList);
+            return itemSystemServiceClient.getAllItemInfoByIds(itemIdList);
         } catch (Exception e) {
             throw new ClientException();
         }
