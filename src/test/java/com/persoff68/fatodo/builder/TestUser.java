@@ -22,7 +22,8 @@ public class TestUser extends User {
         setInfo(new Info());
         getInfo().setFirstname(firstname);
         getInfo().setLastname(lastname);
-        getInfo().setLanguage(language);
+        setSettings(new Settings());
+        getSettings().setLanguage(language);
     }
 
     public static TestUserBuilder defaultBuilder() {
@@ -43,7 +44,8 @@ public class TestUser extends User {
         user.setInfo(new Info());
         user.getInfo().setFirstname(getInfo().getFirstname());
         user.getInfo().setLastname(getInfo().getLastname());
-        user.getInfo().setLanguage(getInfo().getLanguage());
+        user.setSettings(new Settings());
+        user.getSettings().setLanguage(getSettings().getLanguage());
         return user;
     }
 

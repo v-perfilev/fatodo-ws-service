@@ -52,8 +52,8 @@ public class FirebaseService {
 
     public void sendMessages(List<User> userList, WsEventType type, String payload) {
         List<Locale> localeList = userList.stream()
-                .map(User::getInfo)
-                .map(User.Info::getLanguage)
+                .map(User::getSettings)
+                .map(User.Settings::getLanguage)
                 .distinct()
                 .map(Locale::forLanguageTag)
                 .toList();
@@ -61,7 +61,7 @@ public class FirebaseService {
         Map<Locale, FirebaseMessageData> messageDataMap = buildMessageDataMap(type, payload, localeList);
 
         userList.forEach(user -> {
-            String language = user.getInfo().getLanguage();
+            String language = user.getSettings().getLanguage();
             Locale locale = Locale.forLanguageTag(language);
             FirebaseMessageData messageData = messageDataMap.get(locale);
             send(user.getId(), messageData);
