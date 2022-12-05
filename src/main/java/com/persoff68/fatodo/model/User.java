@@ -38,6 +38,11 @@ public class User extends AbstractModel {
 
         private String gender;
 
+    }
+
+    @Data
+    public static class Settings {
+
         private String language;
 
         private String timezone;
@@ -45,11 +50,6 @@ public class User extends AbstractModel {
         private String timeFormat;
 
         private String dateFormat;
-
-    }
-
-    @Data
-    public static class Settings {
 
         private boolean emailReminders;
 
