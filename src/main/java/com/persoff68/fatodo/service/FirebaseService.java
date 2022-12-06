@@ -1,5 +1,7 @@
 package com.persoff68.fatodo.service;
 
+import com.google.firebase.messaging.ApnsConfig;
+import com.google.firebase.messaging.Aps;
 import com.google.firebase.messaging.FirebaseMessaging;
 import com.google.firebase.messaging.FirebaseMessagingException;
 import com.google.firebase.messaging.Message;
@@ -139,8 +141,8 @@ public class FirebaseService {
         List<UUID> userIdList = List.of(message.getUserId());
         String usernamesString = getUsernames(userIdList);
         return localeList.stream().map(locale -> {
-            String title = messageSource.getMessage("chat.create_message", null, locale) + ": " + usernamesString;
-            String body = message.getText();
+            String title = messageSource.getMessage("chat.create_message", null, locale);
+            String body = usernamesString + ": " + message.getText();
             Map<String, String> dataMap = Map.of(CHAT_ID, message.getChatId().toString());
             FirebaseMessageData data = new FirebaseMessageData(title, body, dataMap);
             return Pair.of(locale, data);
@@ -188,8 +190,8 @@ public class FirebaseService {
         List<UUID> userIdList = List.of(comment.getUserId());
         String usernamesString = getUsernames(userIdList);
         return localeList.stream().map(locale -> {
-            String title = messageSource.getMessage("comment.create", null, locale) + ": " + usernamesString;
-            String body = comment.getText();
+            String title = messageSource.getMessage("comment.create", null, locale);
+            String body = usernamesString + ": " + comment.getText();
             Map<String, String> dataMap = Map.of(TARGET_ID, comment.getTargetId().toString());
             FirebaseMessageData data = new FirebaseMessageData(title, body, dataMap);
             return Pair.of(locale, data);
@@ -228,10 +230,14 @@ public class FirebaseService {
                     .setBody(data.body)
                     .build();
 
+            Aps aps = Aps.builder().setSound("ding.mp3").build();
+            ApnsConfig apnsConfig = ApnsConfig.builder().setAps(aps).build();
+
             Message message = Message.builder()
                     .setTopic(userId.toString())
                     .setNotification(notification)
                     .putAllData(data.dataMap)
+                    .setApnsConfig(apnsConfig)
                     .build();
 
             firebaseMessaging.send(message);

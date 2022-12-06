@@ -23,6 +23,7 @@ public class LocaleConfiguration {
     public MessageSource messageSource() {
         ResourceBundleMessageSource messageSource = new ResourceBundleMessageSource();
         messageSource.setBasename("messages/messages");
+        messageSource.setDefaultEncoding("UTF-8");
         return messageSource;
     }
 
