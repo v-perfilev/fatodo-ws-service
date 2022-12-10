@@ -30,6 +30,7 @@ import org.apache.commons.lang3.tuple.Pair;
 import org.springframework.context.MessageSource;
 import org.springframework.stereotype.Service;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -65,8 +66,10 @@ public class FirebaseService {
         userList.forEach(user -> {
             String language = user.getSettings().getLanguage();
             Locale locale = Locale.forLanguageTag(language);
-            FirebaseMessageData messageData = messageDataMap.get(locale);
-            send(user.getId(), messageData);
+            if (messageDataMap.containsKey(locale)) {
+                FirebaseMessageData messageData = messageDataMap.get(locale);
+                send(user.getId(), messageData);
+            }
         });
     }
 
@@ -214,13 +217,13 @@ public class FirebaseService {
         ReminderMeta reminderMeta = jsonService.deserialize(payload, ReminderMeta.class);
         List<UUID> itemIdList = List.of(reminderMeta.getItemId());
         List<ItemInfo> itemInfoList = itemSystemServiceClient.getAllItemInfoByIds(itemIdList);
-        return localeList.stream().map(locale -> {
+        return !itemInfoList.isEmpty() ? localeList.stream().map(locale -> {
             String title = messageSource.getMessage("reminder", null, locale);
             String body = itemInfoList.get(0).getTitle();
             Map<String, String> dataMap = Map.of(ITEM_ID, reminderMeta.getItemId().toString());
             FirebaseMessageData data = new FirebaseMessageData(title, body, dataMap);
             return Pair.of(locale, data);
-        }).collect(Collectors.toMap(Pair::getKey, Pair::getValue));
+        }).collect(Collectors.toMap(Pair::getKey, Pair::getValue)) : Collections.emptyMap();
     }
 
     private void send(UUID userId, FirebaseMessageData data) {

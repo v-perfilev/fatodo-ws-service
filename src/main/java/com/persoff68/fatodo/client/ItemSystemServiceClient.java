@@ -14,7 +14,7 @@ import java.util.UUID;
         qualifiers = {"feignItemSystemServiceClient"})
 public interface ItemSystemServiceClient {
 
-    @GetMapping(value = "/api/info/item")
+    @GetMapping(value = "/api/system/item")
     List<ItemInfo> getAllItemInfoByIds(@RequestParam("ids") List<UUID> itemIdList);
 
 }
