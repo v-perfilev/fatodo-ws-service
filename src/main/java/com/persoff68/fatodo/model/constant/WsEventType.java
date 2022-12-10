@@ -47,7 +47,7 @@ public enum WsEventType {
         List<WsEventType> wsEventList = List.of(
                 ITEM_CREATE, ITEM_GROUP_CREATE, ITEM_MEMBER_ADD,
                 CHAT_CREATE, CHAT_MESSAGE_CREATE, CHAT_REACTION_INCOMING,
-                CONTACT_REQUEST_INCOMING, CONTACT_ACCEPT_INCOMING,
+                CONTACT_REQUEST_INCOMING, CONTACT_ACCEPT_OUTCOMING,
                 COMMENT_CREATE, COMMENT_REACTION_INCOMING,
                 REMINDER
         );
