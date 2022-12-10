@@ -178,7 +178,7 @@ public class FirebaseService {
 
     private Map<Locale, FirebaseMessageData> buildContactAcceptOutcomingData(String payload, List<Locale> localeList) {
         ContactRequest request = jsonService.deserialize(payload, ContactRequest.class);
-        List<UUID> userIdList = List.of(request.getRequesterId());
+        List<UUID> userIdList = List.of(request.getRecipientId());
         String usernamesString = getUsernames(userIdList);
         return localeList.stream().map(locale -> {
             String title = messageSource.getMessage("contact.request_accept", null, locale);
