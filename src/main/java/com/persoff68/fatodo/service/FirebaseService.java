@@ -84,7 +84,7 @@ public class FirebaseService {
             case CHAT_MESSAGE_CREATE -> buildChatMessageCreateData(payload, localeList);
             case CHAT_REACTION_INCOMING -> buildChatReactionIncomingData(payload, localeList);
             case CONTACT_REQUEST_INCOMING -> buildContactRequestIncomingData(payload, localeList);
-            case CONTACT_ACCEPT_INCOMING -> buildContactAcceptIncomingData(payload, localeList);
+            case CONTACT_ACCEPT_OUTCOMING -> buildContactAcceptOutcomingData(payload, localeList);
             case COMMENT_CREATE -> buildCommentCreateData(payload, localeList);
             case COMMENT_REACTION_INCOMING -> buildCommentReactionIncoming(payload, localeList);
             case REMINDER -> buildReminderData(payload, localeList);
@@ -176,9 +176,9 @@ public class FirebaseService {
         }).collect(Collectors.toMap(Pair::getKey, Pair::getValue));
     }
 
-    private Map<Locale, FirebaseMessageData> buildContactAcceptIncomingData(String payload, List<Locale> localeList) {
+    private Map<Locale, FirebaseMessageData> buildContactAcceptOutcomingData(String payload, List<Locale> localeList) {
         ContactRequest request = jsonService.deserialize(payload, ContactRequest.class);
-        List<UUID> userIdList = List.of(request.getRecipientId());
+        List<UUID> userIdList = List.of(request.getRequesterId());
         String usernamesString = getUsernames(userIdList);
         return localeList.stream().map(locale -> {
             String title = messageSource.getMessage("contact.request_accept", null, locale);
