@@ -1,5 +1,7 @@
 package com.persoff68.fatodo.service;
 
+import com.google.firebase.messaging.AndroidConfig;
+import com.google.firebase.messaging.AndroidNotification;
 import com.google.firebase.messaging.ApnsConfig;
 import com.google.firebase.messaging.Aps;
 import com.google.firebase.messaging.FirebaseMessaging;
@@ -30,6 +32,7 @@ import org.apache.commons.lang3.tuple.Pair;
 import org.springframework.context.MessageSource;
 import org.springframework.stereotype.Service;
 
+import java.time.Duration;
 import java.util.Collections;
 import java.util.List;
 import java.util.Locale;
@@ -233,6 +236,13 @@ public class FirebaseService {
                     .setBody(data.body)
                     .build();
 
+            AndroidNotification androidNotification = AndroidNotification.builder().setSound("ding.mp3").build();
+            AndroidConfig androidConfig = AndroidConfig.builder()
+                    .setTtl(Duration.ofMinutes(2).toMillis())
+                    .setPriority(AndroidConfig.Priority.HIGH)
+                    .setNotification(androidNotification)
+                    .build();
+
             Aps aps = Aps.builder().setSound("ding.mp3").build();
             ApnsConfig apnsConfig = ApnsConfig.builder().setAps(aps).build();
 
@@ -240,6 +250,7 @@ public class FirebaseService {
                     .setTopic(userId.toString())
                     .setNotification(notification)
                     .putAllData(data.dataMap)
+                    .setAndroidConfig(androidConfig)
                     .setApnsConfig(apnsConfig)
                     .build();
 
