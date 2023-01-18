@@ -1,5 +1,6 @@
 package com.persoff68.fatodo.model;
 
+import com.persoff68.fatodo.model.constant.WsEventType;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
@@ -27,6 +28,8 @@ public class User extends AbstractModel {
 
     private Settings settings;
 
+    private Notifications notifications;
+
     @Data
     public static class Info {
 
@@ -53,6 +56,17 @@ public class User extends AbstractModel {
 
         private boolean emailReminders;
 
+    }
+
+    @Data
+    public static class Notifications {
+        private Set<WsEventType> pushNotifications;
+        private Set<EmailNotificationType> emailNotifications;
+
+    }
+
+    public enum EmailNotificationType {
+        REMINDER
     }
 
 }

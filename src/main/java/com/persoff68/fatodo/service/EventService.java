@@ -44,11 +44,12 @@ public class EventService {
         boolean hasInactiveUsers = activeUsernameList.size() != userList.size();
 
         if (isPushEvent && hasInactiveUsers) {
-            List<User> inactiveUserList = userList.stream()
+            List<User> inactiveUserToSendList = userList.stream()
                     .filter(user -> !activeUsernameList.contains(user.getUsername()))
                     .filter(user -> !user.getId().equals(event.getUserId()))
+                    .filter(user -> user.getNotifications().getPushNotifications().contains(event.getType()))
                     .toList();
-            firebaseService.sendMessages(inactiveUserList, event.getType(), event.getPayload());
+            firebaseService.sendMessages(inactiveUserToSendList, event.getType(), event.getPayload());
         }
     }
 
